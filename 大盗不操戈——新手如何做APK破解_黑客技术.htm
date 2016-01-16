@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>大盗不操戈——新手如何做APK破解_黑客技术</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/style.css" type="text/css">
+<script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/t.js" charset="utf-8"></script><script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/hm.js"></script><script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/tao.js" language="javascript"></script>
+<link rel="icon" type="image/ico" href="http://hackdig.vipsinaapp.com/favicon.ico">
+<meta name="keywords" content=" 大盗不操戈——新手如何做APK破解_ 黑客技术">
+<meta name="description" content="        传说是阿里的什么竞赛(百度到的地址~http://alictf.com/)，因为已经是工作的人了，也就没怎么关注，前一段时间从朋友手中拿到的apk，简单看了一下。刚刚看到有人发了这个APK的脱壳教程(http://bbs.pediy.com/showthread.php?t=192836)，我也简单来说说对于一个新手，这道题目怎么解吧，甚至连ARM汇编都不需要掌握，只要了解一些APK和调试的基础知识就行了。程序下载附在最后需要的工具呢，android&nbsp;sdk全套是必须的。因为这apk一装进我手机里面就各种崩溃，所以需要一个Android4.0以上的虚拟机，配套的DDMS，Java环境等，就不多说了。然后IDA，需要一些Android调试的知识，知道ARM中函数调用的概念和形式，OK，可大盗不操戈——新手如何做APK破解_记录黑客技术中优秀的内容, 传播黑客文化,分享黑客技术精华黑客技术">
+<meta name="baidu-site-verification" content="6f0ebkxf2C20UJPW">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="google-translate-customization" content="20a01eab864b8f7d-391a7abcc924c60d-gcfc31664e59f6432-f">
+<script charset="utf-8" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/logger.js"></script><script charset="utf-8" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/imgshare.js"></script><script charset="utf-8" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/logger.js"></script><link type="text/css" rel="stylesheet" href="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/bdsstyle.css"><link href="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/imgshare.css" type="text/css" rel="stylesheet"><style></style></head>
+<body><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/o.htm" id="BAIDU_DUP_fp_iframe"></iframe></div><iframe style="display: none;" frameborder="0"></iframe><div style="right: 0px; top: 180px; position: fixed; height: 330px; overflow: hidden;" id="bdshare"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/r5.gif" alt="" style="float:left;margin-top:58px;"><iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe><div style="display: none; left: 24px;" id="bdshare_l"><div id="bdshare_l_c"><h6>分享到</h6><ul><li><a href="#" class="bds_mshare mshare">一键分享</a></li><li><a href="#" class="bds_qzone qqkj">QQ空间</a></li><li><a href="#" class="bds_tsina xlwb">新浪微博</a></li><li><a href="#" class="bds_bdysc bdysc">百度云收藏</a></li><li><a href="#" class="bds_renren rrw">人人网</a></li><li><a href="#" class="bds_tqq txwb">腾讯微博</a></li><li><a href="#" class="bds_bdxc bdxc">百度相册</a></li><li><a href="#" class="bds_kaixin001 kxw">开心网</a></li><li><a href="#" class="bds_tqf txpy">腾讯朋友</a></li><li><a href="#" class="bds_tieba bdtb">百度贴吧</a></li><li><a href="#" class="bds_douban db">豆瓣网</a></li><li><a href="#" class="bds_tsohu shwb">搜狐微博</a></li><li><a href="#" class="bds_bdhome bdhome">百度新首页</a></li><li><a href="#" class="bds_sqq sqq">QQ好友</a></li><li><a href="#" class="bds_thx thx">和讯微博</a></li><li style=""><a href="#" class="bds_more">更多...</a></li></ul><p><a href="#" class="goWebsite">百度分享</a></p></div></div></div>
+<div id="taoBody">
+ 
+<div id="topTitle"><a href="http://www.hackdig.com/" class="basetitle" title="黑客技术"><img id="logo" alt="" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/dot.gif" height="61" width="178"></a><span>记录黑客技术中优秀的内容, 传播黑客文化,分享黑客技术精华</span></div>
+ 
+<div id="nav">
+<li id="home"><a href="http://www.hackdig.com/">首页</a></li>
+<li class="page_item"><a href="http://www.hackdig.com/?cat-3.htm">网络安全</a></li>
+<li class="page_item"><a href="http://www.hackdig.com/?cat-5.htm">移动安全</a></li>
+<li class="page_item"><a href="http://www.hackdig.com/?cat-4.htm">招聘信息</a></li>
+<li class="page_item"><a href="http://en.hackdig.com/" target="_blank" rel="nofollow">English</a></li>
+<div class="clear"></div>
+</div>
+ 
+<div id="bodyLeft">
+<div class="npPost">
+<div class="floatLeft"> «<a href="http://www.hackdig.com/?10/hack-14531.htm" title="ELF section修复的一些思考">ELF section修复的一些思考...</a></div>
+<div class="floatRight"><a href="http://www.hackdig.com/?10/hack-14539.htm" title="协众OA系统任意文件上传 (无需登录)">协众OA系统任意文件上传 (无需登录)...</a> » </div>
+<div class="clear"></div>
+</div>
+ 
+<div id="post">
+<div style="width:640px;height:60px;margin:2px auto;">
+<script type="text/javascript">
+    var cpro_id = "u1939193";
+</script>
+<script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1939193_0"><iframe id="cproIframe_u1939193_1" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/acom.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="60" width="640"></iframe></div><script charset="utf-8" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/acom_003"></script>
+</div> <h2 class="arttitle"><a rel="bookmark" title="Permanent Link to 大盗不操戈——新手如何做APK破解" href="http://www.hackdig.com/?10/hack-14532.htm">大盗不操戈——新手如何做APK破解</a></h2>
+<div id="postTime">2014-10-11 23:07</div>
+ 
+<div id="content"> 传说是阿里的什么竞赛(百度到的地址~http://alictf.com/)，因为已经是工作的人了，也就没怎么关注，前一段时间从朋友手中拿到的apk，简单看了一下。<br><br>刚
+刚看到有人发了这个APK的脱壳教程(http://bbs.pediy.com/showthread.php?t=192836)，我也简单来说说对
+于一个新手，这道题目怎么解吧，甚至连ARM汇编都不需要掌握，只要了解一些APK和调试的基础知识就行了。程序下载附在最后<br><br>需要的工具
+呢，android&nbsp;sdk全套是必须的。因为这apk一装进我手机里面就各种崩溃，所以需要一个Android4.0以上的虚拟机，配套的
+DDMS，Java环境等，就不多说了。然后IDA，需要一些Android调试的知识，知道ARM中函数调用的概念和形式，OK，可以开工了。<br><br>1.&nbsp;&nbsp;拿到APK的第一件事，习惯性地解压缩，看看里面的文件：<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92607&amp;d=1412071672" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_008.png" class="thumbnail" alt="点击图片以查看大图图片名称:1.png查看次数:23文件大小:65.7 KB文件 ID :92607" style="margin: 2px" border="0"></a><br>注意到classes.dex文件大小只有1KB，就应该猜到关键点不是Java代码了，那就肯定是在lib里面实现了动态加载。<br><br>2.&nbsp;&nbsp;动态跑一下程序，发现界面很普通，就是输入一个密码，然后点登陆。打开monitor(sdk/tools/monitor&lt;.bat&gt;)会发现有很多debug信息（放水？）<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92608&amp;d=1412071672" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_012.png" class="thumbnail" alt="点击图片以查看大图图片名称:2.png查看次数:33文件大小:44.1 KB文件 ID :92608" style="margin: 2px" border="0"></a><br>发现整个流程已经写得非常明白了。抓住其中的一些重点例如：<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92609&amp;d=1412071672" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_009.png" class="thumbnail" alt="点击图片以查看大图图片名称:3.png查看次数:13文件大小:2.3 KB文件 ID :92609" style="margin: 2px" border="0"></a><br><br>3.&nbsp;&nbsp;
+现在，打开IDA，设置Android调试环境，Attach到com.ali.encryption进程上面去，在libmobisec.so加载时断
+下来(如果不会的话，请参照http://bbs.pediy.com/showthread.php?t=178659)，然后在Hex&nbsp;
+View里面按g，输入前面看到的0xaa3c9008，敲回车，看到了什么？<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92610&amp;d=1412071672" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_010.png" class="thumbnail" alt="点击图片以查看大图图片名称:4.png查看次数:6文件大小:13.3 KB文件 ID :92610" style="margin: 2px" border="0"></a><br>dex.035，标准的dex文件头有木有，这时候相信很多人都会选择把dex&nbsp;dump出来吧。文件起始位置找到了，大小在文件头里面有<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92611&amp;d=1412071672" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_011.png" class="thumbnail" alt="点击图片以查看大图图片名称:5.png查看次数:4文件大小:6.3 KB文件 ID :92611" style="margin: 2px" border="0"></a><br>长度是0x19cf4。接下来按shift+F2，写一段dump脚本<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92612&amp;d=1412071672" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment.png" class="thumbnail" alt="点击图片以查看大图图片名称:6.png查看次数:14文件大小:40.8 KB文件 ID :92612" style="margin: 2px" border="0"></a><br>点击Run，dump.dex到手。<br><br>4.&nbsp;&nbsp;当然，如果这个这么简单也就没有写这些的必要了。用baksmali反编译，会出现一堆错误信息<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92613&amp;d=1412071689" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_013.png" class="thumbnail" alt="点击图片以查看大图图片名称:7.png查看次数:5文件大小:81.0 KB文件 ID :92613" style="margin: 2px" border="0"></a><br>到此就卡住了。让我们回过头来仔细看看上面这些应该如何分析的。<br><br>5.&nbsp;&nbsp;回到最初的logcat信息，我们仔细来分(xia)析(cai)一下解密流程：<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92614&amp;d=1412071689" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_002.png" class="thumbnail" alt="点击图片以查看大图图片名称:8.png查看次数:11文件大小:22.7 KB文件 ID :92614" style="margin: 2px" border="0"></a><br>第
+一步是这些。根据log可以看出，关键函数式parse_dex，第一次dex&nbsp;magic是乱码，之后有一些解密和解压信息，第二次的
+dex&nbsp;magic就是正常的dex035了。由此可以确定，如果在magic正常之后，进行内存dump，就能获得一个dex文件。过程就不
+多说了，会点调试的人，配合IDA神奇的F5功能，查找字符串，然后查找引用，或者直接从导出表里面找到parse_dex函数，进行分析。应该就能
+dump出dex文件来，但是该dump文件反编译之后，发现没有任何有用的代码，所有代码都是RuntimeException的形式。<br><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_003.png" alt="名称:  9.png查看次数: 2文件大小:  24.5 KB" style="margin: 2px" onload="if(this.width>screen.width*0.6) {this.width=screen.width*0.6;this.alt='';this.onmouseover=this.style.cursor='pointer'; this.onclick=function(){window.open('http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92615&amp;d=1412071689')}}" border="0"><br>声明：本图盗自万抽抽的&lt;ALICTF2014&nbsp;evilAPK400完整脱壳分析&gt;译文，链接：http://bbs.pediy.com/showthread.php?t=192836，个人懒得再做一遍了，如果侵权，请作者联系我删除。:)<br><br>6.&nbsp;&nbsp;然后继续看logcat的输出<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92616&amp;d=1412071689" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_007.png" class="thumbnail" alt="点击图片以查看大图图片名称:10.png查看次数:3文件大小:23.5 KB文件 ID :92616" style="margin: 2px" border="0"></a><br>这
+里看到一个dex_juicer_patch的函数，pacth啊，一看到这个单词，就知道，肯定是关键了。然后动态调试
+dex_juicer_patch函数，发现0xAA3C9008是parse_dex里面存放解密后dex的内存首地
+址，dex_juicer_patch的内容就是对dex内存空间做了系(x)列(x)操(o)作(o)。过程如果不是对ARM很熟的童鞋，估计看到就头
+大。在这里就不细说了。<br><br>7.&nbsp;&nbsp;继续看logcat，发现之后的操作，就是一些替换app，加载新dex的操作了，没有什么值得注意的。<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92617&amp;d=1412071689" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_005.png" class="thumbnail" alt="点击图片以查看大图图片名称:11.png查看次数:3文件大小:31.3 KB文件 ID :92617" style="margin: 2px" border="0"></a><br><br>8.&nbsp;&nbsp;
+到此，应该发现dex_juicer_patch函数是重点中的重点，但是看不懂ARM汇编，该怎么办呢？其实前面说
+了，dex_juicer_patch是对内存0xAA3C9008的操作，那么等dex_juicer_patch执行完了，0xAA3C9008处的
+内存是不是就是修复后的dex文件呢？<br>话不多说，在dex_juicer_patch运行结束，返回前执行之前dump脚本，把内存dump出来。然后用baksmali反编译看看。<br>然后。。。。。。就回到了第4步的结论，反编译各种错误。不过相比于都是RuntimeException有进步。<br><br>9.&nbsp;&nbsp;大结局<br>其实做为一个新手，做到这一步就差不多了，后续内容，要么有很强的实力，要么有很强的运气。都没有的话会比较蛋疼，例如me。<br>过程就不啰嗦了，结论就是，分析dex文件，可以发现里面很多指针指向了文件末尾以外。那么就可以猜测出来，dex文件头的文件长度并不是patch之后真正的文件长度，那么只要扩大这个值，把完整的dex文件dump出来就行了。<br>个
+人的方法呢，就是从0xAA3C9008&nbsp;+&nbsp;0x19CF4处开始往下找，找到下一段全是0的内存区，然后从0xAA3C9008
+到全是0的内存区dump出来。因为全0一般表示分割，可以用来大概区分数据段，如果一次不行的话，就继续往后找下一段。<br>最后贡献一下dump代码：<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92618&amp;d=1412071689" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_006.png" class="thumbnail" alt="点击图片以查看大图图片名称:12.png查看次数:4文件大小:49.5 KB文件 ID :92618" style="margin: 2px" border="0"></a><br>反编译的结果：<br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92619&amp;d=1412071697" rel="nofollow" target="_blank"><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/attachment_004.png" class="thumbnail" alt="点击图片以查看大图图片名称:13.png查看次数:2文件大小:52.6 KB文件 ID :92619" style="margin: 2px" border="0"></a><br><br>最后的dex破解，就不关我的事了，有兴趣的童鞋可以自己尝试一下，如果还有难点，欢迎联系我。<br><br>10.&nbsp;&nbsp;总结<br>总之一句话：大盗不操戈。很多看似很困难的事情，只是因为我们没有想到更优雅的解决办法。<br><br><br><a href="http://bbs.pediy.com/attachment.php?s=61d473ec6ef291ab92165f9752b06753&amp;attachmentid=92620&amp;d=1412072265" title="名称:  crackme.zip查看次数: 73文件大小:  777.6 KB">crackme.zip</a>. <br> <div style="padding:6px"> </div> </div>
+<div id="relate">
+<div id="hm_t_53059"><div style="display: block; margin: 0px; padding: 0px; float: none; clear: none; overflow: hidden; position: relative; border: 0px none; background: transparent none repeat scroll 0% 0%; max-width: none; max-height: none; border-radius: 0px; box-shadow: none; transition: none 0s ease 0s ; text-align: left; box-sizing: content-box; width: 652px; height: 284px;"><iframe style="display: block; margin: 0px; padding: 0px; float: none; clear: none; overflow: hidden; position: relative; border: 0px none; background: transparent none repeat scroll 0% 0%; max-width: none; max-height: none; border-radius: 0px; box-shadow: none; transition: none 0s ease 0s ; text-align: left; box-sizing: content-box; width: 100%; height: 100%;" scrolling="no" frameborder="0"></iframe></div></div>
+</div>
+ 
+<div id="digit"><a rel="nofollow" href="javascript:void(0)" onclick="$taoajax('http://www.hackdig.com/api.php?action=api&amp;ctrl=dig&amp;id=14532&amp;p=up&amp;ajax=1')">我顶</a><span id="dignum">0</span><a rel="nofollow" href="javascript:void(0)" onclick="$taoajax('http://www.hackdig.com/api.php?action=api&amp;ctrl=dig&amp;id=14532&amp;p=down&amp;ajax=1')">我踩</a></div>
+<div style="color:gray;background:rgb(252, 252, 252);padding: 5px 10px;color: gray;border-radius: 5px;">
+知识来源: <a onclick="return confirm('确认访问其他站点链接地址？');" href="http://www.hackdig.com/go.php?rid=14532" rel="nofollow" target="_blank">bbs.pediy.com/showthread.php?p=1320689#post1320689</a>
+</div>
+<div id="postDetal">
+<p> 阅读:24662 | 评论:0 | 标签:无<a href="http://www.hackdig.com/?tag="></a> </p>
+</div>
+ 
+<div class="contentBotAds">想收藏或者和大家分享这篇好文章→<span class="addthis_org_cn"><a href="javascript:void(0)" onclick="window.prompt('复制文本框中的内容后分享','《大盗不操戈——新手如何做APK破解》，本文地址：http://www.hackdig.com/?10/hack-14532.htm');" title="收藏&amp;分享这篇好文章">复制链接地址</a></span> </div>
+ 
+</div>
+<script>
+        var contentimgs=document.getElementById("content").getElementsByTagName("img");
+
+  for(var i=0;i<contentimgs.length;i++){
+contentimgs[i].onerror = function hiddenerrorimg(){this.style.display='none'}
+  }
+    </script>
+ 
+<h3 id="comments" class="cat_heading">“大盗不操戈——新手如何做APK破解”共有0条留言 </h3>
+<ol class="commentlist" id="commentlist">
+<li id="commentAdd"></li>
+</ol>
+<div id="commentsnavi">
+ 
+</div>
+<h3 id="respond">发表评论</h3>
+<form action="http://www.hackdig.com/api.php" method="post" id="commentform" onsubmit="return subcmt();">
+<div class="alignleft">
+<p>
+<small>姓名: </small>
+<label><input name="name" id="name" size="25" tabindex="1" type="text"></label>
+</p>
+<p>
+<small>邮箱: </small>
+<label><input name="emails" id="emails" size="25" tabindex="2" type="text"></label>
+</p>
+<p>
+<small>网址:</small>
+<label><input name="websites" id="websites" size="25" tabindex="3" type="text"></label>
+</p>
+<p>
+<small>验证码:</small>
+<label id="antiarea">46-<input name="antirbt" id="antirbt" size="4" tabindex="4" type="text">=26</label>
+</p>
+<p>
+<label> <input name="article_id" id="article_id" value="14532" type="hidden">
+<input name="ctrl" id="ctrl" value="save" type="hidden">
+<input name="action" id="action" value="comment" type="hidden"></label>
+</p>
+<p><label><textarea name="comment" id="comment" tabindex="5"></textarea>
+<input name="submit" class="corner" id="submit" tabindex="6" value="提交评论" type="submit"></label>
+</p>
+</div>
+</form>
+</div>
+<div id="bodyRight">
+ 
+<h3 class="sitebarHead">公告</h3>
+<div class="separator">
+❤ 关注Hackdig微博，点击下方按钮⇩<br>
+<iframe allowtransparency="true" marginwidth="0" marginheight="0" scrolling="no" border="0" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/followbutton.htm" frameborder="0" height="24" width="245"></iframe>
+❤ <font>关注Hackdig微信，学习技术更方便</font><br>
+<center><img src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/hd_qr.jpg" width="180"></center>
+<div id="google_translate_element"></div>
+</div>
+<h3 class="sitebarHead">工具</h3>
+<div class="separator">
+<script>var nId = "615fc39dab4bd12f35ef869bd21108357b89e462bfa829ff",nWidth="220px;",sColor="light",sText="输入邮箱订阅黑客技术的内容更新" ;</script><script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/qfcode.js" charset="gb18030"></script><style>.rssbook{padding:10px 15px;overflow:hidden;zoom:1;background:#f6f6f6;border:3px solid #ddd;}.light{background:#f6f6f6;border:3px solid #ddd;}.dark{background:#aaa;border:3px solid #666;}.mailInput{margin-top:5px;}.rssbook .info{color:#666;font-size:12px;}.light .info{color:#666;}.dark .info{color:#fff;}.rssbutton{float:left;border:1px solid #698ab4; -moz-border-radius:3px;border-radius:3px;-webkit-border-radius:3px;}.dark .rssbutton{border: 1px solid #585858;}.rssbutton input{background: #77a0d1;border: 1px solid #88b3e6; color: #FFFFFF; cursor: pointer;font-weight: bold;width:90px;display:block;height:22px;line-height:22px;*line-height:19px;text-align:center;}.dark .rssbutton input{background:#676767;border: 1px solid #777;}.rssbutton input:hover{background:#86b4eb;text-decoration:none;}.dark .rssbutton input:hover{background:#797979;border: 1px solid #939393;}input.rsstxt{width:100%;height:20px;font-size:14px;padding:2px 3px;-moz-border-radius:3px;border-radius:3px;-webkit-border-radius:3px;border:1px solid #ccc;;border-color:#7c7c7c #c3c3c3 #c3c3c3 #9a9a9a;margin-bottom:5px;}.dark input.rsstxt{background:#eee;}</style><div class="rssbook light " style="width:220px; "><p class="info">输入邮箱订阅黑客技术的内容更新</p><div class="mailInput"><form action="http://list.qq.com/cgi-bin/qf_compose_send" target="_blank" method="post"><input name="t" value="qf_booked_feedback" type="hidden"><input name="id" value="615fc39dab4bd12f35ef869bd21108357b89e462bfa829ff" type="hidden"><input id="to" name="to" class="rsstxt" type="text"><div class="rssbutton"><input value="订阅" type="submit"></div></form></div></div>
+<style>.rssbook{border:0px;background:#fff;width:230px;overflow:hidden;}</style>
+</div>
+ 
+<div class="sidebarCat">
+<h3 class="sitebarHead">随机推荐</h3>
+<ul class="submenu">
+<li><a href="http://www.hackdig.com/?09/hack-5830.htm">如何玩转andriod远控（androrat）</a></li>
+<li><a href="http://www.hackdig.com/?09/hack-5831.htm">freebuf的服务器遭遇大规模DDos攻击 宣传暂时关闭【业内新闻】</a></li>
+<li><a href="http://www.hackdig.com/?09/hack-5832.htm">百度站长平台“爆”dede后台直取webshell！</a></li>
+<li><a href="http://www.hackdig.com/?09/hack-5833.htm">八门神器作弊杀手2影子阴谋3.14版无限金币无限金钱</a></li>
+<li><a href="http://www.hackdig.com/?09/hack-5834.htm">GISOFT.GCMS上传漏洞及修复</a></li>
+</ul>
+</div>
+ 
+ 
+<div class="sidebarCat">
+<h3 class="sitebarHead">推而广之</h3>
+<p><script type="text/javascript">
+    var cpro_id = "u1934579";
+</script>
+<script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/c.js" type="text/javascript"></script></p><div style="width: 250px; height: 250px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border: medium none; display: inline-block;" id="BAIDU_DUP_wrapper_u1934579_0placeholder"></div><div style="width: 250px; height: 250px; display: inline-block; z-index: 2147483646; position: fixed; top: 5px; left: 1003px;" height="250px" width="250px" id="BAIDU_DUP_wrapper_u1934579_0"><iframe id="cproIframe_u1934579" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/acom_002.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="250" width="250"></iframe></div><script charset="utf-8" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/acom"></script>
+<p></p>
+<p><a href="http://www.hackdig.com/?07/hack-11562.htm" rel="nofollow"><img style="border:1px solid gray;" title="百度招聘安全工程师" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/baidu.png" border="0" height="70" width="248"></a></p>
+  </div>
+  <!--love end -->
+        <!-- tags  begin -->
+  <div class="sidebarCat">
+    <h3 class="sitebarHead">标签云</h3>
+    <ul class="submenu">
+	     <a href="http://www.hackdig.com/?tag=%E6%BC%8F%E6%B4%9E">漏洞</a>[2863]
+         <a href="http://www.hackdig.com/?tag=%E6%B3%A8%E5%85%A5">注入</a>[1861]
+         <a href="http://www.hackdig.com/?tag=xss">xss</a>[927]
+         <a href="http://www.hackdig.com/?tag=CMS">CMS</a>[514]
+         <a href="http://www.hackdig.com/?tag=Web%E5%AE%89%E5%85%A8">Web安全</a>[384]
+         <a href="http://www.hackdig.com/?tag=%E5%B7%A5%E5%85%B7">工具</a>[373]
+         <a href="http://www.hackdig.com/?tag=%E4%B8%9A%E7%95%8C">业界</a>[331]
+         <a href="http://www.hackdig.com/?tag=%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB">技术分享</a>[318]
+         <a href="http://www.hackdig.com/?tag=%E5%8A%A8%E6%80%81">动态</a>[308]
+         <a href="http://www.hackdig.com/?tag=%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95">渗透测试</a>[280]
+         <a href="http://www.hackdig.com/?tag=%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>[217]
+         <a href="http://www.hackdig.com/?tag=%E6%8B%9B%E8%81%98">招聘</a>[211]
+         <a href="http://www.hackdig.com/?tag=%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90">漏洞分析</a>[207]
+         <a href="http://www.hackdig.com/?tag=%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8">系统安全</a>[193]
+         <a href="http://www.hackdig.com/?tag=CSRF">CSRF</a>[185]
+         <a href="http://www.hackdig.com/?tag=%E9%BB%91%E5%AE%A2">黑客</a>[181]
+         <a href="http://www.hackdig.com/?tag=%E9%BB%91%E5%AE%A2%E6%94%BB%E9%98%B2">黑客攻防</a>[172]
+         <a href="http://www.hackdig.com/?tag=%E5%90%8E%E9%97%A8">后门</a>[169]
+         <a href="http://www.hackdig.com/?tag=%E6%89%AB%E6%8F%8F">扫描</a>[155]
+         <a href="http://www.hackdig.com/?tag=exp">exp</a>[140]
+     
+    </ul>
+      
+  </div>
+        <!-- keyword  begin -->
+  <div class="sidebarCat">
+    <h3 class="sitebarHead">本页关键词</h3>
+    <ul class="submenu">
+<a href="http://www.hackdig.com/?10/hack-14532.htm" title="本页关键字:apk脱壳">apk脱壳</a> 
+<a href="http://www.hackdig.com/?10/hack-14532.htm" title="本页关键字:evilAPK400">evilAPK400</a> 
+<a href="http://www.hackdig.com/?10/hack-14532.htm" title="本页关键字:apk怎样脱壳">apk怎样脱壳</a> 
+<a href="http://www.hackdig.com/?10/hack-14532.htm" title="本页关键字:apk脱壳工具">apk脱壳工具</a> 
+<a href="http://www.hackdig.com/?10/hack-14532.htm" title="本页关键字:大盗不操戈——新手如何做APK破解">大盗不操戈——新手如何做APK破解</a> 
+<a href="http://www.hackdig.com/?10/hack-14532.htm" title="本页关键字:libmobisec">libmobisec</a> 
+    </ul>
+  </div>
+      
+   
+  </div>
+<div id="footer"><a href="http://www.hackdig.com/">黑客技术</a> © 2012-2015 | <a href="http://www.hackdig.com/?01/hack-12.htm" rel="nofollow">关于&amp;合作</a> | 京ICP备15005440号 </div>
+<!--底部结束-->
+</div>
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d4ed16d5438dd0cb761a0890357466e8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script type="text/javascript">
+/*悬浮推广*/
+var cpro_id = "u2028519";
+</script>
+<script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/f.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u2028519_0"></div><div id="cproIframe2002holder" style="box-sizing: content-box; margin: 0px; padding: 0px; display: block; visibility: visible; border: medium none; background: transparent none repeat scroll 0% 0%; float: none; overflow: hidden; position: fixed; z-index: 2147483646; width: 130px; height: 300px; right: 151px; top: 150px;"><div style="box-sizing: content-box; position: absolute; top: 275px; left: 0px; cursor: pointer; width: 130px; height: 28px; z-index: 100; opacity: 0; background-color: rgb(153, 153, 153);" id="cproIframe2002CloseBtnWrap"></div><div style="box-sizing: content-box; position: absolute; width: 130px; height: 20px; top: 280px; left: 0px; cursor: pointer; background-color: rgb(153, 153, 153); color: rgb(255, 255, 255); font-size: 12px; font-family: 微软雅黑; text-align: center; line-height: 20px;" id="cproIframe2002CloseBtn">关闭</div><div style="box-sizing: content-box; width: 120px; height: 270px; overflow: hidden; padding: 4px; border: 1px solid rgb(172, 172, 172);"><div style="display:none">-</div><iframe id="cproIframe2002" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/acom_003.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="270" width="120"></iframe></div></div><div id="cproIframe2001holder" style="box-sizing: content-box; margin: 0px; padding: 0px; display: block; visibility: visible; border: medium none; background: transparent none repeat scroll 0% 0%; float: none; overflow: hidden; position: fixed; z-index: 2147483646; width: 130px; height: 300px; left: 151px; top: 150px;"><div style="box-sizing: content-box; position: absolute; top: 275px; left: 0px; cursor: pointer; width: 130px; height: 28px; z-index: 100; opacity: 0; background-color: rgb(153, 153, 153);" id="cproIframe2001CloseBtnWrap"></div><div style="box-sizing: content-box; position: absolute; width: 130px; height: 20px; top: 280px; left: 0px; cursor: pointer; background-color: rgb(153, 153, 153); color: rgb(255, 255, 255); font-size: 12px; font-family: 微软雅黑; text-align: center; line-height: 20px;" id="cproIframe2001CloseBtn">关闭</div><div style="box-sizing: content-box; width: 120px; height: 270px; overflow: hidden; padding: 4px; border: 1px solid rgb(172, 172, 172);"><div style="display:none">-</div><iframe id="cproIframe2001" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/acom_004.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="270" width="120"></iframe></div></div><script charset="utf-8" src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/acom_002"></script>
+
+<!-- Baidu Button BEGIN -->
+<script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/bds_s_v2.js" type="text/javascript" id="bdshare_js" data="type=slide&amp;img=5&amp;pos=right&amp;uid=0"></script>
+
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+    /*if((/spider|bot|goog|search/i.test(navigator.userAgent.toLowerCase()))==false){   
+document.title =document.title.replace('黑客技术','网络安全技术'); 
+}*/
+</script>
+<!-- Baidu Button END -->
+<script src="%E5%A4%A7%E7%9B%97%E4%B8%8D%E6%93%8D%E6%88%88%E2%80%94%E2%80%94%E6%96%B0%E6%89%8B%E5%A6%82%E4%BD%95%E5%81%9AAPK%E7%A0%B4%E8%A7%A3_%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF_files/imgshare_shell.js" id="bdimgshare_shell"></script>
+<script>
+var bdShare_config_imgshare = {
+"type":"list","size":"small","pos":"top","color":"white","list":["qzone","tsina","tqq","renren","t163"],"uid":"0"
+};
+document.getElementById("bdimgshare_shell").src="http://bdimg.share.baidu.com/static/js/imgshare_shell.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+
+
+<!-- translate -->
+<script id="trans_shell"></script>
+<script>
+var isLanZhCn=false;
+if(navigator.userAgent.indexOf("MSIE")!=-1){//判断浏览器是否为ie
+    isLanZhCn=(navigator.browserLanguage.toLocaleLowerCase()=="zh-cn")
+}
+else{
+    isLanZhCn=(navigator.language.toLocaleLowerCase()=="zh-cn");
+}
+if(isLanZhCn==false){
+function googleTranslateElementInit() {
+new google.translate.TranslateElement({
+pageLanguage: 'zh-CN'
+     }, 'google_translate_element');
+  }
+document.getElementById("trans_shell").src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+
+}
+</script>
+
+
+<div id="bdimgshare_1444869565908" class="sr-bdimgshare sr-bdimgshare-list sr-bdimgshare-small sr-bdimgshare-white" style="height: 36px; line-height: 36px; font-size: 12px; width: 600px; position: absolute; top: 3366.6px; left: 336.5px;"><div class="bdimgshare-bg"></div><div class="bdimgshare-content"><label class="bdimgshare-lbl">图片分享</label><a data-btype="0" href="#" onclick="return false;" class="bdimgshare-icon bdshare-i-qzone" data-cmd="qzone" hidefocus=""></a><a data-btype="0" href="#" onclick="return false;" class="bdimgshare-icon bdshare-i-tsina" data-cmd="tsina" hidefocus=""></a><a data-btype="0" href="#" onclick="return false;" class="bdimgshare-icon bdshare-i-tqq" data-cmd="tqq" hidefocus=""></a><a data-btype="0" href="#" onclick="return false;" class="bdimgshare-icon bdshare-i-renren" data-cmd="renren" hidefocus=""></a><a data-btype="0" href="#" onclick="return false;" class="bdimgshare-icon bdshare-i-t163" data-cmd="t163" hidefocus=""></a><a href="#" onclick="return false;" class="bdimgshare-icon bdshare-i-more" data-cmd="more" hidefocus=""></a></div></div></body></html>

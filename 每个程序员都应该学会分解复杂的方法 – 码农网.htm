@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html xmlns:wb="http://open.weibo.com/wb"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><style type="text/css" id="znBdcsStyle">.bdcs-container .bdcs-main,.bdcs-container .bdcs-main *{box-sizing:content-box;margin:0;padding:0;float:none;clear:none;overflow:hidden;white-space:nowrap;word-wrap:normal;border:0;background:0 0;width:auto;height:auto;max-width:none;min-width:none;max-height:none;min-height:none;border-radius:0;box-shadow:none;transition:none;text-align:left}.bdcs-container .bdcs-clearfix:after{content:'';display:block;clear:both;height:0}.bdcs-container .bdcs-clearfix{zoom:1}.bdcs-container .bdcs-main{overflow:visible}.bdcs-container .bdcs-search{display:block;overflow:visible;position:relative;border-style:solid}.bdcs-container .bdcs-search-form-input-wrap{display:inline-block}.bdcs-container .bdcs-search-form-input{border-width:1px;border-style:solid;display:inline-block;vertical-align:top;text-indent:5px;background-color:#fff;float:left}.bdcs-container .bdcs-search-form-input:focus{border-width:1px;border-style:solid;outline:0}.bdcs-container .bdcs-search-form-submit-wrap{display:inline-block}.bdcs-container .bdcs-search-form-submit{display:inline-block;cursor:pointer;border-width:1px;border-style:solid;vertical-align:top;text-align:center;width:50px;//_overflow:hidden}.bdcs-container .bdcs-search-form-submit-magnifier{width:45px;padding:0;text-indent:-999em;overflow:hidden;background:url(http://znsv.baidu.com/static/customer-search/component/search/magnifier-icon.png) no-repeat center center;_background:url(http://znsv.baidu.com/static/customer-search/component/search/magnifier-icon_ie6.png) no-repeat center center}div#default-searchbox .default-channel-meun{position:relative;width:75px;display:inline-block;vertical-align:middle;cursor:pointer;background:#fff;float:left;overflow:visible}div#default-searchbox .default-channel-current{border:1px solid;position:relative;width:100%;border-right:0}div#default-searchbox .default-channel-current span{margin-left:8px}div#default-searchbox .default-channel-current i{overflow:hidden;width:0;height:0;border-width:6px 6px 0;border-color:#9E9E9E #fff;border-style:solid;display:block;position:absolute;right:10px;top:11px}div.cse-default-channel-container{display:block;position:absolute;z-index:30061000000}div.cse-default-channel-container .default-channel-list{display:none;width:99%;list-style:none;background:#fff;border:1px solid #DDD;border-top:0;margin:0;padding:0}div.cse-default-channel-container .default-channel-list li{background:0 0;line-height:24px;list-style:none;display:block;padding-left:7px;cursor:pointer}div.cse-default-channel-container .default-channel-list li:hover{background:#DDD}.bdcs-container .bdcs-search-form-input-wrap{}.bdcs-container .bdcs-search-form-input-notspan{margin-left:0px;font-family:Arial,SimSun,sans-serif;color:#000000;font-size:14px;}.bdcs-container .bdcs-search-form-input .icon-nofocus{left:;right:;top:;height:;width:;}.bdcs-container .bdcs-search{width:231px;height:28px;overflow:hidden;border-color:#0000CC;border-radius:0px;border-width:1px;box-shadow:none;background-color:#0000CC;}.bdcs-container .bdcs-search-form-input{border-color:#FFFFFF;margin-right:0px;width:178px;height:26px;line-height:26px;font-family:Arial,SimSun,sans-serif;color:#000000;font-size:14px;border-radius:0px;background-color:#FFFFFF;}.bdcs-container .bdcs-search-form-input:focus{border-color:#f79646;}.bdcs-container .bdcs-search-form-submit-wrap{}.bdcs-container .bdcs-search-form-submit{border-color:#0000CC;height:26px;width:50px;background-color:#0000CC;color:#ffffff;font-family:Arial,SimSun,sans-serif;font-size:14px;border-radius:0px;}.bdcs-container .bdcs-search-sug-list{width:250px;}.bdcs-container .bdcs-search-sug-list-item{height:28px;line-height:28px;font-family:Arial,SimSun,sans-serif;font-size:14px;}.bdcs-container .bdcs-search-sug-list-item-value{color:#000000;}.bdcs-container .bdcs-clearfix:after{content:'';display:block;clear:both;height:0}.bdcs-container .bdcs-clearfix{zoom:1}.bdcs-container .bdcs-search{overflow:visible;position:relative}.bdcs-container .bdcs-search-sug,.bdcs-container .bdcs-search-sug *{box-sizing:content-box;margin:0;padding:0;float:none;clear:none;overflow:hidden;white-space:nowrap;word-wrap:normal;border:0;background:0 0;width:auto;height:auto;max-width:none;min-width:none;max-height:none;min-height:none;border-radius:0;box-shadow:none;transition:none;text-align:left}.bdcs-container .bdcs-search-sug{display:none;position:absolute;z-index:2147483647}.bdcs-container .bdcs-search-sug-list{list-style:none;border:1px solid #DDD;background-color:#FFF}.bdcs-container .bdcs-search-sug-list{}.bdcs-container .bdcs-search-sug-list-item{display:block;list-style:none;cursor:pointer;padding:0 5px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.bdcs-container .bdcs-search-sug-list-item-current{background-color:#EBEBEB}.bdcs-container .bdcs-search-sug-list-item-author-novel,.bdcs-container .bdcs-search-sug-list-item-author-music,.bdcs-container .bdcs-search-sug-list-item-type-movie{color:#BABABA}.bdcs-container .bdcs-search-sug-list-item-author-novel,.bdcs-container .bdcs-search-sug-list-item-author-music{margin-left:5px}.bdcs-container .bdcs-search-sug-list-item-music{overflow:hidden;*zoom:1}.bdcs-container .bdcs-search-sug-list-item-value-movie{float:left}.bdcs-container .bdcs-search-sug-list-item-type-movie{float:right}.bdcs-container .bdcs-search-sug-skin{display:none;width:85px;height:85px;position:absolute;right:1px;bottom:1px}.bdcs-container .bdcs-search-sug-skin-img{width:85px;height:85px}.bdcs-container .bdcs-search-sug-i{color:#e64fa3;font-weight:700;margin-left:10px;font-family:simsun;font-style:normal}.bdcs-container .bdcs-search-sug-adv{width:105px;position:absolute;right:1px;top:1px;display:none}.bdcs-container .bdcs-search-sug-adv-img{position:absolute;top:0;right:0}.bdcs-container{overflow:visible;}.bdcs-container .bdcs-search-form-submit{*height:28px;*margin-top:1px;}.bdcs-container .bdcs-search-form-submit{height:28px;}.bdcs-container .bdcs-search-form-submit{line-height:26px;}.bdcs-container .bdcs-search-form-input{margin-right:-1px;}.bdcs-container .bdcs-search-sug-list-item{height:28px;line-height:28px;font-family:Arial,SimSun,sans-serif;font-size:14px;}.bdcs-container .bdcs-search-sug-list-item-value{color:#000000;}#bdcs-search-inline{height:30px;}#bdcs-rec{display:none;}</style><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/pa_lu_big.js" async="" charset="utf-8" type="text/javascript"></script><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/single_image.js" async="" charset="utf-8" type="text/javascript"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<title>每个程序员都应该学会分解复杂的方法 – 码农网</title>
+<link rel="stylesheet" id="wp-pagenavi-css" href="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/pagenavi-css.css" type="text/css" media="all">
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/hm.js"></script><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/ca-pub-3171310320403916.js" type="text/javascript" async=""></script><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/js" async="" type="text/javascript"></script><script type="text/javascript">
+var duoshuoQuery = {"short_name":"codeceo","sso":{"login":"http:\/\/www.codeceo.com\/wp-login.php?action=duoshuo_login","logout":"http:\/\/www.codeceo.com\/wp-login.php?action=logout&_wpnonce=c71132eabf"},"theme":"default","stylePatch":"wordpress\/"};
+duoshuoQuery.sso.login += '&redirect_to=' + encodeURIComponent(window.location.href);
+duoshuoQuery.sso.logout += '&redirect_to=' + encodeURIComponent(window.location.href);
+</script>
+<script type="text/javascript" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/embed.js" charset="UTF-8" async="async"></script>
+<link rel="prev" title="Infinispan 8 中新的 Redis 缓存存储实现" href="http://www.codeceo.com/article/infinispan-8-redis-cache.html">
+<link rel="canonical" href="http://www.codeceo.com/article/programmer-break-method.html">
+<meta name="keywords" content="代码重构, 程序员, 其他, 编程开发, 首页精华">
+<meta name="description" content="今天，我们要讲的重构方法为，提取方法（Extract Method）。这也是我最常用的重构方法之一。  注：虽然代码示例是用PHP写的，但相同的概念同样也适用于其他任何OOP语言。 定义 下面是Martin Fowler给出的官方定义： 如果你有一个可以组合在一起的代码段。那么将这个代码片段整合为一个方法，其方法名就用来解释该方法的目的。 我认为再也没有比这更简单的定义了。此处我唯一想强调的是，方法名。事实上，你命名方法的方式决定了你能..">
+<link rel="stylesheet" href="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/style.css" media="all">
+<!--[if lt IE 9]><script src="http://www.codeceo.com/wp-content/themes/d-simple/js/html5.js"></script><![endif]-->
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/jquery.js"></script><link href="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/embed.css" rel="stylesheet" type="text/css">
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/wb.js" type="text/javascript" charset="utf-8"></script>
+
+
+<style type="text/css">
+
+.plink a {
+margin-right: 16px;
+display: inline-block;
+text-transform: uppercase;
+padding: 1em 1.5em 0.75em;
+border-radius: 2px;
+font-weight: bold;
+border: none;
+color: #fff !important;
+text-decoration: none;
+font-family: 'Open Sans Condensed',sans-serif;
+font-size: 14px;
+line-height: 1;
+cursor: pointer;
+}
+.plink a:hover{
+opacity:0.9;
+}
+.plink .phome{
+font-size: 16px;
+padding: 1em 2em 1em;
+background-color: #a5d16d;
+box-shadow: 0 0 5px #a4cf6c inset, 0 1px 1px #eee;
+}
+.plink .pdoc,.plink .pdownload{
+font-size: 16px;
+padding: 1em 2em 1em;
+background-color: #93d0ea;
+box-shadow: 0 0 5px #8fcde7 inset, 0 1px 1px #eee;
+}
+
+.dlink{
+text-align:center;
+}
+.dlink a{
+font-size:18px;
+}
+.trap-link,.un-link{
+display:none;
+}
+
+
+.d-links{
+text-align:center;
+}
+.d-links a {
+margin-right: 16px;
+margin-bottom: 10px;
+display: inline-block;
+text-transform: uppercase;
+padding: 1em 1.5em 0.75em;
+border-radius: 2px;
+font-weight: bold;
+border: none;
+color: #fff !important;
+text-decoration: none;
+font-family: 'Open Sans Condensed',sans-serif;
+font-size: 14px;
+line-height: 1;
+cursor: pointer;
+}
+.d-links a:hover{
+opacity:0.9;
+}
+.d-links .demo{
+font-size: 18px;
+padding: 1.2em 2.5em 1em;
+background-color: #a5d16d;
+box-shadow: 0 0 5px #a4cf6c inset, 0 1px 1px #eee;
+}
+.d-links .download{
+font-size: 18px;
+padding: 1.2em 2.5em 1em;
+background-color: #93d0ea;
+box-shadow: 0 0 5px #8fcde7 inset, 0 1px 1px #eee;
+}
+
+.perlink{
+display:none;
+}
+
+.nav_scroll{ position:fixed;z-index:1200;top:0px;}
+
+.article-entry .yunlu {
+    background: #f0f0f0;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.article-entry .yunlu ul {
+    list-style: none;
+    padding: 9px;
+    border: 1px dotted #9b9b9b;
+    overflow: hidden;
+    margin: 0;
+}
+
+.article-entry .yunlu ul li {
+    width: 310px;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 25px;
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+</style>
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/share.js"></script><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/bundle.js" charset="UTF-8"></script><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/iframeWidget.js" charset="UTF-8"></script><link href="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/share_style0_16.css" rel="stylesheet"></head>
+<body class="single single-post postid-28026 single-format-standard"><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/o.htm" id="BAIDU_DUP_fp_iframe"></iframe></div><iframe id="sina_anywhere_iframe" style="display: none;"></iframe>
+<header class="header">
+	<div class="central">
+		<a class="logo" href="http://www.codeceo.com/" title="码农网 - 程序员编程资料和编程经验分享平台">码农网</a>
+		<ul class="nav">
+			<li id="menu-item-10" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10"><a href="http://www.codeceo.com/article/category/news">资讯</a></li>
+<li id="menu-item-226" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-226"><a href="http://www.codeceo.com/article/category/develop">编程开发</a>
+<ul class="sub-menu">
+	<li id="menu-item-10429" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10429"><a href="http://www.codeceo.com/article/category/develop/java">JAVA开发</a></li>
+	<li id="menu-item-10427" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10427"><a href="http://www.codeceo.com/article/category/develop/cpp">C/C++开发</a></li>
+	<li id="menu-item-10425" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10425"><a href="http://www.codeceo.com/article/category/develop/donet">.NET开发</a></li>
+	<li id="menu-item-10430" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10430"><a href="http://www.codeceo.com/article/category/develop/web">WEB开发</a></li>
+	<li id="menu-item-10426" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10426"><a href="http://www.codeceo.com/article/category/develop/android">Android开发</a></li>
+	<li id="menu-item-10428" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10428"><a href="http://www.codeceo.com/article/category/develop/ios">iOS开发</a></li>
+	<li id="menu-item-10431" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10431"><a href="http://www.codeceo.com/article/category/develop/cloud">云计算/大数据</a></li>
+	<li id="menu-item-10432" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10432"><a href="http://www.codeceo.com/article/category/develop/os">操作系统</a></li>
+	<li id="menu-item-10433" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10433"><a href="http://www.codeceo.com/article/category/develop/database">数据库</a></li>
+	<li id="menu-item-10434" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10434"><a href="http://www.codeceo.com/article/category/develop/machine">机器学习/人工智能</a></li>
+	<li id="menu-item-10435" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10435"><a href="http://www.codeceo.com/article/category/develop/algorithm">算法设计</a></li>
+	<li id="menu-item-10818" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10818"><a href="http://www.codeceo.com/article/category/develop/design-patterns">设计模式</a></li>
+</ul>
+</li>
+<li id="menu-item-9" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9"><a href="http://www.codeceo.com/article/category/programmer">程序员人生</a></li>
+<li id="menu-item-5237" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5237"><a href="http://www.codeceo.com/article/category/weekly">《快乐码农》</a></li>
+<li id="menu-item-4520" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4520"><a href="http://www.codeceo.com/article/category/project">开源软件</a></li>
+<li id="menu-item-13578" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13578"><a href="#">RSS订阅</a>
+<ul class="sub-menu">
+	<li id="menu-item-13579" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13579"><a target="_blank" href="http://www.codeceo.com/feed">订阅全站文章</a></li>
+	<li id="menu-item-13580" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13580"><a target="_blank" href="http://www.codeceo.com/article/category/pick/feed">订阅首页精华文章</a></li>
+</ul>
+</li>
+<li id="menu-item-16182" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16182"><a target="_blank" href="http://bbs.codeceo.com/">码农社区</a></li>
+		</ul>
+		
+<div style="float:right;margin-top:15px">
+<script type="text/javascript">(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=5192211232745119302' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();</script><div id="bdcs"><div class="bdcs-container"><meta http-equiv="x-ua-compatible" content="IE=9">   <!-- 嵌入式 -->  <div class="bdcs-main bdcs-clearfix" id="default-searchbox">      <div class="bdcs-search bdcs-clearfix" id="bdcs-search-inline">          <form action="http://zhannei.baidu.com/cse/search" method="get" target="_blank" class="bdcs-search-form" autocomplete="off" id="bdcs-search-form">              <input name="s" value="5192211232745119302" type="hidden">              <input name="entry" value="1" type="hidden">                                                                        <input style="height: 28px; line-height: 28px;" autocomplete="off" name="q" class="bdcs-search-form-input" id="bdcs-search-form-input" placeholder="请输入关键词" type="text">              <input class="bdcs-search-form-submit " id="bdcs-search-form-submit" value="搜索" type="submit">                       </form>      </div>                <div style="top: 44px; left: 918px; width: 179px;" class="bdcs-search-sug" id="bdcs-search-sug">              <ul class="bdcs-search-sug-list" id="bdcs-search-sug-list"></ul>          </div>                  </div>                           </div></div>
+</div>
+
+
+<!--
+		<form method="get" class="search-form" action="http://www.codeceo.com/" >
+			<input class="search-input" name="s" type="text" placeholder="输入关键字搜索" autofocus="" x-webkit-speech=""><input class="btn btn-primary search-submit" type="submit" value="搜索">
+		</form>
+-->
+
+	</div>
+</header>
+
+<section class="central container">
+<div class="content-wrap">
+	<div class="content">
+				<div class="artical">
+			<header class="article-header">
+				<h1 class="article-title"><a href="http://www.codeceo.com/article/programmer-break-method.html" title="每个程序员都应该学会分解复杂的方法 - 码农网">每个程序员都应该学会分解复杂的方法</a></h1>
+				
+				<p class="article-meta">
+
+					2015-10-15 &nbsp;&nbsp; 分类：<a href="http://www.codeceo.com/article/category/develop/other" title="查看 其他 中的全部文章" rel="category tag">其他</a>、<a href="http://www.codeceo.com/article/category/develop" title="查看 编程开发 中的全部文章" rel="category tag">编程开发</a>、<a href="http://www.codeceo.com/article/category/pick" title="查看 首页精华 中的全部文章" rel="category tag">首页精华</a><a class="comm" href="http://www.codeceo.com/article/programmer-break-method.html#comments" title="查看 每个程序员都应该学会分解复杂的方法 的评论">暂无人评论</a> 				</p>
+
+<div data-bd-bind="1444874232960" class="bdsharebuttonbox share bdshare-button-style0-16" data-tag="share_1">
+	<span class="share-tit">分享到：</span>
+	<a title="分享到一键分享" class="bds_mshare" data-cmd="mshare"></a>
+	<a title="分享到QQ空间" class="bds_qzone" data-cmd="qzone" href="#"></a>
+	<a title="分享到新浪微博" class="bds_tsina" data-cmd="tsina"></a>
+	<a title="分享到微信" class="bds_weixin" data-cmd="weixin"></a>
+	<a class="bds_baidu" data-cmd="baidu"></a>
+	<a title="分享到人人网" class="bds_renren" data-cmd="renren"></a>
+	<a title="分享到腾讯微博" class="bds_tqq" data-cmd="tqq"></a>
+	<a class="bds_more" data-cmd="more">更多</a>
+	<a title="累计分享0次" class="bds_count" data-cmd="count">0</a>
+</div>
+
+
+			</header>
+
+						
+<div class="article-entry">
+
+<div class="yunlu">
+<script type="text/javascript">
+var adHTML = '<ul><li><a rel="nofollow" target="_blank" title="二十万年薪PHP工程师培养计划" href="http://www.codeceo.com/go/yltext1">二十万年薪PHP工程师培养计划</a></li><li><a rel="nofollow" target="_blank" title="成为被疯抢的Android牛人" href="http://www.codeceo.com/go/yltext2">成为被疯抢的Android牛人</a></li><li><a rel="nofollow" target="_blank" title="风中叶讲Java重难点" href="http://www.codeceo.com/go/yltext3">风中叶讲Java重难点</a></li><li><a rel="nofollow" target="_blank" title="Linux运维基础课程" href="http://www.codeceo.com/go/yltext4">Linux运维基础课程</a></li></ul>';
+document.write(adHTML);
+</script><ul><li><a rel="nofollow" target="_blank" title="二十万年薪PHP工程师培养计划" href="http://www.codeceo.com/go/yltext1">二十万年薪PHP工程师培养计划</a></li><li><a rel="nofollow" target="_blank" title="成为被疯抢的Android牛人" href="http://www.codeceo.com/go/yltext2">成为被疯抢的Android牛人</a></li><li><a rel="nofollow" target="_blank" title="风中叶讲Java重难点" href="http://www.codeceo.com/go/yltext3">风中叶讲Java重难点</a></li><li><a rel="nofollow" target="_blank" title="Linux运维基础课程" href="http://www.codeceo.com/go/yltext4">Linux运维基础课程</a></li></ul>
+</div>
+
+<p style="background:#eeefff;padding:10px;"><strong>本文由<a title="码农网" href="http://www.codeceo.com/" target="_blank">码农网</a>&nbsp;– 小峰原创翻译，转载请看清文末的转载要求，欢迎加入技术翻译小组！</strong></p>
+
+				<p>今天，我们要讲的重构方法为，提取方法（Extract Method）。这也是我最常用的重构方法之一。</p>
+<p>注：虽然代码示例是用PHP写的，但相同的概念同样也适用于其他任何OOP语言。</p>
+<h2>定义</h2>
+<p>下面是Martin Fowler给出的官方定义：</p>
+<blockquote><p>如果你有一个可以组合在一起的代码段。那么将这个代码片段整合为一个方法，其方法名就用来解释该方法的目的。</p></blockquote>
+<p>我认为再也没有比这更简单的定义了。此处我唯一想强调的是，方法名。事实上，你命名方法的方式决定了你能从这种重构中受益多少。例
+如，methodmoveToPendingList()这个方法名就比mvToPLst()和moveToList()要好。如果你担心代码太长，那么
+你错了——我们的目标不是字符最少化，而是让代码更易于理解。好的命名方法能够代替你为这个方法额外添加的注释。</p>
+<p><img class="aligncenter size-full wp-image-28027" title="reartch" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/reartch.png" alt="" height="247" width="640"></p>
+<h2>为什么要使用重构？</h2>
+<p>重构很重要。慢慢的，你就会发现，重构带来的好处比你付出的努力要多得多。最重要的一点是，它从根本上简化了代码。此外，重构让代码变得更易读；允许重用；代替了那些令人讨厌却又不得不写的用来描述代码作用的注释。我认为这些理由已经足够说服你来使用重构了，不是吗？</p>
+<h2>提取方法的案例</h2>
+<p>在你使用Extract Method（提取方法）重构的时候，可能会面临这三种情况，它们分别是：没有局部变量，使用局部变量和重新分配局部变量。下面我将一一说明。</p>
+<h3>举例</h3>
+<p>假设，在你的电子商务应用程序中有一个方法，该方法用来打印用户购物车中包括总价格在内的所有项目的细节。</p>
+<pre class="brush: php; gutter: false; first-line: 1">public function printCartDetails()
+{
+    // print items in the cart
+    echo "Your shopping cart contains the following items:&lt;br&gt;";
+    echo "&lt;table&gt;";
+    echo "&lt;th&gt;Name&lt;/th&gt; &lt;th&gt;Price&lt;/th&gt;";
+    foreach($this-&gt;items as $item)
+    {
+        echo "&lt;tr&gt;";
+        echo "&lt;td&gt;{$item-&gt;getName()}&lt;/td&gt;";
+        echo "&lt;td&gt;\${$item-&gt;getPrice()}&lt;/td&gt;";
+        echo "&lt;/tr&gt;";
+    }
+    echo "&lt;/table&gt;";
+
+    // calculate the total price
+    $totalPrice = 0;
+    foreach($this-&gt;items as $item)
+        $totalPrice += $item-&gt;getPrice();
+
+    // print the total price
+    printf("The total price: $%d", $totalPrice);
+}</pre>
+<p>请注意我们是如何从类的数组中获取项目的。该数组包含了一列Item（项目）对象，这些Item对象每一个都有访问名称和价格属性的函数：getName()和getPrice()。</p>
+<p>这种方法有许多设计问题，首先方法太长，细节太烦琐。其次，使用注释来描述每个代码片段要做什么，是一种不被认可的坏方法。同时，这也违背了
+Single Responsibility 
+Principle（单一功能原则）。因此，我们将这个方法分解为更小的方法，这些更小的方法每个都给一个名称用来描述它们是做什么的。</p>
+<p>让我们先从负责打印用户购物车中的项目的代码片段开始。实际上，这是最简单的方法提取情况，因为只需要这样做：</p>
+<pre class="brush: php; gutter: false; first-line: 1">public function printCartDetails()
+{
+    $this-&gt;printItemsInCart();
+
+    // calculate the total price
+    $totalPrice = 0;
+    foreach($this-&gt;items as $item)
+        $totalPrice += $item-&gt;getPrice();
+
+    // print the total price
+    printf("The total price: $%d", $totalPrice);
+}
+
+private function printItemsInCart()
+{
+    echo "Your shopping cart contains the following items:&lt;br&gt;";
+    echo "&lt;table&gt;";
+    echo "&lt;th&gt;Name&lt;/th&gt; &lt;th&gt;Price&lt;/th&gt;";
+    foreach($this-&gt;items as $item)
+    {
+        echo "&lt;tr&gt;";
+        echo "&lt;td&gt;{$item-&gt;getName()}&lt;/td&gt;";
+        echo "&lt;td&gt;\${$item-&gt;getPrice()}&lt;/td&gt;";
+        echo "&lt;/tr&gt;";
+    }
+    echo "&lt;/table&gt;";
+}</pre>
+<p>我们只需要剪切和粘贴代码段到一个新的私有方法中，然后再从源方法调用它即可。这就是我所谓的没有局部变量的情况。因为我们提取的代码不依赖于我们从中提取代码的方法中的任何局部变量。</p>
+<p>这样我们就不再需要注释来描述这个代码片段要做什么，这个提取方法的名字已经告诉了我们。</p>
+<p>接下来要提取的是打印总价格。也很容易。这一次我们需要将源方法中的$totalPrice局部变量作为一个参数，传递到提取方法中。就像这样：</p>
+<pre class="brush: php; gutter: false; first-line: 1">public function printCartDetails()
+{
+    $this-&gt;printItemsInCart();
+
+    // calculate the total price
+    $totalPrice = 0;
+    foreach($this-&gt;items as $item)
+    {
+        $totalPrice += $item-&gt;getPrice();
+    }
+
+    $this-&gt;printTotalPrice($totalPrice);
+}
+
+private function printTotalPrice($totalPrice)
+{
+    printf("The total price: $%d", $totalPrice);
+}</pre>
+<p>而这种情况就是使用局部变量。因为提取出的方法需要使用来自于源方法的一个局部变量（在这个例子中就是$totalPrice）来显示总价格。很简单，是不是？</p>
+<p>现在，让我们提取最后一个负责计算总价的方法。如果你有仔细看的话，你会发现，它修改了源方法中的局部变量（$totalPrice）。此外，之后
+还使用了本地变量。因此，我们不能简单地不做任何修改地剪切和粘贴完全相同的代码到新方法中：我们得根据新版本的提取方法来重新分配局部变量。而且我们只
+需要返回修改后的变量就可以办到。就像这样：</p>
+<pre class="brush: php; gutter: false; first-line: 1">public function printCartDetails()
+{
+    $this-&gt;printItemsInCart();
+
+    $totalPrice = 0;
+
+    $totalPrice = $this-&gt;calculateTotalPrice($totalPrice);
+
+    $this-&gt;printTotalPrice($totalPrice);
+}
+
+private function calculateTotalPrice($totalPrice)
+{
+
+    foreach($this-&gt;items as $item)
+    {
+        $totalPrice += $item-&gt;getPrice();
+    }
+
+    return $totalPrice;
+}</pre>
+<p>不错，但还可以提高。如果我们只是用类似于那样的文本值初始化局部变量（即这里的$totalPrice）的话，那么就没有必要在源方法中保留它，因此我们可以将初始化放到提取方法中。</p>
+<pre class="brush: php; gutter: false; first-line: 1">public function printCartDetails()
+{
+    $this-&gt;printItemsInCart();
+
+    $totalPrice = $this-&gt;calculateTotalPrice();
+
+    $this-&gt;printTotalPrice($totalPrice);
+}
+
+private function calculateTotalPrice()
+{
+    $totalPrice = 0;
+
+    foreach($this-&gt;items as $item)
+    {
+        $totalPrice += $item-&gt;getPrice();
+    }
+
+    return $totalPrice;
+}</pre>
+<p>但是，如果初始化依赖于源方法的值，那么我们就需要在提取方法之外保留那个局部变量，然后像之前那样传递。例如：</p>
+<pre class="brush: php; gutter: false; first-line: 1">public function printCartDetails($previousAmount)
+{
+    $this-&gt;printItemsInCart();
+
+    $totalPrice = previousAmount * 1.1;
+
+    $totalPrice = $this-&gt;calculateTotalPrice($totalPrice);
+
+    $this-&gt;printTotalPrice($totalPrice);
+}
+
+private function calculateTotalPrice($totalPrice)
+{
+    $result = $totalPrice;
+
+    foreach($this-&gt;items as $item)
+    {
+        $result += $item-&gt;getPrice();
+    }
+
+    return $result;
+}</pre>
+<h2>对比</h2>
+<p>下面让我们将改进之后的公共方法printCartDetails（）与改进之前做一个对比。</p>
+<p>之前：</p>
+<pre class="brush: javascript; gutter: false; first-line: 1">public function printCartDetails()
+{
+    // print items in the cart
+    echo "Your shopping cart contains the following items:&lt;br&gt;";
+    echo "&lt;table&gt;";
+    echo "&lt;th&gt;Name&lt;/th&gt; &lt;th&gt;Price&lt;/th&gt;";
+    foreach($this-&gt;items as $item)
+    {
+        echo "&lt;tr&gt;";
+        echo "&lt;td&gt;{$item-&gt;getName()}&lt;/td&gt;";
+        echo "&lt;td&gt;\${$item-&gt;getPrice()}&lt;/td&gt;";
+        echo "&lt;/tr&gt;";
+    }
+    echo "&lt;/table&gt;";
+
+    // calculate the total price
+    $totalPrice = 0;
+    foreach($this-&gt;items as $item)
+        $totalPrice += $item-&gt;getPrice();
+
+    // print the total price
+    printf("The total price: $%d", $totalPrice);
+}</pre>
+<p>之后：</p>
+<pre class="brush: php; gutter: false; first-line: 1">public function printCartDetails()
+{
+    $this-&gt;printItemsInCart();
+
+    $totalPrice = $this-&gt;calculateTotalPrice();
+
+    $this-&gt;printTotalPrice($totalPrice);
+}</pre>
+<p>很明显，改进之后容易理解多了！只需要5秒我就知道这段代码要做什么：首先打印用户购物车中的项目，然后它计算总价格并打印出来。就是这么简单。</p>
+<p>请注意，我们并不关心这段代码如何打印购物车的详细信息。我们只关心代码要做什么。再次重申：我们关心的“what”而不是“how”。如果你想了解“how”的详细信息，那么你就去看如何实现这件事的方法。</p>
+<h2>总结</h2>
+<p>以上就是一个非常简单的提取方法重构的例子。提取方法重构是如此强大又易于使用，所以，我建议你从今天开始就使用到你的代码中。</p>
+<p>欢迎评论。</p>
+<script type="text/javascript">
+var strBatchView = 28026</script>
+
+<a id="soft-link" name="soft-link"></a>
+
+<div class="bd_ad_bottom" style="margin:20px 0 20px 0">
+<div class="sogou_ads" style="float:left;margin-right:36px">
+<script type="text/javascript">
+    /*码农网底部矩形2*/
+    var cpro_id = "u1739327";
+</script>
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1739327_0"><iframe id="cproIframe_u1739327_1" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="250" width="300"></iframe></div><script charset="utf-8" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom"></script>
+</div>
+<div class="baidu_ads" style="float:left">
+<script async="" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/adsbygoogle.js"></script>
+<!-- codeceo left 2 -->
+<ins data-adsbygoogle-status="done" class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-3171310320403916" data-ad-slot="7648671380"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="250" width="300"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div style="clear:both"></div>
+</div>
+
+<!--开源软件资源链接-->
+<!--开源软件资源链接结束-->
+
+
+
+<div class="article-entry">
+<p>译文链接：<a href="http://www.codeceo.com/article/programmer-break-method.html" target="_blank">http://www.codeceo.com/article/programmer-break-method.html</a><br>
+
+英文原文：<a href="http://taha-sh.com/blog/break-your-method-into-smaller-ones" target="_blank">Break Your Method Into Smaller Ones</a><br>
+
+翻译作者：<a href="http://www.codeceo.com/" target="_blank">码农网</a>&nbsp;– 小峰<br>
+[&nbsp;<span style="color: #ff0000;"><strong>转载必须在正文中标注并保留原文链接、译文链接和译者等信息。</strong></span>]</p>
+</div>
+
+
+
+
+<div style="margin-top:10px;margin-bottom:10px">
+<script type="text/javascript">
+var cpro_id="u1984323";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"640",rsi1:"250",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"1",ptc:"%E7%8C%9C%E4%BD%A0%E6%84%9F%E5%85%B4%E8%B6%A3",ptFS:"",ptFC:"#000000",ptBC:"#F2F2F2",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"",rss2:"#000000",titSU:"0",ptbg:"70",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1984323_0"><iframe id="cproIframe_u1984323_2" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom_002.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="250" width="640"></iframe></div><script charset="utf-8" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom_002"></script>
+</div>
+
+
+			</div>
+
+
+			<footer class="article-footer">
+				<div data-bd-bind="1444874232960" class="bdsharebuttonbox share bdshare-button-style0-16" data-tag="share_1">
+	<span class="share-tit">分享到：</span>
+	<a title="分享到一键分享" class="bds_mshare" data-cmd="mshare"></a>
+	<a title="分享到QQ空间" class="bds_qzone" data-cmd="qzone" href="#"></a>
+	<a title="分享到新浪微博" class="bds_tsina" data-cmd="tsina"></a>
+	<a title="分享到微信" class="bds_weixin" data-cmd="weixin"></a>
+	<a class="bds_baidu" data-cmd="baidu"></a>
+	<a title="分享到人人网" class="bds_renren" data-cmd="renren"></a>
+	<a title="分享到腾讯微博" class="bds_tqq" data-cmd="tqq"></a>
+	<a class="bds_more" data-cmd="more">更多</a>
+	<a title="累计分享0次" class="bds_count" data-cmd="count">0</a>
+</div>
+		
+				<div class="article-tags">继续浏览有关<a href="http://www.codeceo.com/article/tag/%e4%bb%a3%e7%a0%81%e9%87%8d%e6%9e%84" rel="tag">代码重构</a><a href="http://www.codeceo.com/article/tag/%e7%a8%8b%e5%ba%8f%e5%91%98" rel="tag">程序员</a>的文章</div>
+			</footer>
+
+			
+		</div>
+
+		
+		
+
+		
+		<a name="comments"></a>
+
+<div id="ds-thread" class="ds-thread" data-thread-key="28026" data-author-key="1" data-title="每个程序员都应该学会分解复杂的方法" data-url="http://www.codeceo.com/article/programmer-break-method.html"><div id="ds-reset"><div class="ds-comments-info"><div class="ds-sort"><a class="ds-order-desc">最新</a><a class="ds-order-asc ds-current">最早</a><a class="ds-order-hot">最热</a></div><ul class="ds-comments-tabs"><li class="ds-tab"><a class="ds-comments-tab-duoshuo ds-current" href="javascript:void(0);">0评论</a></li>  </ul></div><ul class="ds-comments"><li class="ds-post ds-post-placeholder">还没有评论，沙发等你来抢</li></ul><div style="display: none;" class="ds-paginator"><div class="ds-border"></div><a data-page="1" href="javascript:void(0);" class="ds-current">1</a></div><a name="respond"></a><div class="ds-login-buttons"><p>社交帐号登录:</p><div class="ds-social-links"><ul class="ds-service-list"><li><a href="http://codeceo.duoshuo.com/login/weibo/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-weibo">微博</a></li><li><a href="http://codeceo.duoshuo.com/login/qq/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-qq">QQ</a></li><li><a href="http://codeceo.duoshuo.com/login/renren/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-renren">人人</a></li><li><a href="http://codeceo.duoshuo.com/login/douban/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-douban">豆瓣</a></li><li><a class="ds-more-services" href="javascript:void(0)">更多»</a></li></ul><ul class="ds-service-list ds-additional-services"><li><a href="http://codeceo.duoshuo.com/login/kaixin/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-kaixin">开心</a></li><li><a href="http://codeceo.duoshuo.com/login/netease/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-netease">网易</a></li><li><a href="http://codeceo.duoshuo.com/login/sohu/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-sohu">搜狐</a></li><li><a href="http://codeceo.duoshuo.com/login/baidu/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-baidu">百度</a></li><li><a href="http://codeceo.duoshuo.com/login/google/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.codeceo.com%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.codeceo.com%252Farticle%252Fprogrammer-break-method.html" rel="nofollow" class="ds-service-link ds-google">谷歌</a></li></ul></div></div><div class="ds-replybox"><a class="ds-avatar" href="javascript:void(0);" onclick="return false"><img src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/noavatar_default.png" alt=""></a><form method="post"><input name="thread_id" value="6205668825742770945" type="hidden">
+<input name="parent_id" value="" type="hidden">
+<input name="nonce" value="56162a374f0bf" type="hidden"><div class="ds-textarea-wrapper ds-rounded-top"><textarea name="message" title="Ctrl+Enter快捷提交" placeholder="说点什么吧…"></textarea><pre class="ds-hidden-text"></pre></div><div class="ds-post-toolbar"><div class="ds-post-options ds-gradient-bg"><span class="ds-sync"></span></div><button class="ds-post-button" type="submit">发布</button><div class="ds-toolbar-buttons"><a class="ds-toolbar-button ds-add-emote" title="插入表情"></a></div></div></form></div><p class="ds-powered-by"><a href="http://duoshuo.com/" target="_blank" rel="nofollow">码农网正在使用多说</a></p></div></div>
+
+<script type="text/javascript">
+	if (typeof DUOSHUO !== 'undefined')
+		DUOSHUO.EmbedThread('.ds-thread');
+</script>
+	<div id="ds-ssr">
+
+		
+            <ol id="commentlist">
+                            </ol>
+
+		            
+    </div>
+		
+			</div>
+</div>
+
+<script>
+var baiduImagePlus = {
+  unionId:'u2106590',
+  maxMiniAdCount:0,
+  noLogo:true,
+  formList:[{formId:2},{formId:3}]
+};
+</script>
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/i.js"></script>
+
+
+<aside class="sidebar">	
+	<div class="widget widget_text">			<div class="textwidget"><style type="text/css">
+.hot{margin-bottom:30px}
+.hot h2{font-size:18px;padding-top:7px;text-align:center}
+.hot a{text-decoration:none}
+.hot img{width:300px;}
+</style>
+
+<div class="hot">
+<script type="text/javascript">
+    var cpro_id="u2191321";
+    (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"300",rsi1:"250",pat:"17",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"",titFS:"14",rss2:"#000000",titSU:"0"}
+</script>
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u2191321_0"><iframe id="cproIframe_u2191321_3" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom_003.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="250" width="300"></iframe></div><script charset="utf-8" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom_004"></script>
+</div>
+
+<div class="hot">
+<script language="javascript"> 
+var adHTML2 = "<a href='http://www.codeceo.com/go/kuaima' ref='nofollow' target='_blank'><img src='http://static.codeceo.com/images/2015/09/kuaima.jpg' border='0' data-baiduimageplus-ignore /></a>";
+document.write(adHTML2);
+</script><a href="http://www.codeceo.com/go/kuaima" ref="nofollow" target="_blank"><img src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/kuaima.jpg" data-baiduimageplus-ignore="" border="0"></a>
+</div>
+
+<div class="hot">
+<iframe scrolling="no" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/index.htm" frameborder="0" height="500px" width="100%"></iframe>
+</div>
+
+<div class="hot">
+<script async="" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/adsbygoogle.js"></script>
+<!-- codeceo left -->
+<ins data-adsbygoogle-status="done" class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-3171310320403916" data-ad-slot="6171938185"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" frameborder="0" height="250" width="300"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div class="hot">
+<iframe scrolling="no" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/index_002.htm" frameborder="0" height="443px" width="100%"></iframe>
+</div></div>
+		</div><div class="widget widget_text">			<div class="textwidget"><style type="text/css">
+.widget_d_hotpost{
+border: #eee solid 1px;
+padding: 10px;
+}
+</style></div>
+		</div><div class="widget widget_text">			<div class="textwidget"><script type="text/javascript">
+    /*码农网侧边悬停*/
+    var cpro_id = "u1635048";
+</script>
+<script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/c.js" type="text/javascript"></script><div style="width: 300px; height: 250px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border: medium none; display: inline-block;" id="BAIDU_DUP_wrapper_u1635048_0placeholder"></div><div style="width: 300px; height: 250px; display: inline-block; z-index: 2147483646; position: fixed; top: 5px; left: 216px;" height="250px" width="300px" id="BAIDU_DUP_wrapper_u1635048_0"><iframe id="cproIframe_u1635048" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom_004.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="250" width="300"></iframe></div><script charset="utf-8" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/acom_003"></script></div>
+		</div><div style="position: fixed; top: 10px; z-index: 0; width: 300px; opacity: 0.930371;" class="widgetRoller"></div></aside><div style="position:absolute;right:0px;">
+<ul class="nav" style="margin-top:0;margin-bottom:20px">			
+<li>
+<ul class="sub-menu" style="display:block;width:160px;position:relative;top:0">
+	<li id="menu-item-10544" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10544"><a href="http://www.codeceo.com/article/tag/java">Java</a></li>
+	<li id="menu-item-10543" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10543"><a href="http://www.codeceo.com/article/tag/android">Android</a></li>
+	<li id="menu-item-10550" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10550"><a href="http://www.codeceo.com/article/tag/ios">iOS</a></li>
+	<li id="menu-item-10545" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10545"><a href="http://www.codeceo.com/article/tag/javascript">JavaScript</a></li>
+	<li id="menu-item-10554" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10554"><a href="http://www.codeceo.com/article/tag/html5">HTML5</a></li>
+	<li id="menu-item-10556" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10556"><a href="http://www.codeceo.com/article/tag/jquery">jQuery</a></li>
+	<li id="menu-item-10546" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10546"><a href="http://www.codeceo.com/article/tag/linux">Linux</a></li>
+	<li id="menu-item-10548" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10548"><a href="http://www.codeceo.com/article/tag/mysql">MySQL</a></li>
+	<li id="menu-item-10549" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10549"><a href="http://www.codeceo.com/article/tag/php">PHP</a></li>
+	<li id="menu-item-10547" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10547"><a href="http://www.codeceo.com/article/tag/%e7%a8%8b%e5%ba%8f%e5%91%98">程序员</a></li>
+</ul>
+</li>
+</ul>
+<div style="clear:both"></div>
+<div>
+<script async="" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/adsbygoogle.js"></script>
+<!-- codeceo-right-bar -->
+<ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3171310320403916" data-ad-slot="9382725383"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;" frameborder="0" height="600" width="160"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div class="nav_scroll" style="margin-top:20px" id="fixedNav">
+<p style="text-align:center">
+<b>关注我们的微博</b><br>
+</p><div style="margin-top:10px"><wb:follow-button uid="2832482174" type="red_2" width="136" height="24"><iframe marginheight="0" scrolling="no" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/followbutton.htm" frameborder="0" height="24" width="136"></iframe></wb:follow-button></div>
+<a href="http://weibo.com/u/2832482174" target="_blank" title="关注我们的微博">
+<img src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/weibo-logo-03.png" alt="关注我们的微博" style="margin:10px 0" height="105px" width="160px"></a>
+<p></p>
+<p style="text-align:center">
+<b>关注我们的微信</b><br>
+<img src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/weixin-logo-03.png" alt="关注我们的微信" style="margin:10px 0" height="160px" width="160px">
+</p>
+</div>
+
+</div><script language="javascript" type="text/javascript">
+try{
+	var elScript = document.createElement("script");
+	elScript.setAttribute("language", "javascript");
+	elScript.setAttribute("src", "http://www.codeceo.com/wp-counter.php?post_id=" + escape(strBatchView));
+	document.getElementsByTagName("body")[0].appendChild(elScript);
+	}
+catch(e){};
+</script>
+</section><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/wp-counter.htm" language="javascript"></script>
+<footer class="footer">
+	<div class="central">
+		<div class="trackcode">
+					</div>
+		<div class="copyright">
+			版权所有，保留一切权利！ © 2015 <a href="http://www.codeceo.com/">码农网</a>　<a href="http://www.codeceo.com/sitemap.html" target="_blank">网站地图</a>
+		</div>
+	</div>
+</footer>
+<div style="display: block;" class="rollto"><a class="ico ico-totop" title="回顶部"></a><a href="#respond" class="ico ico-torespond" title="发评论"></a></div>
+<script>var asr_1 = 0,asr_2 = 0;</script><script src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/post.js"></script><div style="display:none">
+<script language="javascript" type="text/javascript" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/16025287.js"></script><a href="http://www.51.la/?16025287" target="_blank"><img alt="51.la 专业、免费、强健的访问统计" src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/icon_9.gif" style="border:none"></a>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?af429ff7a5d8173130dceafabcc90a92";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</div>
+<script>
+	window._bd_share_config = {
+		common : {	
+			bdUrl : 'http://www.codeceo.com/article/programmer-break-method.html'
+		},
+		share : [{
+			"bdSize" : 16
+		}]
+	}
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<script type="text/javascript">
+jQuery(function(){
+
+if (jQuery.browser.msie && (jQuery.browser.version == "6.0") && !jQuery.support.style) {
+var handler,sTop,dTop;
+				dTop = jQuery("#fixedNav").offset().top
+    jQuery(window).bind('scroll',function(){
+        window.clearTimeout(handler);
+        handler = window.setTimeout(function(){
+            sTop = jQuery(document).scrollTop();
+            sTop > dTop ? jQuery("#fixedNav").css("top",sTop - dTop) : jQuery("#fixedNav").css("top",0);
+	    jQuery("#fixedNav").css({"position":"relative","z-index":"1200"});
+        },60);
+    });
+}else{
+
+	var topMain= jQuery("#fixedNav").offset().top
+ jQuery(window).scroll(function(){
+  if (jQuery(window).scrollTop()>topMain){
+   jQuery("#fixedNav").addClass("nav_scroll");
+  }else{
+   jQuery("#fixedNav").removeClass("nav_scroll");
+  }
+ });
+
+	}
+});
+</script>
+
+<script>function lc_get_cookie(name) {var c = document.cookie;if (c.indexOf(name) != -1) {var x = c.indexOf(name)+name.length+1;var y = c.indexOf(";",x);if (y < 0) y = c.length;return decodeURIComponent(c.substring(x,y));} else return "";}if ((d = document.getElementById("commentform")) != null) { e = d.elements;var z = lc_get_cookie("comment_author_email_badd07ee9c364732a5e9ad66c6ddab25");if (z != "") e["email"].value = z;z = lc_get_cookie("comment_author_badd07ee9c364732a5e9ad66c6ddab25");if (z != "") e["author"].value = z.replace(/\+/g, " ");z = lc_get_cookie("comment_author_url_badd07ee9c364732a5e9ad66c6ddab25");if (z != "") e["url"].value = z;}</script><div style="position: absolute; border: 0px none; margin: 0px; padding: 0px; height: 0px; overflow: visible; text-align: left; top: 732px; left: 546px; width: 640px; display: block;"><style id="s-f21ac82b21eeb7322631b6aa94e17f451ldoxfy" media="screen" type="text/css">.ad-widget-imageplus-single_image{font:12px/1.5 arial,sans-serif;position:relative;padding:1px;overflow:hidden;_zoom:1;background-color:#FFF}.ad-widget-imageplus-single_image img{display:block;width:300px!important;height:250px!important;padding:0;margin:0;border:0;position:static!important}.ad-widget-imageplus-single_image-redirect{position:absolute;top:0;left:0;_left:-1px;z-index:2;width:100%;height:100%;_height:252px;background-color:#FFF;opacity:0;filter:alpha(opacity=0)}.baiduimageplus-single-logo{position:absolute;bottom:0;right:0;z-index:90;height:18px;width:18px;text-indent:-9999px;background:url(http://cpro.baidustatic.com/cpro/ui/noexpire/img/2.0.1/bg.png) no-repeat left top;background-position:0 0;_filter:progid:dximagetransform.microsoft.alphaimageloader(enabled=true,src="http://cpro.baidustatic.com/cpro/ui/noexpire/img/2.0.1/bg.png",sizingMethod="crop");_background:none}
+.ad-widget-imageplus-box{position:absolute;top:0;left:0;margin:0;padding:0;width:0;height:0;overflow:visible!important}.ad-widget-imageplus-box-icon{position:absolute;top:0;left:0;z-index:10;width:38px;height:38px;overflow:hidden;cursor:pointer;background:url("http://ecma.bdimg.com/public03/imageplus/pa.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa.png')\9}.ad-widget-imageplus-box-icon:hover{background:url("http://ecma.bdimg.com/public03/imageplus/pa-hover.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-hover.png')\9}
+.ad-widget-imageplus-box-icon span{position:absolute;top:0;left:0;width:38px;height:38px;cursor:pointer;text-decoration:none;background-color:#FFF;opacity:0;filter:alpha(opacity=0)}span.ad-widget-imageplus-box-icon{cursor:default}.ad-widget-imageplus-box-icon-medical{background:url("http://ecma.bdimg.com/public03/imageplus/pa-medical.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-medical.png')\9}.ad-widget-imageplus-box-icon-medical:hover{background:url("http://ecma.bdimg.com/public03/imageplus/pa-medical-hover.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-medical-hover.png')\9}
+.ad-widget-imageplus-box-icon-decoration{background:url("http://ecma.bdimg.com/public03/imageplus/pa-decoration.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-decoration.png')\9}.ad-widget-imageplus-box-icon-decoration:hover{background:url("http://ecma.bdimg.com/public03/imageplus/pa-decoration-hover.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-decoration-hover.png')\9}.ad-widget-imageplus-box-icon-machine{background:url("http://ecma.bdimg.com/public03/imageplus/pa-machine.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-machine.png')\9}
+.ad-widget-imageplus-box-icon-machine:hover{background:url("http://ecma.bdimg.com/public03/imageplus/pa-machine-hover.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-machine-hover.png')\9}.ad-widget-imageplus-box-icon-photo{background:url("http://ecma.bdimg.com/public03/imageplus/pa-photo.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-photo.png')\9}.ad-widget-imageplus-box-icon-photo:hover{background:url("http://ecma.bdimg.com/public03/imageplus/pa-photo-hover.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-photo-hover.png')\9}
+.ad-widget-imageplus-box-icon-tourism{background:url("http://ecma.bdimg.com/public03/imageplus/pa-tourism.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-tourism.png')\9}.ad-widget-imageplus-box-icon-tourism:hover{background:url("http://ecma.bdimg.com/public03/imageplus/pa-tourism-hover.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/pa-tourism-hover.png')\9}.ad-widget-imageplus-box-icon-game{background:url("http://ecma.bdimg.com/public03/imageplus/game.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/game.png')\9}
+.ad-widget-imageplus-box-icon-game:hover{background:url("http://ecma.bdimg.com/public03/imageplus/game-hover.png") no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/public03/imageplus/game-hover.png')\9}.ad-widget-imageplus-box-bd{position:absolute;top:0;left:0;z-index:11;display:none;overflow:visible;background:#FFF}.ad-widget-imageplus-box-bg{position:absolute;top:0;left:0;z-index:11;width:100%;height:100%;background:#FFF;opacity:.95;filter:alpha(opacity=95);border-radius:2px;-webkit-box-shadow:2px 2px 4px #000;-moz-box-shadow:2px 2px 4px #000;box-shadow:2px 2px 4px #000}.ad-widget-imageplus{position:relative;top:0;left:0;z-index:12}#f21ac82b21eeb7322631b6aa94e17f451ldoxfy{font:12px/1.5 arial,sans-serif}</style><div data-rendered="true" style="margin: 0px; padding: 0px; border: medium none; overflow: visible; text-align: left;" id="f21ac82b21eeb7322631b6aa94e17f451ldoxfy"><div style="left: 448px; top: 76.2px;" class="ad-widget-imageplus ad-widget-imageplus-box" id="w-e90otz">
+<a class="ad-widget-imageplus-box-icon ad-widget-imageplus-box-icon-default" href="http://www.baidu.com/cpro.php?Ks0000jEdIeUhRrpA5jI8JH1cOCe2tED9mSfeBEUPU-ny-qpFitoeGU49oujIRj0eCLFi_6-Hv7g5YEQUnZgnMqYgISFCBoFy1TizuT7Nge5WE2aKirffmD87s6T.7Y_ifskn1FB3pb4EQKWePicrtpIQ7qYTxKGlq_QDnnH5ggsnHT2knIP-MW3d4QryZZn_nYQZHbePMiC.IgF_5y9YIZ0lQzqLILT8mvqbuyP-Uz4WUvYEmgFYpyP_uiqsThqMTh7VUyNzQyFzuy7oQyd-IA9Eua4CIAd_0ZwV5HcvrjmLrHTznsKYIHddnWDsPWR4n0KYujYs0ZI_5Hc0mv4YUWYvnj0LP1Dzn7qWTZc0mv9VujYk0ZPWpAdb5HD0TL0qnWRv0AN3IjYs0A7bmvk9TLnqn0K1uAVxIWYs0ZIG5HD0TvwogLu-TMPGUv3q0A49TLws5H00TMnqn0KWuWYs0APYUHdBmy-bIRPdTLw2Tvq80A49IZRqPsKGIA-b5HDsPsKGIA-8uhqGujYkPHTLn1n1nfKMTA-b5H00ThNhTA-b5H00mLKzUv-b5H6YnWb3nHPArHT4wb7arjnznbuaP1RLnbNKPHmLPHR10APEUgK_uHYs0A7bgLnqnvD4P1bkuWwhmWP-n1b3msK_mysqnHckrj0vnW60mgwGujY0mgwYXHY0ILPzm1Ys0A7-gLw9TWY0pgPxpLw95fK1UZPzm1Ys0ZP_mv_qn0K1UAVGujYs0AFduAI-I7q-XZKGujYs0A7GTjdhH7qdfWPiTLF5n0Kdpg0qUAsViy9QHRu2Igf0mv6qn0KYmgcqPHDz0AwYTjYk0ZP-UAk-T-qGujYd0A-1gv7sTjYs0A7sT7qGujYs0APdTLfq0A-1gLIGThN_ugP15H00Iv7sgLw4TARqn0KsUjYs0AdW5HndnhNBPh7W0Adv5HR0UMus5H08nj0snj0snj00u1bqnfKhpgF1I7qzuyIGUv3qnfK1uyPEUhwxThNMpyq85HTYrfK1TL0qPfK1TL0z5HD0IZws5HD0uA-1IZ0qn0K9mWYs0A7bXjYk0ZKhIZF9uARqPsKsTLwzmyw-5HTsP0Kspyfqn0KLTA-b5H00mywYXgK-5H00Tv-zuy4bugcqn0K1Iv-b5H00TLw4TARqn0KWThnqrjb4r0K" target="_blank" id="w-e90otz-icon" data-log="2" data-attach="1" style="width: 38px; height: 38px; display: none;">
+<!-- span遮盖了整个a，故需要加data-log和data-attach -->
+<span data-log="2" data-attach="1">&nbsp;</span>
+</a>
+<div class="ad-widget-imageplus-box-bd" id="w-e90otz-content" style="top: 38px; left: -132px; width: 302px; height: 252px;">
+<div class="ad-widget-imageplus-box-bg" style=""></div>
+<div class="ad-widget-imageplus ad-widget-imageplus-single_image" id="w-wzqxmo">
+<img src="acom_data/0f000aUSmSYx_DdpM1wf4s.gif">
+<!-- 图片频道会修改a的地址，如果img标签放在a里面的话 -->
+<a class="ad-widget-imageplus-single_image-redirect" href="http://www.baidu.com/cpro.php?Ks0000jEdIeUhRrpA5jI8JH1cOCe2tED9mSfeBEUPU-ny-qpFitoeGU49oujIRj0eCLFi_6-Hv7g5YEQUnZgnMqYgISFCBoFy1TizuT7Nge5WE2aKirffmD87s6T.7Y_ifskn1FB3pb4EQKWePicrtpIQ7qYTxKGlq_QDnnH5ggsnHT2knIP-MW3d4QryZZn_nYQZHbePMiC.IgF_5y9YIZ0lQzqLILT8mvqbuyP-Uz4WUvYEmgFYpyP_uiqsThqMTh7VUyNzQyFzuy7oQyd-IA9Eua4CIAd_0ZwV5HcvrjmLrHTznsKYIHddnWDsPWR4n0KYujYs0ZI_5Hc0mv4YUWYvnj0LP1Dzn7qWTZc0mv9VujYk0ZPWpAdb5HD0TL0qnWRv0AN3IjYs0A7bmvk9TLnqn0K1uAVxIWYs0ZIG5HD0TvwogLu-TMPGUv3q0A49TLws5H00TMnqn0KWuWYs0APYUHdBmy-bIRPdTLw2Tvq80A49IZRqPsKGIA-b5HDsPsKGIA-8uhqGujYkPHTLn1n1nfKMTA-b5H00ThNhTA-b5H00mLKzUv-b5H6YnWb3nHPArHT4wb7arjnznbuaP1RLnbNKPHmLPHR10APEUgK_uHYs0A7bgLnqnvD4P1bkuWwhmWP-n1b3msK_mysqnHckrj0vnW60mgwGujY0mgwYXHY0ILPzm1Ys0A7-gLw9TWY0pgPxpLw95fK1UZPzm1Ys0ZP_mv_qn0K1UAVGujYs0AFduAI-I7q-XZKGujYs0A7GTjdhH7qdfWPiTLF5n0Kdpg0qUAsViy9QHRu2Igf0mv6qn0KYmgcqPHDz0AwYTjYk0ZP-UAk-T-qGujYd0A-1gv7sTjYs0A7sT7qGujYs0APdTLfq0A-1gLIGThN_ugP15H00Iv7sgLw4TARqn0KsUjYs0AdW5HndnhNBPh7W0Adv5HR0UMus5H08nj0snj0snj00u1bqnfKhpgF1I7qzuyIGUv3qnfK1uyPEUhwxThNMpyq85HTYrfK1TL0qPfK1TL0z5HD0IZws5HD0uA-1IZ0qn0K9mWYs0A7bXjYk0ZKhIZF9uARqPsKsTLwzmyw-5HTsP0Kspyfqn0KLTA-b5H00mywYXgK-5H00Tv-zuy4bugcqn0K1Iv-b5H00TLw4TARqn0KWThnqrjb4r0K" data-log="2" target="_blank">&nbsp;</a>
+<a class="baiduimageplus-single-logo" href="http://wangmeng.baidu.com/" title="百度网盟推广" target="_blank"></a>
+<!-- 新增的推广提示 -->
+<div style="position:absolute;left:0px;bottom:0px;width:29px!important;height:16px!important;overflow:hidden;background: url(http://ecmb.bdimg.com/public03/imageplus/leftbottom.png) no-repeat;"></div>
+</div>
+</div>
+</div></div><style id="s-f21ac82b21eeb7322631b6aa94e17f451gs7syd" media="screen" type="text/css">.baiduimageplus-s-pa{position:relative;width:100%;height:110px;overflow:hidden;cursor:default;-webkit-transition:top .5s;-moz-transition:top .5s;-ms-transition:top .5s;-o-transition:top .5s;transition:top .5s}.baiduimageplus-s-pa p{background:none}.baiduimageplus-s-pa a{outline:0;text-decoration:none}.baiduimageplus-s-pa a:hover{text-decoration:underline}.baiduimageplus-s-pa .baiduimageplus-s-pa-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1}.baiduimageplus-s-pa .baiduimageplus-s-pa-ct{position:relative;z-index:2}.baiduimageplus-s-pa .baiduimageplus-s-pa-hd{height:26px;overflow:hidden;line-height:26px}.baiduimageplus-s-pa .baiduimageplus-s-pa-hd .baiduimageplus-s-pa-hd-title-cell{font-weight:bold;font-size:14px;color:#FFF;height:100%;text-align:center!important;float:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-right:1px solid #FFF}
+.baiduimageplus-s-pa .baiduimageplus-s-pa-bd{position:relative;overflow:hidden;zoom:1;padding:0;margin:0}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper{width:90%;height:84px;float:left;overflow:hidden}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter{height:84px;overflow:hidden}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell{width:100px;height:72px;overflow:hidden;background-color:#FFF;margin:4px 5px;padding:0;float:left;border:2px solid #000;position:relative}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell:hover{border-color:#d1111c}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell:hover .baiduimageplus-s-pa-bd-title{background-color:#d1111c}
+.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell:hover img{-webkit-transform:scale(1.2);-moz-transform:scale(1.2);-ms-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2)}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell img{width:100px;height:50px;display:block;border:0;-webkit-transition:transform .5s;-moz-transition:transform .5s;-ms-transition:transform .5s;-o-transition:transform .5s;transition:transform .5s}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell .baiduimageplus-s-pa-bd-title{position:absolute;font:14px/1.5 arial,sans-serif;bottom:0;left:0;width:100%;height:22px;display:block;line-height:22px;background-color:#000;text-align:center;font-weight:bold;color:#FFF}
+.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell:first-child{margin-left:0}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .baiduimageplus-s-pa-bd-wrapper .baiduimageplus-s-pa-bd-outter .cell:last-child{margin-right:0}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .ad-widget-imgps-sticker-html-btn{margin-top:5px;height:75px;width:20px;cursor:pointer;-webkit-transition:background .4s;-moz-transition:background .4s;-ms-transition:background .4s;-o-transition:background .4s;transition:background .4s}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .adwishbtn_left{width:20px;float:left;background:url(http://ecmb.bdimg.com/public03/imageplus/sticker/leftbtn.jpg) no-repeat center center}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .adwishbtn_left:hover{background:#20439d url(http://ecmb.bdimg.com/public03/sticker/leftbtn_hover.jpg) no-repeat center center}
+.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .adwishbtn_right{width:20px;float:right;background:url(http://ecmb.bdimg.com/public03/imageplus/sticker/rightbtn.jpg) no-repeat center center}.baiduimageplus-s-pa .baiduimageplus-s-pa-bd .adwishbtn_right:hover{background:#20439d url(http://ecmb.bdimg.com/public03/sticker/rightbtn_hover.jpg) no-repeat center center}.baiduimageplus-s-pa .baiduimageplus-s-pa-logo{position:absolute;bottom:0;right:0;z-index:3;height:18px;width:18px;text-indent:-9999px;background:url(http://cpro.baidustatic.com/cpro/ui/noexpire/img/2.0.1/bg.png) no-repeat left top;background-position:0 0;_filter:progid:dximagetransform.microsoft.alphaimageloader(enabled=true,src="http://cpro.baidustatic.com/cpro/ui/noexpire/img/2.0.1/bg.png",sizingMethod="crop");_background:none}.ad-widget-imageplus-sticker{font:12px/1.5 arial,sans-serif;position:absolute;left:0;width:100%;display:none;overflow:hidden;color:#FFF;background:transparent;-webkit-transition:height .5s,top .5s;transition:height .5s,top .5s}
+.ad-widget-imageplus-sticker div{background:transparent}.ad-widget-imageplus-sticker-cut{display:block}.ad-widget-imageplus-sticker-bg{position:absolute;z-index:1;left:0;top:0;width:100%;height:100%;background:#000!important;box-shadow:2px 2px 4px #000}.ad-widget-imageplus-sticker-bd{position:relative;z-index:2;left:0;top:0;width:100%;overflow:hidden}.ad-widget-imageplus-sticker-close{position:absolute;z-index:3;right:0;top:5px;width:25px;height:25px;line-height:25px;text-decoration:none;text-align:center;font-size:18px;color:#FFF!important}.ad-widget-imageplus-sticker-close:hover{background-color:#000}.ad-widget-imageplus-sticker-theme-white{color:#333}.ad-widget-imageplus-sticker-theme-white .ad-widget-imageplus-sticker-bg{background:#FFF!important;box-shadow:2px 2px 4px #FFF}.ad-widget-imageplus-sticker-theme-white .ad-widget-imageplus-sticker-close{color:#666!important}
+.ad-widget-imageplus-sticker-theme-white .ad-widget-imageplus-sticker-close:hover{background-color:#FFF!important}.ad-widget-imageplus-sticker-theme-none{color:#333}.ad-widget-imageplus-sticker-theme-none .ad-widget-imageplus-sticker-bg{background:transparent!important;box-shadow:none}.ad-widget-imageplus-sticker-theme-none .ad-widget-imageplus-sticker-close{color:#666!important}.ad-widget-imageplus-sticker-theme-none .ad-widget-imageplus-sticker-close:hover{background-color:#FFF!important}.ad-widget-imageplus-sticker-theme-none-white{color:#333}.ad-widget-imageplus-sticker-theme-none-white .ad-widget-imageplus-sticker-bg{background:transparent!important;box-shadow:none}.ad-widget-imageplus-sticker-theme-none-white-2 .ad-widget-imageplus-sticker-bg{background:transparent!important;box-shadow:none}
+.ad-widget-imageplus-sticker-theme-none-white-2 .ad-widget-imageplus-sticker-close{top:0;text-indent:-9999px;background:url(http://ecma.bdimg.com/public03/imageplus/v2/dock/close.png) no-repeat 0 0 transparent}.ad-widget-imageplus-sticker-theme-v2 .ad-big-title{position:relative;top:0;opacity:1;filter:alpha(opacity=100);-webkit-transition:top .5s,opacity .6s;transition:top .5s,opacity .6s}.ad-widget-imageplus-sticker-theme-v2 .ad-widget-imageplus-sticker-showing .ad-big-title{position:relative;top:-36px;opacity:0;filter:alpha(opacity=0)}.ad-widget-imageplus-sticker-theme-v2 .ad-widget-imageplus-sticker-showing .ad-widget-imageplus-sticker-bg{top:26px}.ad-widget-imageplus-sticker-theme-v2 .ad-widget-imageplus-sticker-close{top:0;text-indent:-9999px;background:url(http://ecma.bdimg.com/public03/imageplus/v2/dock/close.png) no-repeat 0 0 transparent}
+.ad-widget-imageplus-sticker-thumbnail{font:12px/1.5 arial,sans-serif;position:absolute;right:0;top:0;height:20px;width:100px;overflow:hidden;background:transparent;-webkit-transition:height .5s;-moz-transition:height .5s;-ms-transition:height .5s;-o-transition:height .5s;transition:height .5s;background-color:rgba(0,0,0,0.5);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000);-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000)}.ad-widget-imageplus-sticker-thumbnail a{float:right;width:100px;height:20px;line-height:20px;text-align:center;color:white;background:transparent;text-decoration:none}.ad-widget-imageplus-sticker-thumbnail i{width:12px;height:8px;margin-top:6px;margin-left:5px;display:block;float:left;background:url('http://ecma.bdimg.com/adtest/8e547549c94ab88c81b644d5ff63b0d3.png') no-repeat 0 0;background:none \9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='corp',src='http://ecma.bdimg.com/adtest/8e547549c94ab88c81b644d5ff63b0d3.png')\9}
+.ad-widget-imageplus-sticker-close-newstyle{top:0;text-indent:-9999px;background:url(http://ecmb.bdimg.com/public03/v2/dock/iconfont-close.png) no-repeat 0 0 transparent!important}.ad-widget-imageplus-sticker-showing .baiduimageplus-s-pa-hd{opacity:0;filter:alpha(opacity=0)}</style><div data-rendered="true" style="margin: 0px; padding: 0px; border: medium none; overflow: visible; text-align: left;" id="f21ac82b21eeb7322631b6aa94e17f451gs7syd"><div style="display: block; top: 145px; height: 109px;" class="ad-widget-imageplus-sticker ad-widget-imageplus-sticker-theme-v2 ad-widget-imageplus-sticker-cut" id="w-lwgasx">
+<div style="display: block; top: 83px; height: 26px;" class="ad-widget-imageplus-sticker ad-widget-imageplus-sticker-wrapper ad-widget-imageplus-sticker-box-showing" id="w-lwgasx-wrapper">
+<div class="ad-widget-imageplus-sticker-bg" id="w-lwgasx-background" style="opacity: 0.75;"></div>
+<div class="ad-widget-imageplus-sticker-bd" id="w-lwgasx-body">
+<div class="baiduimageplus-s-pa" id="w-a8aml6">
+<div class="baiduimageplus-s-pa-bg" id="w-a8aml6-background"></div>
+<div class="baiduimageplus-s-pa-ct">
+<div class="baiduimageplus-s-pa-hd">
+<div style="width: 127px ! important;" class="baiduimageplus-s-pa-hd-title-cell">牛杂火锅加盟</div>
+<div style="width: 127px ! important;" class="baiduimageplus-s-pa-hd-title-cell">后脑勺长痘痘</div>
+<div style="width: 127px ! important;" class="baiduimageplus-s-pa-hd-title-cell">虹口区租房</div>
+<div style="width: 127px ! important;" class="baiduimageplus-s-pa-hd-title-cell">天籁优惠</div>
+<div style="width: 127px ! important; border: medium none ! important;" class="baiduimageplus-s-pa-hd-title-cell">全新别克凯越</div>
+<div class="baiduimageplus-s-pa-hd-title-cell">天籁最新报价</div>
+<div class="baiduimageplus-s-pa-hd-title-cell">凯越降价</div>
+</div>
+<div class="baiduimageplus-s-pa-bd">
+<div id="w-a8aml6-left_btn" class="ad-widget-imgps-sticker-html-btn adwishbtn_left"></div>
+<div style="width: 600px ! important;" id="w-a8aml6-wrapper" class="baiduimageplus-s-pa-bd-wrapper">
+<div style="width: 788px ! important;" id="w-a8aml6-outter" class="baiduimageplus-s-pa-bd-outter">
+<div class="cell">
+<a data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k0=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k1=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k2=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k3=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k4=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k5=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=1&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0"><img src="acom_data_002/u1129187772214420501fm76.jpg"></a>
+<a class="baiduimageplus-s-pa-bd-title" data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k0=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k1=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k2=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k3=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k4=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k5=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=1&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0">牛杂火锅加盟</a>
+</div>
+<div class="cell">
+<a data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k0=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k1=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k2=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k3=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k4=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k5=%BF%AD%D4%BD%BD%B5%BC%DB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=2&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0"><img src="acom_data_002/u5338903063688031541fm76.jpg"></a>
+<a class="baiduimageplus-s-pa-bd-title" data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k0=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k1=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k2=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k3=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k4=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k5=%BF%AD%D4%BD%BD%B5%BC%DB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=2&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0">后脑勺长痘痘</a>
+</div>
+<div class="cell">
+<a data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k0=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k1=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k2=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k3=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k4=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k5=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=3&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0"><img src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/u6406450853674578284fm76.jpg"></a>
+<a class="baiduimageplus-s-pa-bd-title" data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k0=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k1=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k2=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k3=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k4=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k5=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=3&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0">虹口区租房</a>
+</div>
+<div class="cell">
+<a data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k0=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k1=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k2=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k3=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k4=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k5=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=4&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0"><img src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/u704835191769601900fm76.jpg"></a>
+<a class="baiduimageplus-s-pa-bd-title" data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k0=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k1=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k2=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k3=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k4=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k5=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=4&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0">天籁优惠</a>
+</div>
+<div class="cell">
+<a data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k0=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k1=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k2=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k3=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k4=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k5=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=5&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0"><img src="%E6%AF%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E5%BA%94%E8%AF%A5%E5%AD%A6%E4%BC%9A%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95%20%E2%80%93%20%E7%A0%81%E5%86%9C%E7%BD%91_files/u17637038682859579022fm76.jpg"></a>
+<a class="baiduimageplus-s-pa-bd-title" data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k0=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;k1=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k2=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k3=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k4=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k5=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=5&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0">全新别克凯越</a>
+</div>
+<div class="cell">
+<a data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k0=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k1=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k2=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k3=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k4=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k5=%CC%EC%F4%A5%D3%C5%BB%DD&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=6&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0"><img src="acom_data_003/u35014161973819229515fm76.jpg"></a>
+<a class="baiduimageplus-s-pa-bd-title" data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k0=%CC%EC%F4%A5%D7%EE%D0%C2%B1%A8%BC%DB&amp;k1=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k2=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k3=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k4=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k5=%CC%EC%F4%A5%D3%C5%BB%DD&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=6&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0">天籁最新报价</a>
+</div>
+<div class="cell">
+<a data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k0=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k1=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k2=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k3=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k4=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k5=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=7&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0"><img src="acom_data_002/u31890774052990056259fm76.jpg"></a>
+<a class="baiduimageplus-s-pa-bd-title" data-log="2" data-mid="" target="_blank" href="http://cpro.baidu.com/cpro/ui/uijs.php?adclass=0&amp;app_id=0&amp;c=news&amp;cf=1&amp;ch=0&amp;di=8&amp;fv=9&amp;is_app=0&amp;jk=2de09a3f94376b7b&amp;k=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k0=%BF%AD%D4%BD%BD%B5%BC%DB&amp;k1=%C5%A3%D4%D3%BB%F0%B9%F8%BC%D3%C3%CB&amp;k2=%BA%F3%C4%D4%C9%D7%B3%A4%B6%BB%B6%BB&amp;k3=%BA%E7%BF%DA%C7%F8%D7%E2%B7%BF&amp;k4=%CC%EC%F4%A5%D3%C5%BB%DD&amp;k5=%C8%AB%D0%C2%B1%F0%BF%CB%BF%AD%D4%BD&amp;kdi0=8&amp;kdi1=8&amp;kdi2=8&amp;kdi3=8&amp;kdi4=8&amp;kdi5=8&amp;luki=7&amp;n=10&amp;p=baidu&amp;q=60077120_cpr&amp;rb=1&amp;rs=1&amp;seller_id=5&amp;sid=7b6b37943f9ae02d&amp;ssp2=1&amp;stid=22&amp;t=tpclicked3_hc&amp;td=&amp;tu=u2106590&amp;u=http%3A%2F%2Fwww%2Ecodeceo%2Ecom%2Farticle%2Fprogrammer%2Dbreak%2Dmethod%2Ehtml&amp;urlid=0">凯越降价</a>
+</div>
+</div>
+</div>
+<div id="w-a8aml6-right_btn" class="ad-widget-imgps-sticker-html-btn adwishbtn_right"></div>
+</div>
+</div>
+<a class="baiduimageplus-s-pa-logo" title="百度网盟推广" href="http://wangmeng.baidu.com/" target="_blank" data-ignore=""></a>
+<!-- 新增的推广提示 -->
+<div style="position:absolute;left:0px;bottom:0px;width:29px;height:16px;overflow:hidden;z-index:12;background: url(http://ecmb.bdimg.com/public03/imageplus/leftbottom.png) no-repeat;"></div>
+</div>
+</div>
+</div>
+<a style="display: none;" class="ad-widget-imageplus-sticker-close " href="#" id="w-lwgasx-close">X</a>
+</div>
+<div class="ad-widget-imageplus-sticker-thumbnail" id="w-lwgasx-thumbnail" style="display: none; top: 234px;">
+<a href="#" title="点击展开"><i>&nbsp;</i>图片相关信息</a>
+</div></div></div></body></html>
+<!-- hyper cache 2015-10-15 09:46:32 -->

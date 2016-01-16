@@ -1,0 +1,803 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Java DES 加解密（支持utf-8） - 前前 - ITeye技术网站</title>
+    <meta name="description" content="  import java.security.Key;  import java.security.Security;    import javax.crypto.Cipher;    public class DESCrypt {  	private static String strDefaultKey = &quot;goodluck&quot;;    	private Cipher en ...">
+    <meta name="keywords" content="Java, Security, SUN Java DES 加解密（支持utf-8）">
+    <link rel="shortcut icon" href="http://toyota2006.iteye.com/images/favicon.ico" type="image/x-icon">
+    <link rel="search" type="application/opensearchdescription+xml" href="http://toyota2006.iteye.com/open_search.xml" title="ITeye">
+    <link href="http://toyota2006.iteye.com/rss" rel="alternate" title="前前" type="application/rss+xml">
+    <link href="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/red.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/ga.js" async="" type="text/javascript"></script><script src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/application.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/shCoreCommon.js" type="text/javascript"></script>
+<script src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/hotkey.js" type="text/javascript"></script>
+  <script src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/code_favorites.js" type="text/javascript"></script>
+<script src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/weiboshare.js" type="text/javascript"></script>
+  <style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style></head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="http://toyota2006.iteye.com/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="http://toyota2006.iteye.com/login">登录</a>
+    <a href="http://toyota2006.iteye.com/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="http://toyota2006.iteye.com/">前前</a></h1>
+        </div>
+        <div id="fd"></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class="blog_navbar_for"><a href="http://toyota2006.iteye.com/"><strong>博客</strong></a></li>
+            <li><a href="http://toyota2006.iteye.com/weibo">微博</a></li>
+            <li><a href="http://toyota2006.iteye.com/album">相册</a></li>
+            <li><a href="http://toyota2006.iteye.com/link">收藏</a></li>
+            <li><a href="http://toyota2006.iteye.com/blog/guest_book">留言</a></li>
+            <li><a href="http://toyota2006.iteye.com/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text">
+              <input class="submit_search" value="" type="submit">
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style="display:none">
+  <a href="http://toyota2006.iteye.com/" class="p-author" target="_blank">toyota2006</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="http://toyota2006.iteye.com/blog/690658">Java DES 加解密（支持utf-8）</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class="blog_categories"><strong>博客分类：</strong> <li><a href="http://toyota2006.iteye.com/category/5563">java基础</a></li> </ul>
+        <div class="news_tag"><a href="http://www.iteye.com/blogs/tag/Java">Java</a><a href="http://www.iteye.com/blogs/tag/Security">Security</a><a href="http://www.iteye.com/blogs/tag/SUN">SUN</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=import%20java.security.Key%3B%0Aimport%20java.security.Security%3B%0A%0Aimport%20javax.crypto.Cipher%3B%0A%0Apublic%20class%20DESCrypt%20%7B%0A%09private%20static%20String%20strDefaultKey%20%3D%20%22goodluck%22%3B%0A%0A%09private%20Cipher%20encryptCipher%20%3D%20null%3B%0A%09private%20Cipher%20decryptCipher%20%3D%20null%3B%0A%0A%09%2F**%0A%09%20*%20%E6%9A%97%E5%8F%B7%E5%8C%96%20%E6%98%8E%E6%96%87%E5%85%A5%E5%8A%9BString%20%E5%AF%86%E6%96%87%E5%87%BA%E5%8A%9B%0A%0A%09%20*%20%40param%20strMing%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E6%98%8E%E6%96%87%0A%09%20*%20%40return%20%E5%AF%86%E6%96%87%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09public%20String%20getEncString(String%20strMing)%20throws%20Exception%20%7B%0A%09%09return%20byteArr2HexStr(encrypt(strMing.getBytes(%22UTF8%22)))%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E8%A7%A3%E5%AF%86%20String%E5%AF%86%E6%96%87%E5%85%A5%E5%8A%9B%2CString%E6%98%8E%E6%96%87%E5%87%BA%E5%8A%9B%0A%0A%09%20*%20%0A%09%20*%20%0A%09%20*%20%40param%20strMi%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E5%AF%86%E6%96%87%0A%09%20*%20%40return%20%E6%98%8E%E6%96%87%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09public%20String%20getDesString(String%20strMi)%20throws%20Exception%20%7B%0A%09%09return%20new%20String(decrypt(hexStr2ByteArr(strMi))%2C%22UTF8%22)%3B%0A%09%7D%0A%09%0A%09public%20String%20getDesStr(String%20strMi)%20%20%7B%0A%09%09String%20ming%3Dnull%3B%0A%09%09try%20%7B%0A%09%09%09ming%3D%20new%20String(decrypt(hexStr2ByteArr(strMi))%2C%22UTF8%22)%3B%0A%09%09%7D%20catch%20(Exception%20e)%20%7B%0A%09%09%09ming%20%3D%20strMi%3B%0A%09%09%7D%0A%09%09return%20ming%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E5%B0%86byte%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E8%A1%A8%E7%A4%BA16%E8%BF%9B%E5%88%B6%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%20%E5%A6%82%EF%BC%9Abyte%5B%5D%7B8%2C18%7D%E8%BD%AC%E6%8D%A2%E4%B8%BA%EF%BC%9A0813%EF%BC%8C%20%E5%92%8Cpublic%20static%20byte%5B%5D%0A%09%20*%20hexStr2ByteArr(String%20strIn)%20%E4%BA%92%E4%B8%BA%E5%8F%AF%E9%80%86%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B%0A%0A%09%20*%20%0A%09%20*%20%40param%20arrB%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E9%9C%80%E8%A6%81%E8%BD%AC%E6%8D%A2%E7%9A%84byte%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%40return%20%E8%BD%AC%E6%8D%A2%E5%90%8E%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%40throws%20Exception%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%20%E6%9C%AC%E6%96%B9%E6%B3%95%E4%B8%8D%E5%A4%84%E7%90%86%E4%BB%BB%E4%BD%95%E5%BC%82%E5%B8%B8%EF%BC%8C%E6%89%80%E6%9C%89%E5%BC%82%E5%B8%B8%E5%85%A8%E9%83%A8%E6%8A%9B%E5%87%BA%0A%09%20*%2F%0A%09private%20static%20String%20byteArr2HexStr(byte%5B%5D%20arrB)%20throws%20Exception%20%7B%0A%09%09int%20iLen%20%3D%20arrB.length%3B%0A%09%09%2F%2F%20%E6%AF%8F%E4%B8%AAbyte%E7%94%A8%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E6%89%8D%E8%83%BD%E8%A1%A8%E7%A4%BA%EF%BC%8C%E6%89%80%E4%BB%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E9%95%BF%E5%BA%A6%E6%98%AF%E6%95%B0%E7%BB%84%E9%95%BF%E5%BA%A6%E7%9A%84%E4%B8%A4%E5%80%8D%0A%0A%09%09StringBuffer%20sb%20%3D%20new%20StringBuffer(iLen%20*%202)%3B%0A%09%09for%20(int%20i%20%3D%200%3B%20i%20%3C%20iLen%3B%20i%2B%2B)%20%7B%0A%09%09%09int%20intTmp%20%3D%20arrB%5Bi%5D%3B%0A%09%09%09%2F%2F%20%E6%8A%8A%E8%B4%9F%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%AD%A3%E6%95%B0%0A%09%09%09while%20(intTmp%20%3C%200)%20%7B%0A%09%09%09%09intTmp%20%3D%20intTmp%20%2B%20256%3B%0A%09%09%09%7D%0A%09%09%09%2F%2F%20%E5%B0%8F%E4%BA%8E0F%E7%9A%84%E6%95%B0%E9%9C%80%E8%A6%81%E5%9C%A8%E5%89%8D%E9%9D%A2%E8%A1%A50%0A%09%09%09if%20(intTmp%20%3C%2016)%20%7B%0A%09%09%09%09sb.append(%220%22)%3B%0A%09%09%09%7D%0A%09%09%09sb.append(Integer.toString(intTmp%2C%2016))%3B%0A%09%09%7D%0A%09%09return%20sb.toString()%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E5%B0%86%E8%A1%A8%E7%A4%BA16%E8%BF%9B%E5%88%B6%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E4%B8%BAbyte%E6%95%B0%E7%BB%84%EF%BC%8C%20%E5%92%8Cpublic%20static%20String%20byteArr2HexStr(byte%5B%5D%20arrB)%0A%09%20*%20%E4%BA%92%E4%B8%BA%E5%8F%AF%E9%80%86%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B%0A%0A%09%20*%20%0A%09%20*%20%40param%20strIn%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E9%9C%80%E8%A6%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%40return%20%E8%BD%AC%E6%8D%A2%E5%90%8E%E7%9A%84byte%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%40throws%20Exception%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%20%E6%9C%AC%E6%96%B9%E6%B3%95%E4%B8%8D%E5%A4%84%E7%90%86%E4%BB%BB%E4%BD%95%E5%BC%82%E5%B8%B8%EF%BC%8C%E6%89%80%E6%9C%89%E5%BC%82%E5%B8%B8%E5%85%A8%E9%83%A8%E6%8A%9B%E5%87%BA%0A%09%20*%2F%0A%09private%20static%20byte%5B%5D%20hexStr2ByteArr(String%20strIn)%20throws%20Exception%20%7B%0A%09%09byte%5B%5D%20arrB%20%3D%20strIn.getBytes()%3B%0A%09%09int%20iLen%20%3D%20arrB.length%3B%0A%0A%09%09%2F%2F%20%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E8%A1%A8%E7%A4%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E8%8A%82%EF%BC%8C%E6%89%80%E4%BB%A5%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%E9%95%BF%E5%BA%A6%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E9%99%A4%E4%BB%A52%0A%09%09byte%5B%5D%20arrOut%20%3D%20new%20byte%5BiLen%20%2F%202%5D%3B%0A%09%09for%20(int%20i%20%3D%200%3B%20i%20%3C%20iLen%3B%20i%20%3D%20i%20%2B%202)%20%7B%0A%09%09%09String%20strTmp%20%3D%20new%20String(arrB%2C%20i%2C%202)%3B%0A%09%09%09arrOut%5Bi%20%2F%202%5D%20%3D%20(byte)%20Integer.parseInt(strTmp%2C%2016)%3B%0A%09%09%7D%0A%09%09return%20arrOut%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4%E5%AF%86%E9%92%A5%0A%09%20*%20%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09public%20DESCrypt()%20throws%20Exception%20%7B%0A%09%09this(strDefaultKey)%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E6%8C%87%E5%AE%9A%E5%AF%86%E9%92%A5%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%0A%0A%09%20*%20%0A%09%20*%20%40param%20strKey%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AF%86%E9%92%A5%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09public%20DESCrypt(String%20strKey)%20throws%20Exception%20%7B%0A%09%09Security.addProvider(new%20com.sun.crypto.provider.SunJCE())%3B%0A%09%09Key%20key%20%3D%20getKey(strKey.getBytes())%3B%0A%0A%09%09encryptCipher%20%3D%20Cipher.getInstance(%22DES%22)%3B%0A%09%09encryptCipher.init(Cipher.ENCRYPT_MODE%2C%20key)%3B%0A%0A%09%09decryptCipher%20%3D%20Cipher.getInstance(%22DES%22)%3B%0A%09%09decryptCipher.init(Cipher.DECRYPT_MODE%2C%20key)%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E5%8A%A0%E5%AF%86%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%0A%09%20*%20%40param%20arrB%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E9%9C%80%E5%8A%A0%E5%AF%86%E7%9A%84%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%40return%20%E5%8A%A0%E5%AF%86%E5%90%8E%E7%9A%84%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09private%20byte%5B%5D%20encrypt(byte%5B%5D%20arrB)%20throws%20Exception%20%7B%0A%09%09return%20encryptCipher.doFinal(arrB)%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E5%8A%A0%E5%AF%86%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%0A%09%20*%20%40param%20strIn%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E9%9C%80%E5%8A%A0%E5%AF%86%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%40return%20%E5%8A%A0%E5%AF%86%E5%90%8E%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09private%20String%20encrypt(String%20strIn)%20throws%20Exception%20%7B%0A%09%09return%20byteArr2HexStr(encrypt(strIn.getBytes()))%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E8%A7%A3%E5%AF%86%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%0A%09%20*%20%40param%20arrB%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E9%9C%80%E8%A7%A3%E5%AF%86%E7%9A%84%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%40return%20%E8%A7%A3%E5%AF%86%E5%90%8E%E7%9A%84%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09private%20byte%5B%5D%20decrypt(byte%5B%5D%20arrB)%20throws%20Exception%20%7B%0A%09%09return%20decryptCipher.doFinal(arrB)%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E8%A7%A3%E5%AF%86%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%0A%09%20*%20%40param%20strIn%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E9%9C%80%E8%A7%A3%E5%AF%86%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%40return%20%E8%A7%A3%E5%AF%86%E5%90%8E%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%09%20*%20%40throws%20Exception%0A%09%20*%2F%0A%09private%20String%20decrypt(String%20strIn)%20throws%20Exception%20%7B%0A%09%09return%20new%20String(decrypt(hexStr2ByteArr(strIn)))%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E4%BB%8E%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%EF%BC%8C%E5%AF%86%E9%92%A5%E6%89%80%E9%9C%80%E7%9A%84%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%E9%95%BF%E5%BA%A6%E4%B8%BA8%E4%BD%8D%20%E4%B8%8D%E8%B6%B38%E4%BD%8D%E6%97%B6%E5%90%8E%E9%9D%A2%E8%A1%A50%EF%BC%8C%E8%B6%85%E5%87%BA8%E4%BD%8D%E5%8F%AA%E5%8F%96%E5%89%8D8%E4%BD%8D%0A%0A%09%20*%20%0A%09%20*%20%40param%20arrBTmp%0A%09%20*%20%20%20%20%20%20%20%20%20%20%20%20%E6%9E%84%E6%88%90%E8%AF%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%0A%0A%09%20*%20%40return%20%E7%94%9F%E6%88%90%E7%9A%84%E5%AF%86%E9%92%A5%0A%09%20*%20%40throws%20java.lang.Exception%0A%09%20*%2F%0A%09private%20Key%20getKey(byte%5B%5D%20arrBTmp)%20throws%20Exception%20%7B%0A%09%09%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A9%BA%E7%9A%848%E4%BD%8D%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%EF%BC%88%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%BA0%EF%BC%89%0A%0A%09%09byte%5B%5D%20arrB%20%3D%20new%20byte%5B8%5D%3B%0A%0A%09%09%2F%2F%20%E5%B0%86%E5%8E%9F%E5%A7%8B%E5%AD%97%E8%8A%82%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA8%E4%BD%8D%0A%0A%09%09for%20(int%20i%20%3D%200%3B%20i%20%3C%20arrBTmp.length%20%26%26%20i%20%3C%20arrB.length%3B%20i%2B%2B)%20%7B%0A%09%09%09arrB%5Bi%5D%20%3D%20arrBTmp%5Bi%5D%3B%0A%09%09%7D%0A%0A%09%09%2F%2F%20%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%0A%09%09Key%20key%20%3D%20new%20javax.crypto.spec.SecretKeySpec(arrB%2C%20%22DES%22)%3B%0A%0A%09%09return%20key%3B%0A%09%7D%0A%0A%09public%20static%20void%20main(String%5B%5D%20args)%20throws%20Exception%20%7B%0A%09%09DESCrypt%20des%20%3D%20new%20DESCrypt()%3B%0A%09%09String%20str1%20%3D%20%22%E9%95%BF%E5%AD%90%22%3B%0A%09%09%2F%2F%20DES%E5%8A%A0%E5%AF%86%0A%0A%0A%09%09String%20str2%20%3D%20des.getEncString(str1)%3B%0A%09%09String%20deStr%20%3D%20des.getDesString(str2)%3B%0A%09%09System.out.println(%22%E5%AF%86%E6%96%87%3A%22%20%2B%20str2)%3B%0A%09%09%2F%2F%20DES%E8%A7%A3%E5%AF%86%0A%0A%0A%09%09System.out.println(%22%E6%98%8E%E6%96%87%3A%22%20%2B%20deStr)%3B%0A%0A%09%7D%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">import</span><span>&nbsp;java.security.Key;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.security.Security;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">import</span><span>&nbsp;javax.crypto.Cipher;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;DESCrypt&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;String&nbsp;strDefaultKey&nbsp;=&nbsp;</span><span class="string">"goodluck"</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;Cipher&nbsp;encryptCipher&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;Cipher&nbsp;decryptCipher&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;暗号化&nbsp;明文入力String&nbsp;密文出力</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strMing</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明文</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;密文</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;String&nbsp;getEncString(String&nbsp;strMing)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;byteArr2HexStr(encrypt(strMing.getBytes(</span><span class="string">"UTF8"</span><span>)));&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;解密&nbsp;String密文入力,String明文出力</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strMi</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密文</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;明文</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;String&nbsp;getDesString(String&nbsp;strMi)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;String(decrypt(hexStr2ByteArr(strMi)),</span><span class="string">"UTF8"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;String&nbsp;getDesStr(String&nbsp;strMi)&nbsp;&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;ming=<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ming=&nbsp;<span class="keyword">new</span><span>&nbsp;String(decrypt(hexStr2ByteArr(strMi)),</span><span class="string">"UTF8"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ming&nbsp;=&nbsp;strMi;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;ming;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;将byte数组转换为表示16进制值的字符串，&nbsp;如：byte[]{8,18}转换为：0813，&nbsp;和public&nbsp;static&nbsp;byte[]</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;hexStr2ByteArr(String&nbsp;strIn)&nbsp;互为可逆的转换过程</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;arrB</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需要转换的byte数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;转换后的字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本方法不处理任何异常，所有异常全部抛出</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;String&nbsp;byteArr2HexStr(</span><span class="keyword">byte</span><span>[]&nbsp;arrB)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int</span><span>&nbsp;iLen&nbsp;=&nbsp;arrB.length;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;每个byte用两个字符才能表示，所以字符串的长度是数组长度的两倍</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuffer&nbsp;sb&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;StringBuffer(iLen&nbsp;*&nbsp;</span><span class="number">2</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">int</span><span>&nbsp;i&nbsp;=&nbsp;</span><span class="number">0</span><span>;&nbsp;i&nbsp;&lt;&nbsp;iLen;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int</span><span>&nbsp;intTmp&nbsp;=&nbsp;arrB[i];&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;把负数转换为正数</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(intTmp&nbsp;&lt;&nbsp;</span><span class="number">0</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intTmp&nbsp;=&nbsp;intTmp&nbsp;+&nbsp;<span class="number">256</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;小于0F的数需要在前面补0</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(intTmp&nbsp;&lt;&nbsp;</span><span class="number">16</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append(<span class="string">"0"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append(Integer.toString(intTmp,&nbsp;<span class="number">16</span><span>));&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;sb.toString();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;
+将表示16进制值的字符串转换为byte数组，&nbsp;和
+public&nbsp;static&nbsp;String&nbsp;byteArr2HexStr(byte[]&nbsp;arrB)</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;互为可逆的转换过程</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strIn</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需要转换的字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;转换后的byte数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本方法不处理任何异常，所有异常全部抛出</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">byte</span><span>[]&nbsp;hexStr2ByteArr(String&nbsp;strIn)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;arrB&nbsp;=&nbsp;strIn.getBytes();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int</span><span>&nbsp;iLen&nbsp;=&nbsp;arrB.length;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;两个字符表示一个字节，所以字节数组长度是字符串长度除以2</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;arrOut&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;</span><span class="keyword">byte</span><span>[iLen&nbsp;/&nbsp;</span><span class="number">2</span><span>];&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">int</span><span>&nbsp;i&nbsp;=&nbsp;</span><span class="number">0</span><span>;&nbsp;i&nbsp;&lt;&nbsp;iLen;&nbsp;i&nbsp;=&nbsp;i&nbsp;+&nbsp;</span><span class="number">2</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;strTmp&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;String(arrB,&nbsp;i,&nbsp;</span><span class="number">2</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arrOut[i&nbsp;/&nbsp;<span class="number">2</span><span>]&nbsp;=&nbsp;(</span><span class="keyword">byte</span><span>)&nbsp;Integer.parseInt(strTmp,&nbsp;</span><span class="number">16</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;arrOut;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;默认构造方法，使用默认密钥</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;DESCrypt()&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span><span>(strDefaultKey);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;指定密钥构造方法</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strKey</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;指定的密钥</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;DESCrypt(String&nbsp;strKey)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Security.addProvider(<span class="keyword">new</span><span>&nbsp;com.sun.crypto.provider.SunJCE());&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Key&nbsp;key&nbsp;=&nbsp;getKey(strKey.getBytes());&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encryptCipher&nbsp;=&nbsp;Cipher.getInstance(<span class="string">"DES"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encryptCipher.init(Cipher.ENCRYPT_MODE,&nbsp;key);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decryptCipher&nbsp;=&nbsp;Cipher.getInstance(<span class="string">"DES"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decryptCipher.init(Cipher.DECRYPT_MODE,&nbsp;key);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;加密字节数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;arrB</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需加密的字节数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;加密后的字节数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">byte</span><span>[]&nbsp;encrypt(</span><span class="keyword">byte</span><span>[]&nbsp;arrB)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;encryptCipher.doFinal(arrB);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;加密字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strIn</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需加密的字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;加密后的字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;String&nbsp;encrypt(String&nbsp;strIn)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;byteArr2HexStr(encrypt(strIn.getBytes()));&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;解密字节数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;arrB</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需解密的字节数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;解密后的字节数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">byte</span><span>[]&nbsp;decrypt(</span><span class="keyword">byte</span><span>[]&nbsp;arrB)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;decryptCipher.doFinal(arrB);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;解密字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strIn</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需解密的字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;解密后的字符串</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;String&nbsp;decrypt(String&nbsp;strIn)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;String(decrypt(hexStr2ByteArr(strIn)));&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;从指定字符串生成密钥，密钥所需的字节数组长度为8位&nbsp;不足8位时后面补0，超出8位只取前8位</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;arrBTmp</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;构成该字符串的字节数组</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;生成的密钥</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@throws&nbsp;java.lang.Exception</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;Key&nbsp;getKey(</span><span class="keyword">byte</span><span>[]&nbsp;arrBTmp)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;创建一个空的8位字节数组（默认值为0）</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;arrB&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;</span><span class="keyword">byte</span><span>[</span><span class="number">8</span><span>];&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;将原始字节数组转换为8位</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">int</span><span>&nbsp;i&nbsp;=&nbsp;</span><span class="number">0</span><span>;&nbsp;i&nbsp;&lt;&nbsp;arrBTmp.length&nbsp;&amp;&amp;&nbsp;i&nbsp;&lt;&nbsp;arrB.length;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arrB[i]&nbsp;=&nbsp;arrBTmp[i];&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;生成密钥</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Key&nbsp;key&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;javax.crypto.spec.SecretKeySpec(arrB,&nbsp;</span><span class="string">"DES"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;key;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DESCrypt&nbsp;des&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;DESCrypt();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;str1&nbsp;=&nbsp;<span class="string">"长子"</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;DES加密</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;str2&nbsp;=&nbsp;des.getEncString(str1);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;deStr&nbsp;=&nbsp;des.getDesString(str2);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"密文:"</span><span>&nbsp;+&nbsp;str2);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;DES解密</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"明文:"</span><span>&nbsp;+&nbsp;deStr);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="Java DES 加解密（支持utf-8）" pre_index="0" source_url="http://toyota2006.iteye.com/blog/690658" codeable_type="Blog" codeable_id="690658" style="display: none;" class="java" name="code">import java.security.Key;
+import java.security.Security;
+
+import javax.crypto.Cipher;
+
+public class DESCrypt {
+	private static String strDefaultKey = "goodluck";
+
+	private Cipher encryptCipher = null;
+	private Cipher decryptCipher = null;
+
+	/**
+	 * 暗号化 明文入力String 密文出力
+
+	 * @param strMing
+	 *            明文
+	 * @return 密文
+	 * @throws Exception
+	 */
+	public String getEncString(String strMing) throws Exception {
+		return byteArr2HexStr(encrypt(strMing.getBytes("UTF8")));
+	}
+
+	/**
+	 * 解密 String密文入力,String明文出力
+
+	 * 
+	 * 
+	 * @param strMi
+	 *            密文
+	 * @return 明文
+	 * @throws Exception
+	 */
+	public String getDesString(String strMi) throws Exception {
+		return new String(decrypt(hexStr2ByteArr(strMi)),"UTF8");
+	}
+	
+	public String getDesStr(String strMi)  {
+		String ming=null;
+		try {
+			ming= new String(decrypt(hexStr2ByteArr(strMi)),"UTF8");
+		} catch (Exception e) {
+			ming = strMi;
+		}
+		return ming;
+	}
+
+	/**
+	 * 将byte数组转换为表示16进制值的字符串， 如：byte[]{8,18}转换为：0813， 和public static byte[]
+	 * hexStr2ByteArr(String strIn) 互为可逆的转换过程
+
+	 * 
+	 * @param arrB
+	 *            需要转换的byte数组
+
+	 * @return 转换后的字符串
+	 * @throws Exception
+	 *             本方法不处理任何异常，所有异常全部抛出
+	 */
+	private static String byteArr2HexStr(byte[] arrB) throws Exception {
+		int iLen = arrB.length;
+		// 每个byte用两个字符才能表示，所以字符串的长度是数组长度的两倍
+
+		StringBuffer sb = new StringBuffer(iLen * 2);
+		for (int i = 0; i &lt; iLen; i++) {
+			int intTmp = arrB[i];
+			// 把负数转换为正数
+			while (intTmp &lt; 0) {
+				intTmp = intTmp + 256;
+			}
+			// 小于0F的数需要在前面补0
+			if (intTmp &lt; 16) {
+				sb.append("0");
+			}
+			sb.append(Integer.toString(intTmp, 16));
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 将表示16进制值的字符串转换为byte数组， 和public static String byteArr2HexStr(byte[] arrB)
+	 * 互为可逆的转换过程
+
+	 * 
+	 * @param strIn
+	 *            需要转换的字符串
+	 * @return 转换后的byte数组
+
+	 * @throws Exception
+	 *             本方法不处理任何异常，所有异常全部抛出
+	 */
+	private static byte[] hexStr2ByteArr(String strIn) throws Exception {
+		byte[] arrB = strIn.getBytes();
+		int iLen = arrB.length;
+
+		// 两个字符表示一个字节，所以字节数组长度是字符串长度除以2
+		byte[] arrOut = new byte[iLen / 2];
+		for (int i = 0; i &lt; iLen; i = i + 2) {
+			String strTmp = new String(arrB, i, 2);
+			arrOut[i / 2] = (byte) Integer.parseInt(strTmp, 16);
+		}
+		return arrOut;
+	}
+
+	/**
+	 * 默认构造方法，使用默认密钥
+	 * 
+	 * @throws Exception
+	 */
+	public DESCrypt() throws Exception {
+		this(strDefaultKey);
+	}
+
+	/**
+	 * 指定密钥构造方法
+
+	 * 
+	 * @param strKey
+	 *            指定的密钥
+	 * @throws Exception
+	 */
+	public DESCrypt(String strKey) throws Exception {
+		Security.addProvider(new com.sun.crypto.provider.SunJCE());
+		Key key = getKey(strKey.getBytes());
+
+		encryptCipher = Cipher.getInstance("DES");
+		encryptCipher.init(Cipher.ENCRYPT_MODE, key);
+
+		decryptCipher = Cipher.getInstance("DES");
+		decryptCipher.init(Cipher.DECRYPT_MODE, key);
+	}
+
+	/**
+	 * 加密字节数组
+
+	 * 
+	 * @param arrB
+	 *            需加密的字节数组
+
+	 * @return 加密后的字节数组
+
+	 * @throws Exception
+	 */
+	private byte[] encrypt(byte[] arrB) throws Exception {
+		return encryptCipher.doFinal(arrB);
+	}
+
+	/**
+	 * 加密字符串
+	 * 
+	 * @param strIn
+	 *            需加密的字符串
+	 * @return 加密后的字符串
+	 * @throws Exception
+	 */
+	private String encrypt(String strIn) throws Exception {
+		return byteArr2HexStr(encrypt(strIn.getBytes()));
+	}
+
+	/**
+	 * 解密字节数组
+
+	 * 
+	 * @param arrB
+	 *            需解密的字节数组
+
+	 * @return 解密后的字节数组
+
+	 * @throws Exception
+	 */
+	private byte[] decrypt(byte[] arrB) throws Exception {
+		return decryptCipher.doFinal(arrB);
+	}
+
+	/**
+	 * 解密字符串
+	 * 
+	 * @param strIn
+	 *            需解密的字符串
+	 * @return 解密后的字符串
+	 * @throws Exception
+	 */
+	private String decrypt(String strIn) throws Exception {
+		return new String(decrypt(hexStr2ByteArr(strIn)));
+	}
+
+	/**
+	 * 从指定字符串生成密钥，密钥所需的字节数组长度为8位 不足8位时后面补0，超出8位只取前8位
+
+	 * 
+	 * @param arrBTmp
+	 *            构成该字符串的字节数组
+
+	 * @return 生成的密钥
+	 * @throws java.lang.Exception
+	 */
+	private Key getKey(byte[] arrBTmp) throws Exception {
+		// 创建一个空的8位字节数组（默认值为0）
+
+		byte[] arrB = new byte[8];
+
+		// 将原始字节数组转换为8位
+
+		for (int i = 0; i &lt; arrBTmp.length &amp;&amp; i &lt; arrB.length; i++) {
+			arrB[i] = arrBTmp[i];
+		}
+
+		// 生成密钥
+		Key key = new javax.crypto.spec.SecretKeySpec(arrB, "DES");
+
+		return key;
+	}
+
+	public static void main(String[] args) throws Exception {
+		DESCrypt des = new DESCrypt();
+		String str1 = "长子";
+		// DES加密
+
+
+		String str2 = des.getEncString(str1);
+		String deStr = des.getDesString(str2);
+		System.out.println("密文:" + str2);
+		// DES解密
+
+
+		System.out.println("明文:" + deStr);
+
+	}
+}</pre>
+<br>
+<br><strong>法2</strong>
+<br>
+<br>
+<br><div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=import%20java.security.Key%3B%0Aimport%20java.security.SecureRandom%3B%0Aimport%20javax.crypto.Cipher%3B%0Aimport%20javax.crypto.KeyGenerator%3B%0A%0Aimport%20sun.misc.BASE64Decoder%3B%0Aimport%20sun.misc.BASE64Encoder%3B%0A%0A%2F**%0A%20*%20%0A%20*%20%E4%BD%BF%E7%94%A8DES%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%2C%E5%8F%AF%E5%AF%B9byte%5B%5D%2CString%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%20%E5%AF%86%E6%96%87%E5%8F%AF%E4%BD%BF%E7%94%A8String%2Cbyte%5B%5D%E5%AD%98%E5%82%A8.%0A%20*%20%0A%20*%20%E6%96%B9%E6%B3%95%3A%20void%20getKey(String%20strKey)%E4%BB%8EstrKey%E7%9A%84%E5%AD%97%E6%9D%A1%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AAKey%0A%20*%20%0A%20*%20String%20getEncString(String%20strMing)%E5%AF%B9strMing%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86%2C%E8%BF%94%E5%9B%9EString%E5%AF%86%E6%96%87%20String%0A%20*%20getDesString(String%20strMi)%E5%AF%B9strMin%E8%BF%9B%E8%A1%8C%E8%A7%A3%E5%AF%86%2C%E8%BF%94%E5%9B%9EString%E6%98%8E%E6%96%87%0A%20*%20%0A%20*%20byte%5B%5D%20getEncCode(byte%5B%5D%20byteS)byte%5B%5D%E5%9E%8B%E7%9A%84%E5%8A%A0%E5%AF%86%20byte%5B%5D%20getDesCode(byte%5B%5D%0A%20*%20byteD)byte%5B%5D%E5%9E%8B%E7%9A%84%E8%A7%A3%E5%AF%86%0A%20*%2F%0A%0Apublic%20class%20DESCrypt%20%7B%0A%09Key%20key%3B%0A%09private%20static%20String%20strDefaultKey%20%3D%20%22goodluck%22%3B%0A%09public%20DESCrypt()%7B%0A%09%09getKey(strDefaultKey)%3B%0A%09%7D%0A%09%2F**%0A%09%20*%20%E6%A0%B9%E6%8D%AE%E5%8F%82%E6%95%B0%E7%94%9F%E6%88%90KEY%0A%09%20*%20%0A%09%20*%20%40param%20strKey%0A%09%20*%2F%0A%09public%20%20void%20getKey(String%20strKey)%20%7B%0A%09%09try%20%7B%0A%09%09%09KeyGenerator%20_generator%20%3D%20KeyGenerator.getInstance(%22DES%22)%3B%0A%09%09%09_generator.init(new%20SecureRandom(strKey.getBytes()))%3B%0A%09%09%09this.key%20%3D%20_generator.generateKey()%3B%0A%09%09%09_generator%20%3D%20null%3B%0A%09%09%7D%20catch%20(Exception%20e)%20%7B%0A%09%09%09e.printStackTrace()%3B%0A%09%09%7D%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E5%8A%A0%E5%AF%86String%E6%98%8E%E6%96%87%E8%BE%93%E5%85%A5%2CString%E5%AF%86%E6%96%87%E8%BE%93%E5%87%BA%0A%09%20*%20%0A%09%20*%20%40param%20strMing%0A%09%20*%20%40return%0A%09%20*%2F%0A%09public%20String%20getEncString(String%20strMing)%20%7B%0A%09%09byte%5B%5D%20byteMi%20%3D%20null%3B%0A%09%09byte%5B%5D%20byteMing%20%3D%20null%3B%0A%09%09String%20strMi%20%3D%20%22%22%3B%0A%09%09BASE64Encoder%20base64en%20%3D%20new%20BASE64Encoder()%3B%0A%09%09try%20%7B%0A%09%09%09byteMing%20%3D%20strMing.getBytes(%22UTF8%22)%3B%0A%09%09%09byteMi%20%3D%20this.getEncCode(byteMing)%3B%0A%09%09%09strMi%20%3D%20base64en.encode(byteMi)%3B%0A%09%09%7D%20catch%20(Exception%20e)%20%7B%0A%09%09%09e.printStackTrace()%3B%0A%09%09%7D%20finally%20%7B%0A%09%09%09base64en%20%3D%20null%3B%0A%09%09%09byteMing%20%3D%20null%3B%0A%09%09%09byteMi%20%3D%20null%3B%0A%09%09%7D%0A%09%09return%20strMi%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E8%A7%A3%E5%AF%86%20%E4%BB%A5String%E5%AF%86%E6%96%87%E8%BE%93%E5%85%A5%2CString%E6%98%8E%E6%96%87%E8%BE%93%E5%87%BA%0A%09%20*%20%0A%09%20*%20%40param%20strMi%0A%09%20*%20%40return%0A%09%20*%2F%0A%09public%20String%20getDesString(String%20strMi)%20%7B%0A%09%09BASE64Decoder%20base64De%20%3D%20new%20BASE64Decoder()%3B%0A%09%09byte%5B%5D%20byteMing%20%3D%20null%3B%0A%09%09byte%5B%5D%20byteMi%20%3D%20null%3B%0A%09%09String%20strMing%20%3D%20%22%22%3B%0A%09%09try%20%7B%0A%09%09%09byteMi%20%3D%20base64De.decodeBuffer(strMi)%3B%0A%09%09%09byteMing%20%3D%20this.getDesCode(byteMi)%3B%0A%09%09%09strMing%20%3D%20new%20String(byteMing%2C%20%22UTF8%22)%3B%0A%09%09%7D%20catch%20(Exception%20e)%20%7B%0A%09%09%09e.printStackTrace()%3B%0A%09%09%7D%20finally%20%7B%0A%09%09%09base64De%20%3D%20null%3B%0A%09%09%09byteMing%20%3D%20null%3B%0A%09%09%09byteMi%20%3D%20null%3B%0A%09%09%7D%0A%09%09return%20strMing%3B%0A%09%7D%0A%0A%09public%20String%20getDesStr(String%20strMi)%20%7B%0A%09%09BASE64Decoder%20base64De%20%3D%20new%20BASE64Decoder()%3B%0A%09%09byte%5B%5D%20byteMing%20%3D%20null%3B%0A%09%09byte%5B%5D%20byteMi%20%3D%20null%3B%0A%09%09String%20strMing%20%3D%20%22%22%3B%0A%09%09try%20%7B%0A%09%09%09byteMi%20%3D%20base64De.decodeBuffer(strMi)%3B%0A%09%09%09byteMing%20%3D%20this.getDesCode(byteMi)%3B%0A%09%09%09strMing%20%3D%20new%20String(byteMing%2C%20%22UTF8%22)%3B%0A%09%09%7D%20catch%20(Exception%20e)%20%7B%0A%09%09%09%2F%2Fe.printStackTrace()%3B%0A%09%09%09strMing%20%3D%20strMi%3B%0A%09%09%7D%20finally%20%7B%0A%09%09%09base64De%20%3D%20null%3B%0A%09%09%09byteMing%20%3D%20null%3B%0A%09%09%09byteMi%20%3D%20null%3B%0A%09%09%7D%0A%09%09return%20strMing%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E5%8A%A0%E5%AF%86%E4%BB%A5byte%5B%5D%E6%98%8E%E6%96%87%E8%BE%93%E5%85%A5%2Cbyte%5B%5D%E5%AF%86%E6%96%87%E8%BE%93%E5%87%BA%0A%09%20*%20%0A%09%20*%20%40param%20byteS%0A%09%20*%20%40return%0A%09%20*%2F%0A%09private%20byte%5B%5D%20getEncCode(byte%5B%5D%20byteS)%20%7B%0A%09%09byte%5B%5D%20byteFina%20%3D%20null%3B%0A%09%09Cipher%20cipher%3B%0A%09%09try%20%7B%0A%09%09%09cipher%20%3D%20Cipher.getInstance(%22DES%22)%3B%0A%09%09%09cipher.init(Cipher.ENCRYPT_MODE%2C%20key)%3B%0A%09%09%09byteFina%20%3D%20cipher.doFinal(byteS)%3B%0A%09%09%7D%20catch%20(Exception%20e)%20%7B%0A%09%09%09e.printStackTrace()%3B%0A%09%09%7D%20finally%20%7B%0A%09%09%09cipher%20%3D%20null%3B%0A%09%09%7D%0A%09%09return%20byteFina%3B%0A%09%7D%0A%0A%09%2F**%0A%09%20*%20%E8%A7%A3%E5%AF%86%E4%BB%A5byte%5B%5D%E5%AF%86%E6%96%87%E8%BE%93%E5%85%A5%2C%E4%BB%A5byte%5B%5D%E6%98%8E%E6%96%87%E8%BE%93%E5%87%BA%0A%09%20*%20%0A%09%20*%20%40param%20byteD%0A%09%20*%20%40return%0A%09%20*%2F%0A%09private%20byte%5B%5D%20getDesCode(byte%5B%5D%20byteD)%20%7B%0A%09%09Cipher%20cipher%3B%0A%09%09byte%5B%5D%20byteFina%20%3D%20null%3B%0A%09%09try%20%7B%0A%09%09%09cipher%20%3D%20Cipher.getInstance(%22DES%22)%3B%0A%09%09%09cipher.init(Cipher.DECRYPT_MODE%2C%20key)%3B%0A%09%09%09byteFina%20%3D%20cipher.doFinal(byteD)%3B%0A%09%09%7D%20catch%20(Exception%20e)%20%7B%0A%09%09%09e.printStackTrace()%3B%0A%09%09%7D%20finally%20%7B%0A%09%09%09cipher%20%3D%20null%3B%0A%09%09%7D%0A%09%09return%20byteFina%3B%0A%0A%09%7D%0A%0A%09public%20static%20void%20main(String%5B%5D%20args)%20%7B%0A%0A%09%09System.out.println(%22des%20demo%22)%3B%0A%09%09DESCrypt%20des%20%3D%20new%20DESCrypt()%3B%2F%2F%20%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%80%E4%B8%AA%E5%AF%B9%E5%83%8F%0A%09%09%2F%2Fdes.getKey(%22MYKEY11%22)%3B%2F%2F%20%E7%94%9F%E6%88%90%E5%AF%86%E5%8C%99%0A%09%09%2F%2FSystem.out.println(%22key%3DMYKEY11%22)%3B%0A%09%09String%20strEnc%20%3D%20des.getEncString(%22%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B%E8%AF%95%E8%AF%95%EF%BC%81%22)%3B%2F%2F%20%E5%8A%A0%E5%AF%86%E5%AD%97%E7%AC%A6%E4%B8%B2%2C%E8%BF%94%E5%9B%9EString%E7%9A%84%E5%AF%86%E6%96%87%0A%09%09System.out.println(%22%E5%AF%86%E6%96%87%3D%22%20%2B%20strEnc)%3B%0A%0A%09%09String%20strDes%20%3D%20des.getDesString(strEnc)%3B%2F%2F%20%E6%8A%8AString%20%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AF%86%E6%96%87%E8%A7%A3%E5%AF%86%0A%09%09System.out.println(%22%E6%98%8E%E6%96%87%3D%22%20%2B%20strDes)%3B%0A%0A%09%7D%0A%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">import</span><span>&nbsp;java.security.Key;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.security.SecureRandom;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;javax.crypto.Cipher;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;javax.crypto.KeyGenerator;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">import</span><span>&nbsp;sun.misc.BASE64Decoder;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;sun.misc.BASE64Encoder;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;使用DES加密与解密,可对byte[],String类型进行加密与解密&nbsp;密文可使用String,byte[]存储.</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;方法:&nbsp;void&nbsp;getKey(String&nbsp;strKey)从strKey的字条生成一个Key</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;String&nbsp;getEncString(String&nbsp;strMing)对strMing进行加密,返回String密文&nbsp;String</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;getDesString(String&nbsp;strMi)对strMin进行解密,返回String明文</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;byte[]&nbsp;getEncCode(byte[]&nbsp;byteS)byte[]型的加密&nbsp;byte[]&nbsp;getDesCode(byte[]</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;byteD)byte[]型的解密</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;DESCrypt&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;Key&nbsp;key;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;String&nbsp;strDefaultKey&nbsp;=&nbsp;</span><span class="string">"goodluck"</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;DESCrypt(){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getKey(strDefaultKey);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;根据参数生成KEY</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strKey</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;&nbsp;</span><span class="keyword">void</span><span>&nbsp;getKey(String&nbsp;strKey)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyGenerator&nbsp;_generator&nbsp;=&nbsp;KeyGenerator.getInstance(<span class="string">"DES"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_generator.init(<span class="keyword">new</span><span>&nbsp;SecureRandom(strKey.getBytes()));&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span><span>.key&nbsp;=&nbsp;_generator.generateKey();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_generator&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;加密String明文输入,String密文输出</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strMing</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;String&nbsp;getEncString(String&nbsp;strMing)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteMi&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteMing&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;strMi&nbsp;=&nbsp;<span class="string">""</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BASE64Encoder&nbsp;base64en&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;BASE64Encoder();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMing&nbsp;=&nbsp;strMing.getBytes(<span class="string">"UTF8"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMi&nbsp;=&nbsp;<span class="keyword">this</span><span>.getEncCode(byteMing);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strMi&nbsp;=&nbsp;base64en.encode(byteMi);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">finally</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base64en&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMing&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMi&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;strMi;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;解密&nbsp;以String密文输入,String明文输出</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;strMi</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;String&nbsp;getDesString(String&nbsp;strMi)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BASE64Decoder&nbsp;base64De&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;BASE64Decoder();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteMing&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteMi&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;strMing&nbsp;=&nbsp;<span class="string">""</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMi&nbsp;=&nbsp;base64De.decodeBuffer(strMi);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMing&nbsp;=&nbsp;<span class="keyword">this</span><span>.getDesCode(byteMi);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strMing&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;String(byteMing,&nbsp;</span><span class="string">"UTF8"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">finally</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base64De&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMing&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMi&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;strMing;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;String&nbsp;getDesStr(String&nbsp;strMi)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BASE64Decoder&nbsp;base64De&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;BASE64Decoder();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteMing&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteMi&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;strMing&nbsp;=&nbsp;<span class="string">""</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMi&nbsp;=&nbsp;base64De.decodeBuffer(strMi);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMing&nbsp;=&nbsp;<span class="keyword">this</span><span>.getDesCode(byteMi);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strMing&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;String(byteMing,&nbsp;</span><span class="string">"UTF8"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//e.printStackTrace();</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strMing&nbsp;=&nbsp;strMi;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">finally</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base64De&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMing&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteMi&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;strMing;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;加密以byte[]明文输入,byte[]密文输出</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;byteS</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">byte</span><span>[]&nbsp;getEncCode(</span><span class="keyword">byte</span><span>[]&nbsp;byteS)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteFina&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cipher&nbsp;cipher;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cipher&nbsp;=&nbsp;Cipher.getInstance(<span class="string">"DES"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cipher.init(Cipher.ENCRYPT_MODE,&nbsp;key);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteFina&nbsp;=&nbsp;cipher.doFinal(byteS);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">finally</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cipher&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;byteFina;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;解密以byte[]密文输入,以byte[]明文输出</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;byteD</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">byte</span><span>[]&nbsp;getDesCode(</span><span class="keyword">byte</span><span>[]&nbsp;byteD)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cipher&nbsp;cipher;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;byteFina&nbsp;=&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cipher&nbsp;=&nbsp;Cipher.getInstance(<span class="string">"DES"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cipher.init(Cipher.DECRYPT_MODE,&nbsp;key);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteFina&nbsp;=&nbsp;cipher.doFinal(byteD);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">finally</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cipher&nbsp;=&nbsp;<span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;byteFina;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"des&nbsp;demo"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DESCrypt&nbsp;des&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;DESCrypt();</span><span class="comment">//&nbsp;实例化一个对像</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//des.getKey("MYKEY11");//&nbsp;生成密匙</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//System.out.println("key=MYKEY11");</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;strEnc&nbsp;=&nbsp;des.getEncString(<span class="string">"测试一下试试！"</span><span>);</span><span class="comment">//&nbsp;加密字符串,返回String的密文</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"密文="</span><span>&nbsp;+&nbsp;strEnc);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;strDes&nbsp;=&nbsp;des.getDesString(strEnc);<span class="comment">//&nbsp;把String&nbsp;类型的密文解密</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"明文="</span><span>&nbsp;+&nbsp;strDes);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="Java DES 加解密（支持utf-8）" pre_index="1" source_url="http://toyota2006.iteye.com/blog/690658" codeable_type="Blog" codeable_id="690658" style="display: none;" class="java" name="code">import java.security.Key;
+import java.security.SecureRandom;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+/**
+ * 
+ * 使用DES加密与解密,可对byte[],String类型进行加密与解密 密文可使用String,byte[]存储.
+ * 
+ * 方法: void getKey(String strKey)从strKey的字条生成一个Key
+ * 
+ * String getEncString(String strMing)对strMing进行加密,返回String密文 String
+ * getDesString(String strMi)对strMin进行解密,返回String明文
+ * 
+ * byte[] getEncCode(byte[] byteS)byte[]型的加密 byte[] getDesCode(byte[]
+ * byteD)byte[]型的解密
+ */
+
+public class DESCrypt {
+	Key key;
+	private static String strDefaultKey = "goodluck";
+	public DESCrypt(){
+		getKey(strDefaultKey);
+	}
+	/**
+	 * 根据参数生成KEY
+	 * 
+	 * @param strKey
+	 */
+	public  void getKey(String strKey) {
+		try {
+			KeyGenerator _generator = KeyGenerator.getInstance("DES");
+			_generator.init(new SecureRandom(strKey.getBytes()));
+			this.key = _generator.generateKey();
+			_generator = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 加密String明文输入,String密文输出
+	 * 
+	 * @param strMing
+	 * @return
+	 */
+	public String getEncString(String strMing) {
+		byte[] byteMi = null;
+		byte[] byteMing = null;
+		String strMi = "";
+		BASE64Encoder base64en = new BASE64Encoder();
+		try {
+			byteMing = strMing.getBytes("UTF8");
+			byteMi = this.getEncCode(byteMing);
+			strMi = base64en.encode(byteMi);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			base64en = null;
+			byteMing = null;
+			byteMi = null;
+		}
+		return strMi;
+	}
+
+	/**
+	 * 解密 以String密文输入,String明文输出
+	 * 
+	 * @param strMi
+	 * @return
+	 */
+	public String getDesString(String strMi) {
+		BASE64Decoder base64De = new BASE64Decoder();
+		byte[] byteMing = null;
+		byte[] byteMi = null;
+		String strMing = "";
+		try {
+			byteMi = base64De.decodeBuffer(strMi);
+			byteMing = this.getDesCode(byteMi);
+			strMing = new String(byteMing, "UTF8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			base64De = null;
+			byteMing = null;
+			byteMi = null;
+		}
+		return strMing;
+	}
+
+	public String getDesStr(String strMi) {
+		BASE64Decoder base64De = new BASE64Decoder();
+		byte[] byteMing = null;
+		byte[] byteMi = null;
+		String strMing = "";
+		try {
+			byteMi = base64De.decodeBuffer(strMi);
+			byteMing = this.getDesCode(byteMi);
+			strMing = new String(byteMing, "UTF8");
+		} catch (Exception e) {
+			//e.printStackTrace();
+			strMing = strMi;
+		} finally {
+			base64De = null;
+			byteMing = null;
+			byteMi = null;
+		}
+		return strMing;
+	}
+
+	/**
+	 * 加密以byte[]明文输入,byte[]密文输出
+	 * 
+	 * @param byteS
+	 * @return
+	 */
+	private byte[] getEncCode(byte[] byteS) {
+		byte[] byteFina = null;
+		Cipher cipher;
+		try {
+			cipher = Cipher.getInstance("DES");
+			cipher.init(Cipher.ENCRYPT_MODE, key);
+			byteFina = cipher.doFinal(byteS);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cipher = null;
+		}
+		return byteFina;
+	}
+
+	/**
+	 * 解密以byte[]密文输入,以byte[]明文输出
+	 * 
+	 * @param byteD
+	 * @return
+	 */
+	private byte[] getDesCode(byte[] byteD) {
+		Cipher cipher;
+		byte[] byteFina = null;
+		try {
+			cipher = Cipher.getInstance("DES");
+			cipher.init(Cipher.DECRYPT_MODE, key);
+			byteFina = cipher.doFinal(byteD);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cipher = null;
+		}
+		return byteFina;
+
+	}
+
+	public static void main(String[] args) {
+
+		System.out.println("des demo");
+		DESCrypt des = new DESCrypt();// 实例化一个对像
+		//des.getKey("MYKEY11");// 生成密匙
+		//System.out.println("key=MYKEY11");
+		String strEnc = des.getEncString("测试一下试试！");// 加密字符串,返回String的密文
+		System.out.println("密文=" + strEnc);
+
+		String strDes = des.getDesString(strEnc);// 把String 类型的密文解密
+		System.out.println("明文=" + strDes);
+
+	}
+
+}</pre>
+<br>
+<br>
+  </div>
+
+  
+
+  
+  
+  <iframe src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/187.htm" scrolling="no" frameborder="0" height="60" width="468"></iframe>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="http://toyota2006.iteye.com/blog/783909" class="next" title="home键的委托事件">home键的委托事件</a>
+      |
+      <a href="http://toyota2006.iteye.com/blog/658882" class="pre" title="Pager">Pager</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2010-06-12 16:14</li>
+      <li>浏览 2537</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/other">非技术</a></li>      
+      <li class="last"><a href="http://www.iteye.com/wiki/blog/690658" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="http://toyota2006.iteye.com/login" style="background-color:white;"> <img src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="http://toyota2006.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 690658;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'Java DES 加解密（支持utf-8）');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'Java DES 加解密（支持utf-8）');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="http://toyota2006.iteye.com/"><img alt="toyota2006的博客" class="logo" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/b27107b3-fde8-34e6-9a38-6cb610b9b3a4.png" title="toyota2006的博客: 前前" width=""></a></div>
+  <div id="blog_owner_name">toyota2006</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 398016 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_minigender_1.gif" title="男"></li>
+              <li>来自: 石家庄</li>
+              <li><img src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/offline.gif"></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;"><a href="http://toyota2006.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://kitlee.iteye.com/" target="_blank"><img alt="kitlee的博客" class="logo" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/dde242f5-c190-3d19-a708-5bd9b896c7da-thumb.jpg" title="kitlee的博客: 沧海芒涯" width="48px"></a></div>
+                <div class="left"><a href="http://kitlee.iteye.com/" target="_blank" title="kitlee">kitlee</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://wbin22.iteye.com/" target="_blank"><img alt="wbin22的博客" class="logo" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="wbin22的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://wbin22.iteye.com/" target="_blank" title="wbin22">wbin22</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://zhouzhouluo.iteye.com/" target="_blank"><img alt="zhouzhouluo的博客" class="logo" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="zhouzhouluo的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://zhouzhouluo.iteye.com/" target="_blank" title="zhouzhouluo">zhouzhouluo</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://leisurez.iteye.com/" target="_blank"><img alt="Leisurez的博客" class="logo" src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="Leisurez的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://leisurez.iteye.com/" target="_blank" title="Leisurez">Leisurez</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="http://toyota2006.iteye.com/">全部博客 (130)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5545">ORM (3)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5546">Spring (1)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5547">JS/AJAX (13)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5549">数据库 (2)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5548">分页 (3)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5550">报表 (0)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5551">jsf/struts/webwork/... (4)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5554">全文索引 (0)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5555">设计模式 (10)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5556">规则引擎 (0)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5557">测试 (0)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5558">IDE (4)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5559">其它 (14)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5563">java基础 (17)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5564">Server (6)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5565">Taglib (2)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5581">项目管理/项目设计/文档 (6)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5600">UML (0)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5646">* *  杂坛 ** (4)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/5656">日本語学习 (5)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/18671">C语言 (1)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/46943">html/js/css (6)</a></li>
+                
+                  <li><a href="http://toyota2006.iteye.com/category/127128">iPhone/iPad开发 (24)</a></li>
+                
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="http://toyota2006.iteye.com/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="http://toyota2006.iteye.com/blog/post">我的论坛</a> (29)
+                </li>
+                <li><a href="http://toyota2006.iteye.com/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="http://toyota2006.iteye.com/blog/monthblog/2011-04">2011-04</a> (1)</li>
+                
+                  <li><a href="http://toyota2006.iteye.com/blog/monthblog/2011-03">2011-03</a> (4)</li>
+                
+                  <li><a href="http://toyota2006.iteye.com/blog/monthblog/2011-01">2011-01</a> (3)</li>
+                
+                <li><a href="http://toyota2006.iteye.com/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href="http://toyota2006.iteye.com/" target="_blank" title="toyota2006">toyota2006</a>： 
+                  thank you!<br>
+                  <a href="http://toyota2006.iteye.com/blog/553012#bc2356450">适配器(Adapter)模式</a>
+                </li>
+                
+                <li>
+                  <a href="http://910014107.iteye.com/" target="_blank" title="910014107">910014107</a>： 
+                  收藏一下<br>
+                  <a href="http://toyota2006.iteye.com/blog/265061#bc2350866">JIRA安装和破解</a>
+                </li>
+                
+                <li>
+                  <a href="http://wangchaobashen.iteye.com/" target="_blank" title="wangchaobashen">wangchaobashen</a>： 
+                  注册完是一年期的License，请问这个期限该如何修改呢？<br>
+                  <a href="http://toyota2006.iteye.com/blog/265061#bc2341575">JIRA安装和破解</a>
+                </li>
+                
+                <li>
+                  <a href="http://ihqn19.iteye.com/" target="_blank" title="ihqn19">ihqn19</a>： 
+                  总而言之，就是不知道你想表达什么就对了。<br>
+                  <a href="http://toyota2006.iteye.com/blog/41255#bc2323339">JS 面向对象的简单应用实例</a>
+                </li>
+                
+                <li>
+                  <a href="http://jxls162408.iteye.com/" target="_blank" title="jxls162408">jxls162408</a>： 
+                  第四步更新tomcat libraris ，找不到那个包呀。怎 ...<br>
+                  <a href="http://toyota2006.iteye.com/blog/265061#bc2318893">JIRA安装和破解</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br>
+          © 2003-2015 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/a.gif" height="0" width="0">
+
+<script src="Java%20DES%20%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E6%94%AF%E6%8C%81utf-8%EF%BC%89%20-%20%E5%89%8D%E5%89%8D%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tracking.js" type="text/javascript"></script>
+
+    
+    
+  
+
+</body></html>

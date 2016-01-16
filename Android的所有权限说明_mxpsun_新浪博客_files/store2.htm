@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[1,151,772] published at 2013-01-09 11:44:04 from #235 by 4685-->
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=gbk">
+    <meta charset="gb2312">
+    <script charset="utf-8" id="seajsnode" src="Android%E7%9A%84%E6%89%80%E6%9C%89%E6%9D%83%E9%99%90%E8%AF%B4%E6%98%8E_mxpsun_%E6%96%B0%E6%B5%AA%E5%8D%9A%E5%AE%A2_files/sea.js"></script>
+    <script src="store2_data/config.js"></script>
+</head>
+<body>
+
+<script>
+(function(){
+    seajs.use('sina.util', function(util){
+        var store = util.store;
+
+        //set domain
+        try{ document.domain = 'sina.com.cn'; }
+        catch (__err__){return;}
+
+        //link store with parent
+        window.parent && window.parent.tmpUidev
+        && window.parent.tmpUidev.handler
+        && window.parent.tmpUidev.handler.permanentOnload(store);         
+    });
+})();
+</script>
+
+
+
+</body></html>

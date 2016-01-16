@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta content="width=device-width,user-scalable=no" name="viewport">
+<meta name="apple-itunes-app" content="app-id=425349261">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>AndroidStudio下BuildTypes和ProductFlavors动态编译并重命名apk - CSDN博客</title>
+<link rel="Stylesheet" type="text/css" href="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/wapall.css">
+<script src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/ga.js" async="" type="text/javascript"></script><script src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/ajax.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="wrap">
+<div id="header">
+<a class="home" href="http://www.csdn.net/"><img src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/home.png"></a> 
+<a class="logo" href="http://m.blog.csdn.net/">
+<img src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/logo.jpg"></a>
+<a href="http://m.blog.csdn.net/blog/qq_15771061" id="loginname">qq_15771061</a>
+</div>
+<div id="nav">
+<a href="http://m.blog.csdn.net/" id="shouye1">首页</a>
+<a href="http://m.blog.csdn.net/column/index" id="zhuanlan1">专栏</a>
+<a href="http://m.blog.csdn.net/People/index" id="zhuanjia1">专家</a>
+<a href="http://m.blog.csdn.net/home/hot" id="rewen1">热文</a>
+</div>
+<div id="main">
+        <div id="top">
+        <div class="avatar">
+        <a href="http://m.blog.csdn.net/blog/angusing" class="name">angusing的专栏</a>
+        </div>
+        <div class="content">
+        <h1><a href="#">[原]AndroidStudio下BuildTypes和ProductFlavors动态编译并重命名apk</a></h1>
+        <p class="time"><span>2015-8-17</span><span>阅读59</span> <a href="#comment">评论<span id="sp_cmt">0</span></a></p>
+        <div id="articlecontent">
+        <blockquote>
+  <p>在实际的开发与发布过程中，我们常需要根据不同的构建场景或者发布渠道，选择不同的.java文件进行编译。而在AndroidStudio中，其自带的Gradle组件能帮我们快速实现这一功能。</p>
+</blockquote>
+
+
+
+<h2 id="什么是buildtypesflavorsbuildvariants">什么是BuildTypes、Flavors、BuildVariants</h2>
+
+<p><strong>BuildTypes：</strong>构建类型，AndroidStudio的Gradle组件默认提供给了“debug”“release”两个默认配置，此处用于配置是否需要混淆、是否可调试等 <br>
+<strong>Flavors：</strong>产品渠道，默认不提供任何默认配置，在实际发布中，根据不同渠道，我们可能需要用不同的包名，服务器地址等 <br>
+<strong>BuildVariants：</strong>每个buildtype和flavor组成一个buildvariant</p>
+
+<hr>
+
+<h2 id="实施步骤">实施步骤</h2>
+
+<blockquote>
+  <p>实现目的：我们通过新增staging和 
+production渠道，分别针对调试阶段和发布阶段指向不同的服务器地址，并假设服务器地址编写于Constants.java文件中，在通过
+AndroidStudio默认的apk构建选项，动态根据不同渠道去自动生成指向不同服务器的apk</p>
+</blockquote>
+
+<h3 id="1添加stagingproduction渠道">1、添加staging、production渠道</h3>
+
+<pre class="prettyprint"><code class=" hljs r">apply plugin: <span class="hljs-string">'com.android.application'</span>
+
+dependencies {
+    <span class="hljs-keyword">...</span>
+}
+
+android {
+    compileSdkVersion <span class="hljs-number">15</span>
+    buildToolsVersion <span class="hljs-string">"22.0.1"</span>
+
+    sourceSets {
+        <span class="hljs-keyword">...</span>
+    }
+
+    buildTypes {
+        //开启混淆
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile(<span class="hljs-string">'proguard-android.txt'</span>), <span class="hljs-string">'proguard-project.txt'</span>
+        }
+
+    }
+
+    productFlavors {
+        //新增渠道staging，表示调试阶段的发布
+        staging {
+        }
+
+        //新增渠道production，表示产品发布阶段的发布
+        production {
+        }
+        //其他不同apk市场渠道添加，类似<span class="hljs-keyword">...</span>
+    }</code></pre>
+
+<p>在”android”闭包内添加配置如上，新增了staging和production渠道。本文不对这两个渠道做个性化配置。</p>
+
+<hr>
+
+
+
+<h3 id="2添加stagingproduction对应的源码目录">2、添加staging、production对应的源码目录</h3>
+
+<p>（1）在主Module目录中的创建目录<strong>“src/staging/java”</strong>和<strong>“src/production/java”</strong>与原有的<strong>“src/main/java”</strong>目录对称 <br>
+<img src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/20150817100210672.png" alt="这里写图片描述" title=""> <br>
+（2）在build.gradle中，指定staging、production的源码目录</p>
+
+<pre class="prettyprint"><code class=" hljs r">apply plugin: <span class="hljs-string">'com.android.application'</span>
+
+dependencies {
+    <span class="hljs-keyword">...</span>
+}
+
+android {
+    compileSdkVersion <span class="hljs-number">15</span>
+    buildToolsVersion <span class="hljs-string">"22.0.1"</span>
+
+    sourceSets {
+        <span class="hljs-keyword">...</span>
+        staginge {
+            java.srcDirs = [<span class="hljs-string">'src/staging'</span>, <span class="hljs-string">'src/staging/java'</span>, <span class="hljs-string">'src/staging/java/'</span>]
+        }
+
+        production {
+            java.srcDirs = [<span class="hljs-string">'src/production'</span>, <span class="hljs-string">'src/production/java'</span>, <span class="hljs-string">'src/production/java/'</span>]
+        }
+    }
+
+    buildTypes {
+        <span class="hljs-keyword">...</span>
+    }
+
+    productFlavors {
+        <span class="hljs-keyword">...</span>
+    }</code></pre>
+
+<blockquote>
+  <p>步骤分析：AS的Gradle组件会根据sourceset的配置，在实际编译过程中，根据选择的buildtype和。productfalvor（即buildvariant）到指定的源码目录查找源码文件，并且将main目录下的源码和这些指定目录下的源码<strong>进行合并（不是替换）</strong></p>
+</blockquote>
+
+<hr>
+
+
+
+<h3 id="3迁移constantjava文件关键">3、迁移Constant.java文件（关键）</h3>
+
+<p>把main下的Constant.java文件剪切+粘贴到”src/staging/java”和”src/main/java”的对应包下<strong>（注意千万不能保留main下的Constant.java文件）</strong>，并且相应修改Constant.java里面的服务器地址</p>
+
+<blockquote>
+  <p>步骤分析：在Gradle进行构建时，它会现在main目录下寻找所需的.java文件，如果找不到，就会在构建时选择的渠道对应源码目录下寻
+找，如果此时main和渠道源码目录都有同一个.java文件，就会报“duplicate 
+class（重复类）”错误。因此，应该删除main的原文件。</p>
+</blockquote>
+
+<h3 id="4定义apk命名规则">4、定义apk命名规则</h3>
+
+<p>我们暂定apk命名规则为：[appName][versionName]-[flavorName]-[date].apk， <br>
+如：MyAPPv2.0.0-production-201508171214.apk</p>
+
+<pre class="prettyprint"><code class=" hljs r">apply plugin: <span class="hljs-string">'com.android.application'</span>
+
+dependencies {
+   <span class="hljs-keyword">...</span>
+}
+
+
+
+android {
+    <span class="hljs-keyword">...</span>
+
+    //修改生成的apk名字
+    applicationVariants.all { variant -&gt;
+
+        <span class="hljs-keyword">if</span> (variant.buildType.name.equals(<span class="hljs-string">'release'</span>)) {
+            variant.outputs.each { output -&gt;
+                def appName = <span class="hljs-string">'MyApp'</span>
+                def oldFile = output.outputFile
+                def buildName
+                def releaseApkName
+
+                variant.productFlavors.each { product -&gt;
+                        buildName = product.name
+                }
+
+                releaseApkName = appName + getVersionNameFromManifest() + <span class="hljs-string">'-'</span> + buildName + <span class="hljs-string">'-'</span> + getDate() + <span class="hljs-string">'.apk'</span>
+                output.outputFile = new File(oldFile.parent, releaseApkName)
+            }
+        }
+    }
+}
+
+//获取时间戳
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format(<span class="hljs-string">'yyyyMMddHHmm'</span>)
+    <span class="hljs-keyword">return</span> formattedDate
+}
+
+//从androidManifest.xml中获取版本号
+def getVersionNameFromManifest() {
+    def manifestParser = new com.android.builder.core.DefaultManifestParser()
+    <span class="hljs-keyword">return</span> manifestParser.getVersionName(android.sourceSets.main.manifest.srcFile)
+}</code></pre>
+
+<hr>
+
+
+
+<h3 id="5开始构建">5、开始构建</h3>
+
+<p>Build-&gt;Generate Signed APK，补充好签名信息，可以看到Flavors多了两个我们添加的渠道，这时候选择一个然后开始构建，看效果吧！</p>
+        </div>
+        </div>
+        <div class="next_page">
+            <a href="http://m.blog.csdn.net/blog/angusing/47616775" class="next_btn">上一篇</a>
+            <a href="http://m.blog.csdn.net/blog/angusing/48130865" class="next_btn">下一篇</a>
+        </div>
+        <div class="comment">
+        <p><a name="comment"></a>发表评论</p>
+        <p><textarea id="con" rows="4" style="width:99%;"></textarea></p>
+        <p><input class="login_sub1" value="提 交" style="margin-top:0;" onclick="subform()" type="button"></p>
+        </div>
+        <div class="comment_sub">
+        <span class="lf10">查看评论</span>
+        <ul id="cmt_ul">        </ul>
+        <a href="http://m.blog.csdn.net/comment/47721765" class="lf10">更多评论（0）</a>
+        </div>
+        </div>
+        <script type="text/javascript" src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/Ajax.js"></script>
+        <script type="text/javascript">
+            function subform() {
+                if (!el('con').value) {
+                    el('con').focus();
+                    return;
+                }
+                Ajax.post('/comment/47721765?save=1', 'con=' + encodeURIComponent(el('con').value));
+                alert('评论成功！');
+
+                var li = document.createElement('li');
+                var s = '<p class="time"><span>' + (parseInt(el('sp_cmt').innerHTML, 10) + 1) + '楼</span><a class="name">我</a><span>刚刚</span></p>';
+                s += '<p>' + el('con').value + '</p>';
+                li.innerHTML = s;
+                el('cmt_ul').insertBefore(li, el('cmt_ul').firstChild);
+            }
+        </script>
+
+</div>
+
+<div class="back-top" id="ding1">
+<a href="#" onclick="document.body.scrollTop=0;return false;">
+<img src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/back-top.jpg">回顶部</a>
+</div>
+<div id="footer">
+<p><a class="now" href="http://m.blog.csdn.net/">移动版</a>|<a href="http://blog.csdn.net/" onclick="document.cookie='wap-pc=1; domain=blog.csdn.net; path=/;';">桌面版</a></p>
+<p>©1999-2012, CSDN.NET, All Rights Reserved</p>
+</div>
+
+</div>
+<script src="AndroidStudio%E4%B8%8BBuildTypes%E5%92%8CProductFlavors%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8Dapk%20-%20CSDN%E5%8D%9A%E5%AE%A2_files/wapall.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var username = getUN();
+    if (username == '') {
+        el('loginname').innerHTML = "登录";
+        el('loginname').href = "/account/login";
+    }
+    else {
+        el('loginname').innerHTML = username;
+        el('loginname').href = "/blog/"+username;
+    
+    } 
+</script>
+
+</body></html>

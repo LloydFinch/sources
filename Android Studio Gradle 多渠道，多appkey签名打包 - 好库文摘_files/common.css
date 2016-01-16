@@ -1,0 +1,64 @@
+.cmthead{height:30px;margin-bottom:5px;background:url(/Images/2012/cmt.png) no-repeat;border-bottom:#cccccc 1px solid;}
+.cmthead_t{padding:6px 0 0 35px;}
+.cmtitem{clear:both;margin-bottom:10px;}
+.cmttitle {background:url(/Images/2012/cmtusr.png) no-repeat;}
+.cmtitem .username{margin:0 20px 0 20px;}
+.cmtitem .entrydate{}
+.cmtitem .details{margin:5px 0 0 20px;}
+.cmtform .mceEditor,#details .mceEditor {width:520px;height:200px;}
+.bq_post_comment{
+margin: 0 0 5px 0;
+font-style: normal;
+line-height: 180%;
+border: 1px solid #DDD;
+padding: 10px;
+background: none;
+}
+.commentform_title{background:url(/Images/2012/addcmt.gif) no-repeat;height:20px;padding-left:20px;}
+.icon{display: inline-block;vertical-align: middle;margin-right:2px;width:19px;height:19px;}
+.archive_title .icon{float:left;margin:0 5px 0 0;}
+.icoattr1 {background:url(/images/2012/icoattr1.gif) no-repeat;}
+.icoattr2 {background:url(/images/2012/icoattr2.gif) no-repeat;}
+.icoattr3 {background:url(/images/2012/icoattr3.gif) no-repeat;}
+.icoattr4 {background:url(/images/2012/icoattr4.gif) no-repeat;}
+.pic_item {float:left;padding:5px;margin:0 0 0 15px;width:135px;height:160px;}
+.leftcolumn p {margin-left:10px;}
+input.textfield, textarea {
+background: white;
+border: 1px solid #A6A6A6;
+padding: 2px 1px;
+font-size: 12px;
+font-family: Verdana,"BitStream vera Sans",Tahoma,Helvetica,Sans-serif;
+}
+.irow {
+margin-bottom: 5px;
+}
+.bluebtn {
+padding: 0;
+margin: 0;
+background: #0270BF;
+height: 32px;
+}
+.bluebtn a:hover {
+display: block;
+color: white;
+background: #F60;
+line-height: 12px;
+padding: 10px;
+}
+pre {
+white-space: pre-wrap;
+font-size: 1em !important;
+line-height: 1.1em !important;
+text-align: left !important;
+font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+font-weight: normal !important;
+font-style: normal !important;
+color: black !important;
+background-color:#E1FFFC;
+
+margin: 10px 0;
+border: 1px solid #DDD;
+border-left: 3px solid #6CE26C;
+padding: 5px;
+}

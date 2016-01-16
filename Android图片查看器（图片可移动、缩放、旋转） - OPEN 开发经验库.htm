@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html><head>
+<title>Android图片查看器（图片可移动、缩放、旋转）  - OPEN 开发经验库</title>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<meta name="robots" content="index,follow">
+<meta name="keywords" content="Android,Android开发">
+<meta name="description" content="要实现图片在手指点击后移动和缩放有好几种方法，在这里是通过onTouch来实现的。 
+
+">
+<link rel="shortcut icon" href="http://www.open-open.com/lib/favicon.ico">
+<link rel="copyright" href="http://www.open-open.com/">
+
+
+
+<link type="text/css" rel="stylesheet" href="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/shCore.css">
+<link type="text/css" rel="stylesheet" href="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/shCoreRDark.css">
+ 
+<style type="text/css" media="screen, projection">
+		/*<![CDATA[*/
+			@import "/lib/css/common.css";
+			@import "/lib/css/main.css";
+			@import "/lib/css/thickbox.css";
+			@import "/lib/css/jquery.ui.css";
+		/*]]>*/
+</style> 
+<style type="text/css">
+ 
+.search {
+	margin: 8px 0 0 0;
+	overflow: hidden;
+}
+.search .TXT {
+	float: left;
+}
+
+.search .BTN {
+	float: left;
+	font-size: 10.5pt;
+	color: #999;
+	background: #3385FF;
+	border: 0;
+	color: #fff;
+	height: 32px;
+	padding: 0 10px;
+	cursor: pointer;
+	border-bottom: 1px solid #2D78F4;
+}
+
+.search .BTN:hover {
+	background:#2D78F4;
+	color:#fff;
+}
+  </style>
+
+
+<script src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/ca-pub-7963911354665843.js" type="text/javascript" async=""></script><script src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/hm.js"></script><script type="text/javascript">
+	var rooturl="/lib";
+	var wgDocKey='1432444594458';
+	var wgDocTitle='Android图片查看器（图片可移动、缩放、旋转） ';
+	var wgDocStatusFlag='';
+	var wgUserFolders=null;
+	var wgDownFrame=null;
+	var wgCostByUser=null;
+	var wgDocFavoriteByUser=false;
+	var wgDocScoreByUser=null;
+	var wgUserLogined=0;
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?4b19e5cc155fe555484434d8338ee0af";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<script src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/logger.js"></script><link type="text/css" rel="stylesheet" href="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/bdsstyle.css"></head>
+<body id="view"><iframe style="display: none;" frameborder="0"></iframe><div style="right: 0px; top: 256px; position: fixed; height: 330px; overflow: hidden;" id="bdshare"><img src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/r0.gif" alt="" style="float:left;margin-top:58px;"><iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe><div style="display: none; left: 24px;" id="bdshare_l"><div id="bdshare_l_c"><h6>分享到</h6><ul><li><a href="#" class="bds_mshare mshare">一键分享</a></li><li><a href="#" class="bds_qzone qqkj">QQ空间</a></li><li><a href="#" class="bds_tsina xlwb">新浪微博</a></li><li><a href="#" class="bds_bdysc bdysc">百度云收藏</a></li><li><a href="#" class="bds_renren rrw">人人网</a></li><li><a href="#" class="bds_tqq txwb">腾讯微博</a></li><li><a href="#" class="bds_bdxc bdxc">百度相册</a></li><li><a href="#" class="bds_kaixin001 kxw">开心网</a></li><li><a href="#" class="bds_tqf txpy">腾讯朋友</a></li><li><a href="#" class="bds_tieba bdtb">百度贴吧</a></li><li><a href="#" class="bds_douban db">豆瓣网</a></li><li><a href="#" class="bds_tsohu shwb">搜狐微博</a></li><li><a href="#" class="bds_bdhome bdhome">百度新首页</a></li><li><a href="#" class="bds_sqq sqq">QQ好友</a></li><li><a href="#" class="bds_thx thx">和讯微博</a></li><li><a href="#" class="bds_more">更多...</a></li></ul><p><a href="#" class="goWebsite">百度分享</a></p></div></div></div>
+
+        
+
+
+<div id="topnav">
+<div id="Personal">
+	
+		<a href="http://www.open-open.com/lib/members/login?keepThis=true&amp;TB_iframe=true&amp;height=177&amp;width=280" title="登录OPEN经验库" class="" "="">登录</a>&nbsp;&nbsp;
+		<a href="http://www.open-open.com/lib/members/register?keepThis=true&amp;TB_iframe=true&amp;height=460&amp;width=710" title="注册新的账号" class="">注册</a>
+	
+		
+</div>
+<div id="topmenu">
+<ul>
+		<li><a title="Java开源" href="http://www.open-open.com/">Java开源</a></li>
+		 
+		<li><a title="JS脚本大全" href="http://www.open-open.com/ajax/">JS脚本</a></li>
+		<li><a title="OPEN家园" href="http://www.open-open.com/home/">OPEN家园</a></li>
+		<li><a title="OPEN文档频道" href="http://www.open-open.com/doc/">OPEN文档</a></li>
+		<li><a title="OPEN资讯频道" href="http://www.open-open.com/news/">OPEN资讯</a></li>
+		<li><a title="OPEN论坛频道" href="http://www.open-open.com/bbs">OPEN论坛</a></li>
+		<li><a href="http://www.open-open.com/github/">Github日报</a></li>
+		<li><a href="http://www.open-open.com/code/"><strong>OPEN代码</strong></a><img src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/new.gif" alt="最新上线"></li>
+
+
+</ul>
+</div>
+</div>
+<!--end top nav-->
+<div id="head">
+<div id="head-logo"><a title="OPEN开发经验库" href="http://www.open-open.com/lib/"><img alt="OPEN开发经验库" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/logo.jpg" border="0"></a></div>
+<div id="head-search">
+<form method="get" name="search" class="search" action="/lib/search" accept-charset="GBK" onsubmit="document.charset='GBK';">
+
+<table border="0" cellpadding="0" cellspacing="0">
+		
+		<tbody>
+				<tr>
+						<td align="left">
+							<input id="searchinput" class="TXT" maxlength="1048" style="height: 25px;font-size:18px" x-webkit-speech="" size="45" name="q" type="text">
+							<input id="searchbutton" class="BTN" value="经验搜索" style="height: 28px;font-size:17" type="submit">
+							<input id="od" name="od" value="0" type="hidden">
+&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size: 9.5pt"><b>推荐：</b></font><a href="http://www.miniui.com/demo/#src=datagrid/celledit.html" title="jQuery MiniUI，Web界面控件库！" target="_blank" rel="nofollow"><font style="font-size: 9.5pt" color="red"><b>jQuery MiniUI，Web界面控件库！</b></font></a><br>
+						</td>
+						</tr>
+		</tbody>
+</table>
+</form>
+
+</div>
+<div id="head-ad">
+
+</div>
+
+</div>
+<!-- end head -->
+
+<div id="content">
+<div id="content-nav">
+<a href="http://www.open-open.com/lib/list/all">所有分类</a>
+
+	&nbsp;&gt;&nbsp;
+	<a href="http://www.open-open.com/lib/list/36">开发语言与工具</a>
+
+	&nbsp;&gt;&nbsp;
+	<a href="http://www.open-open.com/lib/list/41">移动开发</a>
+
+	&nbsp;&gt;&nbsp;
+	<a href="http://www.open-open.com/lib/list/177">Android开发</a>
+
+</div>
+
+
+<div id="view-main">
+
+
+<div id="view-titleh">
+<div id="view-title">
+	<h3>Android图片查看器（图片可移动、缩放、旋转） </h3>
+</div>
+<div id="view-summary">
+<table>
+		<tbody>
+				<tr>
+						<td><strong>您的评价</strong>:</td>
+						<td>
+						<div id="rate" class="rate-container"><span id="star1" class="star-big-off" title="很差">&nbsp;</span><span id="star2" class="star-big-off" title="较差">&nbsp;</span><span id="star3" class="star-big-off" title="还行">&nbsp;</span><span id="star4" class="star-big-off" title="不错">&nbsp;</span><span id="star5" class="star-big-off" title="力荐">&nbsp;</span></div>
+						</td>
+						<td width="30">
+						<div id="rate-tip"></div>
+						</td>
+						
+						<td>
+						<div id="favorite-container"><span class="icon favorite">&nbsp;</span><a id="favorite" href="javascript:void(0)"><strong>收藏该经验</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+						 </div>
+
+</td>
+				</tr>
+		</tbody>
+</table>
+
+
+</div>
+
+</div>
+
+
+<div id="readercontainer">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-7963911354665843";
+    google_ad_slot = "8119760813";
+    google_ad_width = 728;
+    google_ad_height = 90;
+</script>
+<!-- openlibview -->
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="728"></iframe></ins></ins>
+ <div id="toc"></div>
+<!-- google_ad_section_start -->
+<blockquote>
+<p>要实现图片在手指点击后移动和缩放有好几种方法，在这里是通过onTouch来实现的。 </p>
+</blockquote>
+<p>实例代码如下： </p>
+<p>首先是在View中有一个<strong>ImageView</strong> </p>
+<div><div id="highlighter_295122" class="syntaxhighlighter  xml"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">RelativeLayout</code> <code class="xml color1">xmlns:android</code><code class="xml plain">=</code><code class="xml string">"http://schemas.android.com/apk/res/android"</code>&nbsp;</div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">xmlns:tools</code><code class="xml plain">=</code><code class="xml string">"http://schemas.android.com/tools"</code>&nbsp;</div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:layout_width</code><code class="xml plain">=</code><code class="xml string">"match_parent"</code>&nbsp;</div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:layout_height</code><code class="xml plain">=</code><code class="xml string">"match_parent"</code>&nbsp;</div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:paddingBottom</code><code class="xml plain">=</code><code class="xml string">"@dimen/activity_vertical_margin"</code>&nbsp;</div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:paddingLeft</code><code class="xml plain">=</code><code class="xml string">"@dimen/activity_horizontal_margin"</code>&nbsp;</div><div class="line number7 index6 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:paddingRight</code><code class="xml plain">=</code><code class="xml string">"@dimen/activity_horizontal_margin"</code>&nbsp;</div><div class="line number8 index7 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:paddingTop</code><code class="xml plain">=</code><code class="xml string">"@dimen/activity_vertical_margin"</code>&nbsp;</div><div class="line number9 index8 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">tools:context</code><code class="xml plain">=</code><code class="xml string">".MainActivity"</code> <code class="xml plain">&gt;&nbsp; </code></div><div class="line number10 index9 alt1"><code class="xml spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number11 index10 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">ImageView</code>&nbsp;</div><div class="line number12 index11 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:id</code><code class="xml plain">=</code><code class="xml string">"@+id/iv"</code>&nbsp;</div><div class="line number13 index12 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:scaleType</code><code class="xml plain">=</code><code class="xml string">"matrix"</code>&nbsp;</div><div class="line number14 index13 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:layout_width</code><code class="xml plain">=</code><code class="xml string">"wrap_content"</code>&nbsp;</div><div class="line number15 index14 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:layout_height</code><code class="xml plain">=</code><code class="xml string">"wrap_content"</code>&nbsp;</div><div class="line number16 index15 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml color1">android:src</code><code class="xml plain">=</code><code class="xml string">"@drawable/b"</code> <code class="xml plain">/&gt;&nbsp; </code></div><div class="line number17 index16 alt2"><code class="xml spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number18 index17 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">RelativeLayout</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div><br>
+然后为ImageView设置<strong>onTouch</strong>点击事件 <div><div id="highlighter_557519" class="syntaxhighlighter  xml"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">iv.setOnTouchListener(this);</code></div></div></td></tr></tbody></table></div></div><br>
+重写onTouch <div><div id="highlighter_538436" class="syntaxhighlighter  java"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java keyword">private</code> <code class="java plain">PointF startPoint = </code><code class="java keyword">new</code> <code class="java plain">PointF();</code><code class="java comments">// 获取图片的原始坐标&nbsp; </code></div><div class="line number2 index1 alt1"><code class="java keyword">private</code> <code class="java keyword">int</code> <code class="java plain">mode = </code><code class="java value">0</code><code class="java plain">, single = </code><code class="java value">1</code><code class="java plain">, multi = </code><code class="java value">2</code><code class="java plain">;</code><code class="java comments">// 设置点击的模式，是单点触摸还是多点&nbsp; </code></div><div class="line number3 index2 alt2"><code class="java keyword">private</code> <code class="java plain">Matrix matrix = </code><code class="java keyword">new</code> <code class="java plain">Matrix();&nbsp; </code></div><div class="line number4 index3 alt1"><code class="java keyword">private</code> <code class="java plain">Matrix currentMatrix = </code><code class="java keyword">new</code> <code class="java plain">Matrix();&nbsp; </code></div><div class="line number5 index4 alt2"><code class="java keyword">private</code> <code class="java keyword">float</code> <code class="java plain">startDistance; </code><code class="java comments">// 两点开始的距离&nbsp; </code></div><div class="line number6 index5 alt1"><code class="java keyword">private</code> <code class="java keyword">float</code> <code class="java plain">startRotation;</code><code class="java comments">// 开始的角度&nbsp; </code></div><div class="line number7 index6 alt2"><code class="java keyword">private</code> <code class="java plain">PointF midPoint; </code><code class="java comments">// 两点的中心位置</code></div></div></td></tr></tbody></table></div></div><br>
+<div><div id="highlighter_333633" class="syntaxhighlighter  java"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div><div class="line number53 index52 alt2">53</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@Override</code>&nbsp;</div><div class="line number2 index1 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">public</code> <code class="java keyword">boolean</code> <code class="java plain">onTouch(View v, MotionEvent event) {&nbsp; </code></div><div class="line number3 index2 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">switch</code> <code class="java plain">(event.getAction() &amp; MotionEvent.ACTION_MASK) {&nbsp; </code></div><div class="line number4 index3 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">case</code> <code class="java plain">MotionEvent.ACTION_DOWN:</code><code class="java comments">// 表示用户开始触摸&nbsp; </code></div><div class="line number5 index4 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">mode = single;&nbsp; </code></div><div class="line number6 index5 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">currentMatrix.set(iv.getImageMatrix());&nbsp; </code></div><div class="line number7 index6 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">startPoint.set(event.getX(), event.getY());&nbsp; </code></div><div class="line number8 index7 alt1"><code class="java spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number9 index8 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">break</code><code class="java plain">;&nbsp; </code></div><div class="line number10 index9 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">case</code> <code class="java plain">MotionEvent.ACTION_POINTER_DOWN:</code><code class="java comments">// 当屏幕上已经有触点（手指），又有一个手指按下屏幕&nbsp; </code></div><div class="line number11 index10 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">mode = multi;&nbsp; </code></div><div class="line number12 index11 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">startDistance = getDistance(event);&nbsp; </code></div><div class="line number13 index12 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">startRotation = getRotation(event);&nbsp; </code></div><div class="line number14 index13 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">getMidPoint(event);&nbsp; </code></div><div class="line number15 index14 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">currentMatrix.set(iv.getImageMatrix());&nbsp; </code></div><div class="line number16 index15 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">midPoint = getMidPoint(event);&nbsp; </code></div><div class="line number17 index16 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">break</code><code class="java plain">;&nbsp; </code></div><div class="line number18 index17 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">case</code> <code class="java plain">MotionEvent.ACTION_MOVE:</code><code class="java comments">// 手指在屏幕上移动，该事件会不断触发&nbsp; </code></div><div class="line number19 index18 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">if</code> <code class="java plain">(mode == single) {&nbsp; </code></div><div class="line number20 index19 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number21 index20 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">x = event.getX() - startPoint.x;&nbsp; </code></div><div class="line number22 index21 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">y = event.getY() - startPoint.y;&nbsp; </code></div><div class="line number23 index22 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">matrix.set(currentMatrix);&nbsp; </code></div><div class="line number24 index23 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">matrix.postTranslate(x, y);&nbsp; </code></div><div class="line number25 index24 alt2"><code class="java spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number26 index25 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">} </code><code class="java keyword">else</code> <code class="java keyword">if</code> <code class="java plain">(mode == multi) {&nbsp; </code></div><div class="line number27 index26 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number28 index27 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">endDistance = getDistance(event);&nbsp; </code></div><div class="line number29 index28 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">endRotate = getRotation(event);&nbsp; </code></div><div class="line number30 index29 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">if</code> <code class="java plain">(endDistance &gt; 10f) {&nbsp; </code></div><div class="line number31 index30 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">sclace = endDistance / startDistance;&nbsp; </code></div><div class="line number32 index31 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">rotate = endRotate - startRotation;&nbsp; </code></div><div class="line number33 index32 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">matrix.set(currentMatrix);&nbsp; </code></div><div class="line number34 index33 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">matrix.postScale(sclace, sclace, midPoint.x, midPoint.y);&nbsp; </code></div><div class="line number35 index34 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">matrix.postRotate(rotate, midPoint.x, midPoint.y);&nbsp; </code></div><div class="line number36 index35 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number37 index36 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}&nbsp; </code></div><div class="line number38 index37 alt1"><code class="java spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number39 index38 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}&nbsp; </code></div><div class="line number40 index39 alt1"><code class="java spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number41 index40 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">break</code><code class="java plain">;&nbsp; </code></div><div class="line number42 index41 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">case</code> <code class="java plain">MotionEvent.ACTION_UP:</code><code class="java comments">// 手指离开屏幕&nbsp; </code></div><div class="line number43 index42 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">case</code> <code class="java plain">MotionEvent.ACTION_POINTER_UP:</code><code class="java comments">// 当一个手指离开屏幕，但在屏幕上还有触点。&nbsp; </code></div><div class="line number44 index43 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">mode = </code><code class="java value">0</code><code class="java plain">;&nbsp; </code></div><div class="line number45 index44 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number46 index45 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">break</code><code class="java plain">;&nbsp; </code></div><div class="line number47 index46 alt2"><code class="java spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number48 index47 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">default</code><code class="java plain">:&nbsp; </code></div><div class="line number49 index48 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">break</code><code class="java plain">;&nbsp; </code></div><div class="line number50 index49 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}&nbsp; </code></div><div class="line number51 index50 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">iv.setImageMatrix(matrix);&nbsp; </code></div><div class="line number52 index51 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java keyword">true</code><code class="java plain">;&nbsp; </code></div><div class="line number53 index52 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div><br>
+<p>在这里mode用来判断当前是哪种触摸方式single代表单指操作用来移动图片，multi代表双指操作，用来做图片缩放处理。 </p>
+<p><span style="color:#ff0000;font-size:18px;">移动图片：</span> </p>
+<p><strong>currentMatrix</strong>代表点击时图片的当前位置 </p>
+<p><strong>startPoint</strong>是点击时图片的坐标点 </p>
+<p><strong>matrix.set(currentMatrix);matrix.postTranslate(x, y);</strong> </p>
+<p>先获取图片的位置然后进行平移操作，平移的距离是手指移动的距离。 </p>
+<p><span style="color:#ff0000;font-size:18px;">图片缩放：</span> </p>
+<p>由于图片的缩放要用两个手指来实现，所以要用到<strong>MotionEvent.ACTION_POINTER_DOWN</strong> </p>
+<p><strong>startDistance</strong>是开始按下时两个手指间的距离， </p>
+<p><strong>midPoint</strong>是按下时两点间的中心， </p>
+<p><strong>matrix.postScale(sclace, sclace, midPoint.x, midPoint.y);</strong>这几个参数表示X轴和y轴缩放的比例，和以那个坐标点开始缩放。 </p>
+<p>图片旋转： </p>
+<p>startRotation 开始时候图片的角度， </p>
+<p>matrix.postRotate(rotate, midPoint.x, midPoint.y);rotate是旋转的角度，minPoint.x和midPoint.y表示以某个点为中心开始旋转。 </p>
+<div><div id="highlighter_248191" class="syntaxhighlighter  java"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java preprocessor">/** </code></div><div class="line number2 index1 alt1"><code class="java spaces">&nbsp;</code><code class="java preprocessor">*&nbsp; </code></div><div class="line number3 index2 alt2"><code class="java spaces">&nbsp;</code><code class="java preprocessor">* @param event </code></div><div class="line number4 index3 alt1"><code class="java spaces">&nbsp;</code><code class="java preprocessor">* @return 两个手指的中心点 </code></div><div class="line number5 index4 alt2"><code class="java spaces">&nbsp;</code><code class="java preprocessor">*/</code>&nbsp;</div><div class="line number6 index5 alt1"><code class="java keyword">private</code> <code class="java plain">PointF getMidPoint(MotionEvent event) {&nbsp; </code></div><div class="line number7 index6 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">midx = (event.getX(</code><code class="java value">0</code><code class="java plain">) + event.getX(</code><code class="java value">1</code><code class="java plain">)) / </code><code class="java value">2</code><code class="java plain">;&nbsp; </code></div><div class="line number8 index7 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">midy = (event.getY(</code><code class="java value">0</code><code class="java plain">) + event.getY(</code><code class="java value">1</code><code class="java plain">)) / </code><code class="java value">2</code><code class="java plain">;&nbsp; </code></div><div class="line number9 index8 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java keyword">new</code> <code class="java plain">PointF(midx, midy);&nbsp; </code></div><div class="line number10 index9 alt1"><code class="java plain">}&nbsp; </code></div><div class="line number11 index10 alt2"><code class="java spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number12 index11 alt1"><code class="java preprocessor">/** </code></div><div class="line number13 index12 alt2"><code class="java spaces">&nbsp;</code><code class="java preprocessor">*&nbsp; </code></div><div class="line number14 index13 alt1"><code class="java spaces">&nbsp;</code><code class="java preprocessor">* @param event </code></div><div class="line number15 index14 alt2"><code class="java spaces">&nbsp;</code><code class="java preprocessor">* @return 移动的距离 </code></div><div class="line number16 index15 alt1"><code class="java spaces">&nbsp;</code><code class="java preprocessor">*/</code>&nbsp;</div><div class="line number17 index16 alt2"><code class="java keyword">private</code> <code class="java keyword">float</code> <code class="java plain">getDistance(MotionEvent event) {&nbsp; </code></div><div class="line number18 index17 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">dx = event.getX(</code><code class="java value">1</code><code class="java plain">) - event.getX(</code><code class="java value">0</code><code class="java plain">);&nbsp; </code></div><div class="line number19 index18 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">float</code> <code class="java plain">dy = event.getY(</code><code class="java value">1</code><code class="java plain">) - event.getY(</code><code class="java value">0</code><code class="java plain">);&nbsp; </code></div><div class="line number20 index19 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">FloatMath.sqrt(dx * dx + dy * dy);&nbsp; </code></div><div class="line number21 index20 alt2"><code class="java plain">}&nbsp; </code></div><div class="line number22 index21 alt1"><code class="java spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number23 index22 alt2"><code class="java preprocessor">/** </code></div><div class="line number24 index23 alt1"><code class="java spaces">&nbsp;</code><code class="java preprocessor">*&nbsp; </code></div><div class="line number25 index24 alt2"><code class="java spaces">&nbsp;</code><code class="java preprocessor">* @param event </code></div><div class="line number26 index25 alt1"><code class="java spaces">&nbsp;</code><code class="java preprocessor">* @return 取旋转角度 </code></div><div class="line number27 index26 alt2"><code class="java spaces">&nbsp;</code><code class="java preprocessor">*/</code>&nbsp;</div><div class="line number28 index27 alt1"><code class="java keyword">private</code> <code class="java keyword">float</code> <code class="java plain">getRotation(MotionEvent event) {&nbsp; </code></div><div class="line number29 index28 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">double</code> <code class="java plain">delta_x = (event.getX(</code><code class="java value">0</code><code class="java plain">) - event.getX(</code><code class="java value">1</code><code class="java plain">));&nbsp; </code></div><div class="line number30 index29 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">double</code> <code class="java plain">delta_y = (event.getY(</code><code class="java value">0</code><code class="java plain">) - event.getY(</code><code class="java value">1</code><code class="java plain">));&nbsp; </code></div><div class="line number31 index30 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">double</code> <code class="java plain">radians = Math.atan2(delta_y, delta_x);&nbsp; </code></div><div class="line number32 index31 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">(</code><code class="java keyword">float</code><code class="java plain">) Math.toDegrees(radians);&nbsp; </code></div><div class="line number33 index32 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div><br>
+
+
+</div>
+
+<div style="margin-top: 10px;margin-bottom: 2px;">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-7963911354665843";
+    google_ad_slot = "8119760813";
+    google_ad_width = 728;
+    google_ad_height = 90;
+</script>
+<!-- openlibview -->
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="728"></iframe></ins></ins>
+
+</div>
+
+			<table width="100%"><tbody><tr>
+				<td class="Related" valign="top" width="49%">
+                <div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关资讯</strong> 　—　<a href="http://www.open-open.com/news" target="_blank" rel="nofollow">更多</a></div>
+            	<ul>
+            		
+            	     <li><a href="http://www.open-open.com/news/view/1421a7" target="_blank" rel="nofollow" title="分享海量 iOS 及 Mac 开源项目和学习资料 ">分享海量 iOS 及 Mac 开源项目和学习资料 </a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/a0c35d" target="_blank" rel="nofollow" title="Android开发技术周报 Issue#36">Android开发技术周报 Issue#36</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/21f3f8" target="_blank" rel="nofollow" title="Android 4.0通过新的特性统一了平板电脑与手机">Android 4.0通过新的特性统一了平板电脑与手机</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/8f00a0" target="_blank" rel="nofollow" title="盘点最受开发者喜爱的Android 5.0 Lollipop API">盘点最受开发者喜爱的Android 5.0 Lollipop API</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/c3bfe5" target="_blank" rel="nofollow" title="2015谷歌I/O大会综述：Android M、Android Studio、云端测试工具">2015谷歌I/O大会综述：Android M、Android Studio、云端测试工具</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/e97117" target="_blank" rel="nofollow" title="十八般武艺！移动应用开发者必备的18款利器">十八般武艺！移动应用开发者必备的18款利器</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/bb0c43" target="_blank" rel="nofollow" title="Android 开源项目源码解析（第二期）">Android 开源项目源码解析（第二期）</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/1ea9b72" target="_blank" rel="nofollow" title="6个实用的移动开发辅助工具">6个实用的移动开发辅助工具</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/13a3323" target="_blank" rel="nofollow" title="8 个最优秀的 Android Studio 插件">8 个最优秀的 Android Studio 插件</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/1d415c3" target="_blank" rel="nofollow" title="Android开发技术周报 Issue#21">Android开发技术周报 Issue#21</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/10aa3ce" target="_blank" rel="nofollow" title="Android开发周报：Android 5.0.2发布">Android开发周报：Android 5.0.2发布</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/100b5db" target="_blank" rel="nofollow" title="Android开发技术周报 Issue#37">Android开发技术周报 Issue#37</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/16e473e" target="_blank" rel="nofollow" title="Android开发技术周报 Issue#33">Android开发技术周报 Issue#33</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/87aa0d" target="_blank" rel="nofollow" title="Hybrid移动应用：用网页技术提供Native体验">Hybrid移动应用：用网页技术提供Native体验</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/f2a1b1" target="_blank" rel="nofollow" title="Android开发周报：Android自动化测试、人脸识别技术解析">Android开发周报：Android自动化测试、人脸识别技术解析</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/6d9332" target="_blank" rel="nofollow" title="亮点纷呈 -  Android 4.0 发布会小结">亮点纷呈 -  Android 4.0 发布会小结</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/1ec3ca9" target="_blank" rel="nofollow" title="Android开发技术周报 Issue#18">Android开发技术周报 Issue#18</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/ebeccb" target="_blank" rel="nofollow" title="自动释放内存！Facebook推出强大Android图片库Fresco">自动释放内存！Facebook推出强大Android图片库Fresco</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/18574a6" target="_blank" rel="nofollow" title="为什么“老妖精”Android 2.3还不死？">为什么“老妖精”Android 2.3还不死？</a></li>            
+            	     
+            	     <li><a href="http://www.open-open.com/news/view/d3089" target="_blank" rel="nofollow" title="7款Android开发者常用的Android UI组件">7款Android开发者常用的Android UI组件</a></li>            
+            	     
+            	     
+            	</ul>
+        		 <div style="clear: both; font-size: 1px; line-height: 0;"></div>
+            </td>
+			<td width="5px"></td>
+			<td class="Relatedb" valign="top" width="49%">
+			 	<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关文档</strong> 　—　<a href="http://www.open-open.com/doc" rel="nofollow" target="_blank">更多</a></div>
+            	<ul>
+            		
+            	     <li><a href="http://www.open-open.com/doc/view/bcf4a442ef3743d6bc12abfa16f15892" rel="nofollow" target="_blank" title="Android获取图片资源的4种方式.doc">Android获取图片资源的4种方式.doc</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/e697748b54774f7394340d83ae00ac36" rel="nofollow" target="_blank" title="Android 开机图片/文字/动画 修改.doc">Android 开机图片/文字/动画 修改.doc</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/1b2b1da6adf8435b832e73b54bbd1ed2" rel="nofollow" target="_blank" title="android之从网络上获取图片视频.docx">android之从网络上获取图片视频.docx</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/67a59a6799ec42d48c1c94c8b37ef862" rel="nofollow" target="_blank" title="Android 远程图片获取和本地缓存.docx">Android 远程图片获取和本地缓存.docx</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/101ff221b6e64e02a428aad8c905e750" rel="nofollow" target="_blank" title="Android Nine Patch图片及按钮背景.doc">Android Nine Patch图片及按钮背景.doc</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/720620bba5e6400bbbcb9fce7ec43e1c" rel="nofollow" target="_blank" title="在Android远程上传以及下载图片---xfire框架.doc">在Android远程上传以及下载图片---xfire框架.doc</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/005fe2c3797f4bf0af2feadddc46422e" rel="nofollow" target="_blank" title="Android 源码修改.pdf">Android 源码修改.pdf</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/c31bb9e296c5428587f2b93b6076274a" rel="nofollow" target="_blank" title="Android中几种图像特效处理的集锦.docx">Android中几种图像特效处理的集锦.docx</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/0478658ebfc74d0a8701042b9d732931" rel="nofollow" target="_blank" title="Android 图形图像处理.ppt">Android 图形图像处理.ppt</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/eea5db9199c640aca287b4297b62c866" rel="nofollow" target="_blank" title="百度android工程师面试题].pdf">百度android工程师面试题].pdf</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/82f8e5c5e731463ea29a0bb35675fcc2" rel="nofollow" target="_blank" title="Android API 函数详解.pdf">Android API 函数详解.pdf</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/9af6e009579d438d98a2299688613ced" rel="nofollow" target="_blank" title="Android 界面组件.ppt">Android 界面组件.ppt</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/a45eb316ed3f4052a5108e6feec252d0" rel="nofollow" target="_blank" title="基于Android平台的即时通讯系统的研究与实现.pdf">基于Android平台的即时通讯系统的研究与实现.pdf</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/65e0dd3eb5384149ad1651b4d7feff16" rel="nofollow" target="_blank" title="Android 开发基础.pptx">Android 开发基础.pptx</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/a03cc68f00ea4410b474c88dd12d099e" rel="nofollow" target="_blank" title="Android开发手册之API函数详解.pdf">Android开发手册之API函数详解.pdf</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/a346630b03e64264b2a48adabecf6c18" rel="nofollow" target="_blank" title="Professional Android Application Development.pdf">Professional Android Application Development.pdf</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/cb8d2a9a2d4043ea93eaa208c9c4db69" rel="nofollow" target="_blank" title="Android-UI 基本控件.ppt">Android-UI 基本控件.ppt</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/f605d93a462745d8b796c20e3a9024e3" rel="nofollow" target="_blank" title="Android 2高级编程(第2版) .pdf">Android 2高级编程(第2版) .pdf</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/6479c321e0de488db92cdd0bd37bc259" rel="nofollow" target="_blank" title="android定位和地图开发实例.docx">android定位和地图开发实例.docx</a></li>            
+            	    
+            	     <li><a href="http://www.open-open.com/doc/view/51af5155d1d34421acd2fca98ee0621f" rel="nofollow" target="_blank" title="Android开发中ImageButton与ImageView的使用.doc">Android开发中ImageButton与ImageView的使用.doc</a></li>            
+            	    
+            	</ul>
+            </td>
+			</tr></tbody></table>
+<div style="margin-top: 10px;margin-bottom: 10px;">
+<div id="baiduad1" style="margin-bottom: 5px;">
+</div>	
+
+</div>
+
+
+
+<div style="margin-top: 10px;margin-bottom: 10px;">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7963911354665843";
+/* 横向单元 */
+google_ad_slot = "6546082871";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/show_ads.js">
+</script><ins id="aswift_2_expand" style="display:inline-table;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;" frameborder="0" height="15" width="728"></iframe></ins></ins>
+</div>	
+	
+</div>
+
+<div id="view-side">
+<div id="upload-box" class="box-blue angle">
+<div class="box-bg">
+<div class="box-body"><a id="upload" class="upload" href="#"></a>
+</div>
+</div>
+</div>
+
+<div class="box-blue angle-footer">
+<div class="box_1"></div>
+<div class="box_2"></div>
+<div class="box_3"></div>
+<div class="box-bg">
+<div class="box-title">内容信息</div>
+<div id="docinfo" class="box-body">
+<div id="doc-score"><span id="score-stars" class="stars-big-0" title="经验评价得分：0.0分">&nbsp;</span><span id="score-num">0.0</span><br>
+<div id="score-ratecount">(已有0个人评价)</div>
+<div id="score-scale">
+<span class="starscale stars-small-10" title="力荐">&nbsp;</span>
+<div style="width: 0px" class="power"></div>
+0%<br>
+<span class="starscale stars-small-8" title="不错">&nbsp;</span>
+<div style="width: 0px" class="power"></div>
+0%<br>
+<span class="starscale stars-small-6" title="还行">&nbsp;</span>
+<div style="width: 0px" class="power"></div>
+0%<br>
+<span class="starscale stars-small-4" title="较差">&nbsp;</span>
+<div style="width: 0px" class="power"></div>
+0%<br>
+<span class="starscale stars-small-2" title="很差">&nbsp;</span>
+<div style="width: 0px" class="power"></div>
+0%<br>
+</div>
+</div>
+<div class="sp"></div>
+<div id="doc-status">
+<span class="item">收藏：3人</span>
+
+<span class="item">发布时间：2015-05-24 17:34:55</span>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="upload-box1" class="box-blue angle">
+<div class="box-bg">
+<div class="box-body">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-7963911354665843";
+    google_ad_slot = "7013382412";
+    google_ad_width = 336;
+    google_ad_height = 280;
+</script>
+<!-- opendoclibnew -->
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/show_ads.js">
+</script><ins id="aswift_3_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;" frameborder="0" height="280" width="336"></iframe></ins></ins>
+</div>
+</div>
+</div>
+
+
+<div id="upload-box1" class="box-blue angle">
+<div class="box-bg">
+<div class="box-body">
+<center>
+<script>
+document.write("<a href='https://www.jpush.cn/' target='_blank' rel='nofollow'><img src='http://static.open-open.com/j300250n.jpg'></a>")
+</script><a href="https://www.jpush.cn/" target="_blank" rel="nofollow"><img src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/j300250n.jpg"></a>
+</center>
+</div>
+</div>
+</div>
+
+
+<div id="view-tag" class="box-blue angle">
+<div class="box-bg">
+<div class="box-title">经验标签</div>
+<div id="tag-list" class="box-body">
+	
+		<a href="http://www.open-open.com/lib/tag/Android">Android</a>
+	 
+</div>
+
+
+
+</div>
+</div>
+
+ 
+
+<div id="view-topic" class="box-blue angle">
+<div class="box-bg">
+<div class="box-title">同类热门经验</div>
+<div class="box-body">
+	<ul id="topic-list" class="file-shortlist">
+		
+			<li>
+				<span class="samelist"></span><a title="上百个Android开源项目分享" href="http://www.open-open.com/lib/view/open1328063267889.html"><span class="title">上百个Android开源项目分享</span></a>
+				<div class="attribute"><span>79672次浏览</span></div>
+			</li>
+		
+			<li>
+				<span class="samelist"></span><a title="android" json解析及简单例子="" href="http://www.open-open.com/lib/view/open1326376799874.html"><span class="title">android json解析及简单例子</span></a>
+				<div class="attribute"><span>163908次浏览</span></div>
+			</li>
+		
+			<li>
+				<span class="samelist"></span><a title="Android" 软件自动更新功能的实现="" href="http://www.open-open.com/lib/view/open1322529319718.html"><span class="title">Android 软件自动更新功能的实现</span></a>
+				<div class="attribute"><span>64920次浏览</span></div>
+			</li>
+		
+			<li>
+				<span class="samelist"></span><a title="自定义" android="" 对话框="" (alertdialog)="" 的样式="" href="http://www.open-open.com/lib/view/open1325635738437.html"><span class="title">自定义 Android 对话框 (AlertDialog) 的样式</span></a>
+				<div class="attribute"><span>97085次浏览</span></div>
+			</li>
+		
+			<li>
+				<span class="samelist"></span><a title="adb" shell="" 命令详解="" href="http://www.open-open.com/lib/view/open1327557366686.html"><span class="title">adb shell 命令详解</span></a>
+				<div class="attribute"><span>0次浏览</span></div>
+			</li>
+		
+			<li>
+				<span class="samelist"></span><a title="android定位和地图开发实例" href="http://www.open-open.com/lib/view/open1328756009421.html"><span class="title">android定位和地图开发实例 </span></a>
+				<div class="attribute"><span>63079次浏览</span></div>
+			</li>
+		
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="view-top-category" class="box-blue angle-header">
+<div class="box-bg">
+<div class="box-title">相关经验</div>
+<div class="box-body">
+<ul id="top-list" class="file-shortlist">
+		
+			<li><span class="samelist"></span><a title="Android开源项目分类汇总" href="http://www.open-open.com/lib/view/open1406272852585.html" target="_blank"><span class="title"> Android开源项目分类汇总</span></a><br>
+			<div class="attribute"><span class="score stars-small-9" title="经验评价得分：4.7分">&nbsp;</span> <span>3人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="Android常用开源项目" href="http://www.open-open.com/lib/view/open1400830463175.html" target="_blank"><span class="title">Android常用开源项目 </span></a><br>
+			<div class="attribute"><span class="score stars-small-7" title="经验评价得分：3.7分">&nbsp;</span> <span>6人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="对" android="" 开发者有益的="" 40="" 条优化建议="" href="http://www.open-open.com/lib/view/open1379293219068.html" target="_blank"><span class="title">对 Android 开发者有益的 40 条优化建议</span></a><br>
+			<div class="attribute"><span class="score stars-small-8" title="经验评价得分：4.3分">&nbsp;</span> <span>3人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="GitHub" 优秀的="" android="" 开源项目="" href="http://www.open-open.com/lib/view/open1416808977430.html" target="_blank"><span class="title">GitHub 优秀的 Android 开源项目</span></a><br>
+			<div class="attribute"><span class="score stars-small-0" title="经验评价得分：0.0分">&nbsp;</span> <span>0人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="Android" 游戏设计教程：游戏元素和工具="" href="http://www.open-open.com/lib/view/open1339208972648.html" target="_blank"><span class="title">Android 游戏设计教程：游戏元素和工具</span></a><br>
+			<div class="attribute"><span class="score stars-small-7" title="经验评价得分：3.6分">&nbsp;</span> <span>5人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="Android" 各版本历史主要变动(version1.5--&gt;4.0)全面整理="" href="http://www.open-open.com/lib/view/open1385211570119.html" target="_blank"><span class="title">Android 各版本历史主要变动(Version1.5--&gt;4.0)全面整理 </span></a><br>
+			<div class="attribute"><span class="score stars-small-10" title="经验评价得分：5.0分">&nbsp;</span> <span>1人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="Web性能优化之图片优化" href="http://www.open-open.com/lib/view/open1418216475823.html" target="_blank"><span class="title">Web性能优化之图片优化</span></a><br>
+			<div class="attribute"><span class="score stars-small-0" title="经验评价得分：0.0分">&nbsp;</span> <span>0人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="Android单张图片查看、单指移动、双指缩放、双击最大化或最小化" href="http://www.open-open.com/lib/view/open1390525919554.html" target="_blank"><span class="title">Android单张图片查看、单指移动、双指缩放、双击最大化或最小化 </span></a><br>
+			<div class="attribute"><span class="score stars-small-0" title="经验评价得分：0.0分">&nbsp;</span> <span>0人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="在Android中实现图片缩放和旋转" href="http://www.open-open.com/lib/view/open1339846117471.html" target="_blank"><span class="title">在Android中实现图片缩放和旋转 </span></a><br>
+			<div class="attribute"><span class="score stars-small-10" title="经验评价得分：5.0分">&nbsp;</span> <span>1人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="iOS(iPhone,iPad))开发(Objective-C)开发库常用库索引" href="http://www.open-open.com/lib/view/open1387097799515.html" target="_blank"><span class="title">iOS(iPhone,iPad))开发(Objective-C)开发库常用库索引</span></a><br>
+			<div class="attribute"><span class="score stars-small-8" title="经验评价得分：4.0分">&nbsp;</span> <span>1人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="iOS开发库常用库索引" href="http://www.open-open.com/lib/view/open1437019250928.html" target="_blank"><span class="title">iOS开发库常用库索引 </span></a><br>
+			<div class="attribute"><span class="score stars-small-0" title="经验评价得分：0.0分">&nbsp;</span> <span>0人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="Android图片贴纸旋转缩放功能的实现" href="http://www.open-open.com/lib/view/open1432188634661.html" target="_blank"><span class="title">Android图片贴纸旋转缩放功能的实现</span></a><br>
+			<div class="attribute"><span class="score stars-small-0" title="经验评价得分：0.0分">&nbsp;</span> <span>0人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="Android之关于手势操作图片的缩放与移动" href="http://www.open-open.com/lib/view/open1343261747880.html" target="_blank"><span class="title">Android之关于手势操作图片的缩放与移动 </span></a><br>
+			<div class="attribute"><span class="score stars-small-0" title="经验评价得分：0.0分">&nbsp;</span> <span>0人评</span>
+			</div>
+		</li>
+		
+			<li><span class="samelist"></span><a title="iOS开发者必备：自己总结的iOS、mac开源项目及库" href="http://www.open-open.com/lib/view/open1442458724383.html" target="_blank"><span class="title">iOS开发者必备：自己总结的iOS、mac开源项目及库</span></a><br>
+			<div class="attribute"><span class="score stars-small-0" title="经验评价得分：0.0分">&nbsp;</span> <span>0人评</span>
+			</div>
+		</li>
+		
+</ul>
+</div>
+</div>
+<div class="box_3"></div>
+<div class="box_2"></div>
+<div class="box_1"></div>
+
+</div>
+
+
+
+<div id="view-top-category" class="box-blue angle-header">
+<div class="box-bg">
+<div class="box-title">相关讨论 - <a href="http://www.open-open.com/bbs" target="_blank" rel="nofollow">更多</a></div>
+<div class="box-body">
+<ul id="top-list" class="file-shortlist">
+		
+			<li>
+			<span class="samelist"></span><a title="玩转Android---UI篇" zoomcontrols放大缩小图片="" href="http://www.open-open.com/bbs/view/1320138574827" rel="nofollow" target="_blank"><span class="title">玩转Android---UI篇 ZoomControls放大缩小图片</span></a>
+		</li>
+		
+			<li>
+			<span class="samelist"></span><a title="Android网络图片异步加载实例" href="http://www.open-open.com/bbs/view/1318591627530" rel="nofollow" target="_blank"><span class="title">Android网络图片异步加载实例 </span></a>
+		</li>
+		
+			<li>
+			<span class="samelist"></span><a title="Android" 几种图像特效处理的集锦="" href="http://www.open-open.com/bbs/view/1320677040327" rel="nofollow" target="_blank"><span class="title">Android 几种图像特效处理的集锦</span></a>
+		</li>
+		
+			<li>
+			<span class="samelist"></span><a title="如何让你的" android="" 显示gif格式的图片="" href="http://www.open-open.com/bbs/view/1319170352905" rel="nofollow" target="_blank"><span class="title">如何让你的 Android 显示gif格式的图片</span></a>
+		</li>
+		
+			<li>
+			<span class="samelist"></span><a title="Android" fragment应用实战="" href="http://www.open-open.com/bbs/view/1434936267935" rel="nofollow" target="_blank"><span class="title"> Android Fragment应用实战</span></a>
+		</li>
+		
+			<li>
+			<span class="samelist"></span><a title="Android开发教程ZoomControls控件详解" href="http://www.open-open.com/bbs/view/1421137237187" rel="nofollow" target="_blank"><span class="title">Android开发教程ZoomControls控件详解</span></a>
+		</li>
+		
+			<li>
+			<span class="samelist"></span><a title="android笔记--在ListView中显示图片及ListView的动态刷新" href="http://www.open-open.com/bbs/view/1319448468827" rel="nofollow" target="_blank"><span class="title">android笔记--在ListView中显示图片及ListView的动态刷新</span></a>
+		</li>
+		
+</ul>
+</div>
+</div>
+<div class="box_3"></div>
+<div class="box_2"></div>
+<div class="box_1"></div>
+
+</div>
+
+<!-- end top list--></div>
+</div>
+
+
+
+
+<div id="footer">
+<div id="footer-menu"><a href="http://www.open-open.com/home/1">联系我们</a> - <a href="http://www.open-open.com/home/1">问题反馈</a> </div>
+<p>2005-2015 OPEN-OPEN, all rights reserved.</p>
+</div>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/jquery.js"></script>
+
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/thickbox.js"></script>
+
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/app.js"></script>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+	var rooturl="/lib";
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+	
+  	
+</script>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/jquery-ui.js"></script>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/view.js"></script>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/shCore.js"></script>
+<script type="text/javascript" src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/shAutoloader.js"></script>
+
+<script type="text/javascript">
+  	scrolltotop.offset(95,165);
+	scrolltotop.init();
+  </script>
+<script type="text/javascript">
+SyntaxHighlighter.autoloader(
+	'applescript			/lib/syntaxhighlighter_3.0.83/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/lib/syntaxhighlighter_3.0.83/scripts/shBrushAS3.js',
+	'bash shell				/lib/syntaxhighlighter_3.0.83/scripts/shBrushBash.js',
+	'coldfusion cf			/lib/syntaxhighlighter_3.0.83/scripts/shBrushColdFusion.js',
+	'cpp c					/lib/syntaxhighlighter_3.0.83/scripts/shBrushCpp.js',
+	'obj-c objc				/lib/syntaxhighlighter_3.0.83/scripts/shBrushObjC.js',
+	'c# c-sharp csharp		/lib/syntaxhighlighter_3.0.83/scripts/shBrushCSharp.js',
+	'css					/lib/syntaxhighlighter_3.0.83/scripts/shBrushCss.js',
+	'delphi pascal			/lib/syntaxhighlighter_3.0.83/scripts/shBrushDelphi.js',
+	'diff patch pas			/lib/syntaxhighlighter_3.0.83/scripts/shBrushDiff.js',
+	'erl erlang				/lib/syntaxhighlighter_3.0.83/scripts/shBrushErlang.js',
+	'groovy					/lib/syntaxhighlighter_3.0.83/scripts/shBrushGroovy.js',
+	'haxe hx				/lib/syntaxhighlighter_3.0.83/scripts/shBrushHaxe.js',
+	'java					/lib/syntaxhighlighter_3.0.83/scripts/shBrushJava.js',
+	'jfx javafx				/lib/syntaxhighlighter_3.0.83/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/lib/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js',
+	'perl pl				/lib/syntaxhighlighter_3.0.83/scripts/shBrushPerl.js',
+	'php					/lib/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js',
+	'text plain				/lib/syntaxhighlighter_3.0.83/scripts/shBrushPlain.js',
+	'py python				/lib/syntaxhighlighter_3.0.83/scripts/shBrushPython.js',
+	'ruby rails ror rb		/lib/syntaxhighlighter_3.0.83/scripts/shBrushRuby.js',
+	'scala					/lib/syntaxhighlighter_3.0.83/scripts/shBrushScala.js',
+	'sql					/lib/syntaxhighlighter_3.0.83/scripts/shBrushSql.js',
+	'vb vbnet				/lib/syntaxhighlighter_3.0.83/scripts/shBrushVb.js',
+	'xml xhtml xslt html	/lib/syntaxhighlighter_3.0.83/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+</script>
+
+<script language="javascript" type="text/javascript">
+//生成目录索引列表
+function GenerateContentList()
+{
+    var jquery_h3_list = $('#readercontainer h3');//如果你的章节标题不是h3,只需要将这里的h3换掉即可
+    if(jquery_h3_list.length>0)
+    {
+        var content = '<a name="_labelTop"></a>';
+        content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+        content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+        content    += '<ul>';
+        for(var i =0;i<jquery_h3_list.length;i++)
+        {
+	    if(i==0){
+              var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+	    }else
+	    {
+		var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+	    }
+            $(jquery_h3_list[i]).before(go_to_top);
+            var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+            content += li_content;
+        }
+        content    += '</ul>';
+        content    += '</div>';
+        if($('#readercontainer').length != 0 )
+        {
+            $($('#readercontainer')[0]).prepend(content);
+        }
+    }else{
+GenerateContentList2()
+    }  
+}
+
+function GenerateContentList2()
+{
+    var jquery_h3_list = $('#readercontainer h2');//如果你的章节标题不是h2,只需要将这里的h2换掉即可
+    if(jquery_h3_list.length>0)
+    {
+        var content = '<a name="_labelTop"></a>';
+        content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+        content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+        content    += '<ul>';
+        for(var i =0;i<jquery_h3_list.length;i++)
+        {
+	    if(i==0){
+              var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+	    }else
+	    {
+		var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+	    }
+            $(jquery_h3_list[i]).before(go_to_top);
+            var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+            content += li_content;
+        }
+        content    += '</ul>';
+        content    += '</div>';
+        if($('#readercontainer').length != 0 )
+        {
+            $($('#toc')[0]).prepend(content);
+        }
+    }    
+}
+
+GenerateContentList();
+</script>
+
+<!-- Baidu Button BEGIN -->
+<script src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/bds_s_v2.js" type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=6734290"></script>
+
+<script type="text/javascript">
+var bds_config={"bdTop":256};
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END -->
+
+<div aria-labelledby="ui-dialog-title-favorite-box" role="dialog" tabindex="-1" class="ui-dialog ui-widget ui-widget-content ui-corner-all  ui-draggable" style="display: none; z-index: 1000; outline: 0px none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-dialog-title-favorite-box" class="ui-dialog-title">收藏提示</span><a role="button" class="ui-dialog-titlebar-close ui-corner-all" href="#"><span class="ui-icon ui-icon-closethick">close</span></a></div><div class="ui-dialog-content ui-widget-content" style="display: block;" id="favorite-box">
+<table>
+		<tbody>
+				<tr>
+						<td align="right" width="70">文件夹</td>
+						<td><select id="fav_folderlist" name="folder">
+								<option selected="selected" value="0">请选择...</option>
+								<option id="newfolder-sp" disabled="disabled" value="">-------------</option>
+								<option value="-1">新增文件夹...</option>
+						</select></td>
+				</tr>
+				<tr style="display: none" id="newfolder-input">
+						<td align="right">新增文件夹</td>
+						<td><input id="fav_newfolder" maxlength="50" name="newfolder" type="text"></td>
+				</tr>
+				<tr>
+						<td align="right">标签</td>
+						<td><input id="fav_tags" maxlength="135" size="20" name="tags" type="text"></td>
+				</tr>
+				<tr>
+						<td></td>
+						<td colspan="2">(多个标签用逗号分隔)</td>
+				</tr>
+		</tbody>
+</table>
+</div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button aria-disabled="false" role="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type="button"><span class="ui-button-text">取消</span></button><button aria-disabled="false" role="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type="button"><span class="ui-button-text">确认</span></button></div></div></div><div title="回到顶部" style="position: fixed; bottom: 165px; right: 95px; cursor: pointer; display: block;" id="topcontrol"><img src="Android%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8%EF%BC%88%E5%9B%BE%E7%89%87%E5%8F%AF%E7%A7%BB%E5%8A%A8%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E6%97%8B%E8%BD%AC%EF%BC%89%20-%20OPEN%20%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E5%BA%93_files/gotop.gif" style="width:35px; height:35px;"></div></body></html>

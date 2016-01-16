@@ -1,0 +1,213 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  border: 0;
+  font: inherit;
+  font-family: "Lato", "Lucida Sans", Arial, Helvetica, sans-serif;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+html, body, * {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+html, body {
+  color: #585858;
+  font-family: "Lato", "Lucida Sans", sans-serif;
+  height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+header {
+  font-size: 21px;
+  font-weight: 900;
+  margin-top: 9px;
+  text-align: center;
+}
+
+.layout {
+  background: #fff;
+  font-family: "Lato", "Lucida Sans", sans-serif;
+}
+
+.headline {
+  color: #585858;
+  font-weight: 900;
+  line-height: 25px;
+  margin: 0 auto;
+  text-align: center;
+  width: 90%;
+}
+
+.product-wrapper {
+  background: #0073ec;
+  box-shadow: 5px 5px 0 #cbcbcb;
+  height: 128px;
+  margin: 10px auto;
+  padding: 8px;
+  width: 244px;
+}
+
+.product-wrapper ul {
+  color: #fff;
+  font-family: "Ubuntu Condensed", "Lucida Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding:0;
+}
+
+.product-wrapper ul li {
+  display:inline-block;
+  font-size: 16px;
+  height: 19px;
+  line-height: 18px;
+  margin-top: -2px;
+  position:relative;
+  width: 228px;
+}
+
+.product-wrapper ul li .product-name,
+.product-wrapper ul li .product-name span,
+.product-wrapper ul li .product-subtitle,
+.product-wrapper ul li .product-subtitle span {
+  font-family: "Ubuntu Condensed", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+
+.product-wrapper ul li:first-child {
+  margin-top: 0;
+}
+
+.product-wrapper ul li span {
+  display: inline-block;
+  margin-left: 5px;
+  padding-bottom: 1px;
+  vertical-align: middle;
+}
+
+.chevron {
+  display: inline-block;
+  font-size: 15px;
+  height: 20px;
+  text-align: left;
+  width: 17px;
+}
+
+.sub-title {
+  color: #585858;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  padding-bottom: 1px;
+  text-align: center;
+}
+
+.sub-title strong {
+  font-weight: 700;
+}
+
+.logo-holder {
+  height: 34px;
+  width: 100%;
+}
+
+.noSubTitle.noDisclaimer .logo-holder {
+  margin-top: 6px;
+}
+
+.logo {
+  height: 100%;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.logo img {
+  display: block;
+}
+
+.disclaimer {
+  bottom: 0;
+  font: 9px Arial;
+  line-height: 11px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+#logoContainer {
+  padding-top: 7px;
+  text-align: center;
+}
+
+.chevron::before {
+  border-style: solid;
+  border-width: 3px 3px 0 0;
+  content: '';
+  display: inline-block;
+  height: 6px;
+  left: 2px;
+  position: relative;
+  top: 4px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  vertical-align: top;
+  width: 6px;
+}
+
+.chevron.right:before {
+  left: 0;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.chevron.bottom:before {
+  top: 0;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.chevron.left:before {
+  left: 3px;
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}

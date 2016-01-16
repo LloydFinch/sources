@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<!--
+ ______________ 
+< TUICOOL.COM >
+ -------------- 
+        \   ^__^
+         \  (**)\__$__$__
+            (__)\       )\/\
+             U  ||------|
+                ||     ||
+-->
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="IyrxFbvRUQjLg1ipfkJVlj/nrzKEW5OYxY4Yi0lUrZw=" name="csrf-token">
+    <title>
+            android studio如何使用git - 推酷
+   </title>
+    <meta name="description" content="android studio如何使用git">
+  <link rel="shortcut icon" href="http://static0.tuicool.com/favicon.ico" type="image/x-icon">
+  <link href="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/application-0d4e8cad524c6308f5082fe6be9560f8.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/font-awesome.css" rel="stylesheet">
+  <script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/ca-pub-7054762349007490.js" type="text/javascript" async=""></script><script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/application-5272668a8ed427c5225cac7c6110da64.js" type="text/javascript"></script>
+
+  <!--[if IE 7]>
+  <link rel="stylesheet" href="http://assets.tuicool.com/assets/font-awesome-ie7.min.css">
+  <![endif]--> 
+    <script type="text/javascript" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/tip.js"></script>
+  
+  <script type="text/javascript" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/m.js"></script>
+<script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/ds.js"></script>
+<script type="text/javascript" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/spin.js"></script><style type="text/css"></style>
+<link rel="stylesheet" href="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/github.css">
+
+<script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/share.js"></script><link href="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/share_style1_24.css" rel="stylesheet"></head>
+<body><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/o.htm" id="BAIDU_DUP_fp_iframe"></iframe></div><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/o_002.htm" id="BAIDU_DUP_fp_iframe"></iframe></div>
+  
+  <div id="header" class="navbar-fixed-top">
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </a>
+          <a href="http://www.tuicool.com/" class="brand">推酷</a>        
+        <nav class="nav-collapse collapse">
+            <ul class="nav navbar primary-nav">                            
+              <li class="active">
+                <a href="http://www.tuicool.com/ah">
+                  文章
+                </a>
+              </li>              
+              <li class="">
+                <a href="http://www.tuicool.com/sites/hot">
+                  站点
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/topics">
+                  主题
+                </a>
+              </li>
+              <li class="">
+                <a href="http://course.tuicool.com/">
+                  公开课
+                </a>
+              </li>
+              <li class="">
+                <a href="http://huodong.tuicool.com/">
+                  活动
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/mobile">
+                  客户端
+                    <sup style="font-size:0.8em;color: #16A085;">荐</sup>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">周刊 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.tuicool.com/mags">编程狂人</a></li>
+                  <li><a href="http://www.tuicool.com/mags/design">设计匠艺</a></li> 
+                  <li><a href="http://www.tuicool.com/articles/weekly">一周拾遗</a></li>                  
+                </ul>
+              </li>
+              
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.tuicool.com/bbs">讨论区</a></li>  
+                  <li><a href="http://www.tuicool.com/about">关于我们</a></li>                 
+                </ul>
+              </li>
+              
+              </ul>
+            <form class="navbar-search pull-left" action="http://www.tuicool.com/search">
+              <input class="search-query span2" name="kw" placeholder="搜索" type="text">
+            </form>
+            <ul class="nav pull-right">
+                <li><a href="http://www.tuicool.com/login">登录</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+  </div>   
+</div>
+  <div id="flash_container" class="noPrint">    
+  </div>
+  
+  <div class="container-fluid">  
+    <div class="row-fluid article_row_fluid">
+    <div class="span8 contant article_detail_bg">
+        <h1>android studio如何使用git</h1>
+        <div class="article_meta">
+            <div style="margin-bottom: 5px;">
+            <span class="timestamp">时间&nbsp;2014-12-12 20:50:23
+            </span>
+            <span class="from">
+                <i class="icon-globe"></i>
+                    <a class="cut cut28 from" href="http://www.tuicool.com/sites/vQZRB3" target="_blank">CSDN博客
+                    </a>
+            </span>
+            </div>
+            <div class="source">
+                <i style="float:left;">原文</i>&nbsp; 
+                <a class="cut cut70" href="http://blog.csdn.net/hello0370/article/details/41899207?utm_source=tuicool" style="display:inline-block;">http://blog.csdn.net/hello0370/article/details/41899207</a>
+            </div>
+            <div>
+                <span>主题</span>
+                <a href="http://www.tuicool.com/topics/11090032" target="_blank">
+                    <span class="new-label">Git</span>
+                </a>
+                <a href="http://www.tuicool.com/topics/11350052" target="_blank">
+                    <span class="new-label">Android Studio</span>
+                </a>
+                <a href="http://www.tuicool.com/topics/11300004" target="_blank">
+                    <span class="new-label">Windows 7</span>
+                </a>
+            </div>
+        </div>
+        <div class="article_body" id="nei">
+            <div> 
+ <p>Android studio为我们提供了git的插件，让我们能够很好的进行版本控制，这篇blog我们就来展示一下如何使用（操作系统是win7）。</p> 
+ <p> 1.准备，下载window上的git， <a target="_blank" href="http://git-scm.com/downloads" rel="nofollow,noindex">下载地址</a> ；在studio中设置git插件：File-&gt;Setting-&gt;Version Control-&gt;Git, 然后可以点击Test测试一下，如下图：那么你就设置成功了。 </p> 
+ <p> <img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/3AfqI3B.jpg" alt="" class="alignCenter"> </p> 
+ <p>2.初始化git项目(git init)，操作如下：VCS-&gt;Enable Control Integration-&gt;Select "Git".</p> 
+ <p>3.为git添加remote，在这一步中，studio没有为我们提供可视化的GUI，得用Git工具了。找到并打开git安装目录下面的
+Git Bash，将目录切换到项目的目录，然后输入git添加remote的命令，例如：git remote add origin 
+"https://github.com/xxx/xxx.git".</p> 
+ <p>4.将代码添加到VCS(git add),选中要提交的文件-&gt;VCS-&gt;Git-&gt;Add,</p> 
+ <p> <img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/JJ7bEvm.png" alt="" class="alignCenter"> </p> 
+ <p>5.提交变化(git commit),VCS-&gt;Commit Changes,如下图，在提交的时候可以选择Commit and Push,就可以直接push到服务器。</p> 
+ <p> <img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/6biIfe.png" alt="" class="alignCenter"> </p> 
+ <p>6.Git Push，VCS-&gt;Git-&gt;Push.</p> 
+ <p>最后，如果要是clone project到studio，如下图，</p> 
+ <p> <img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/F7z2eeu.png" alt="" class="alignCenter"> </p> 
+</div>
+        </div>
+        <div class="article_social">
+        <div class="article_like">
+                <button class="btn btn-large btn-like" id="my_like2" data_id="V7j6Zfq">
+                    <i class="icon-heart-empty"></i>
+                    赞一个
+                </button>
+                <button class="btn btn-large btn-fav liked" id="my_like" data_id="V7j6Zfq">
+                    <i class="icon-star-empty"></i>
+                    收 藏
+                </button>
+        </div>
+        <div class="bottom_ad huodong-detail-ad-banner clearfix">
+            <script type="text/javascript">
+    var cpro_id = "u1665123";
+</script>
+<script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1665123_0"><div style="margin:0 auto;width:580px;height:90px;position:relative;"><iframe id="cproIframe_u1665123_1" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/acom.htm" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" align="center,center" height="90" width="580"></iframe></div></div><script charset="utf-8" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/acom"></script>
+
+        </div>
+        </div>
+           <div id="site_articles">
+              <div class="article-part-title">
+                <span>推荐文章</span>
+              </div>
+          <ul class="side_article_list">
+                <li class="side_article_list_item">
+                    1.<a href="http://www.tuicool.com/articles/qy6bYjF" target="_blank" title="浅谈Android 6.0之Runtime Permissions">
+                    浅谈Android 6.0之Runtime Permissions
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    2.<a href="http://www.tuicool.com/articles/Ub6n6bn" target="_blank" title="Android开发周报：Android 6.0源码发布、React Native For Android架构初探">
+                    Android开发周报：Android 6.0源码发布、React Native For Android..
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    3.<a href="http://www.tuicool.com/articles/yAbMj2" target="_blank" title="Android开发技术周报 Issue#51">
+                    Android开发技术周报 Issue#51
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    4.<a href="http://www.tuicool.com/articles/e2MZBzM" target="_blank" title="ViewDragHelper与Transition的示例代码">
+                    ViewDragHelper与Transition的示例代码
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    5.<a href="http://www.tuicool.com/articles/6JVfQfA" target="_blank" title="viewPager+fragment实现滑页效果">
+                    viewPager+fragment实现滑页效果
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    6.<a href="http://www.tuicool.com/articles/Q3iYF3j" target="_blank" title="Android UI 设计（11）：ListView 控件使用优化（五）">
+                    Android UI 设计（11）：ListView 控件使用优化（五）
+                </a>
+                </li>
+         </ul>
+        </div>
+
+        <div id="kan_articles"> <div class="article-part-title"> <span>相关推刊</span></div><ul class="kan-list">          <li class="kan-item">            <a href="http://www.tuicool.com/kans/1905552363" target="_blank" class="kan-item-head">              <small>刊主：sploit</small>              <img class="kan-cover" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/be67Jf.png">            </a>            <span class="kan-detail">              <a href="http://www.tuicool.com/kans/1905552363" target="_blank">《Android开发》</a>              <i class="kan-num">138</i>            </span>          </li>                  <li class="kan-item">            <a href="http://www.tuicool.com/kans/2637332260" target="_blank" class="kan-item-head">              <small>刊主：红色男爵</small>              <img class="kan-cover" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/Qjyuim.jpg">            </a>            <span class="kan-detail">              <a href="http://www.tuicool.com/kans/2637332260" target="_blank">《安卓开发》</a>              <i class="kan-num">70</i>            </span>          </li>                  <li class="kan-item">            <a href="http://www.tuicool.com/kans/3860223152" target="_blank" class="kan-item-head">              <small>刊主：情绪时间</small>              <img class="kan-cover" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/iuE732U.gif">            </a>            <span class="kan-detail">              <a href="http://www.tuicool.com/kans/3860223152" target="_blank">《Android开发》</a>              <i class="kan-num">69</i>            </span>          </li>        </ul><i class="clearfix"></i></div>
+        <div id="article_weibo" style="display:none;">
+            <div class="article-part-title">
+                <span>相关微博</span>
+                <sub>
+                    <a href="http://www.tuicool.com/articles/weibo_list/V7j6Zfq" target="_blank">(<i id="weibo_num"></i>)</a> 
+               </sub>
+            </div>
+            <div class="related-weibo-list"></div>
+        </div>
+        <div class="comments">
+    <div class="comments-area">
+    <div class="comments-header">
+        <h5>我来评几句</h5>
+        <div class="alert comment-alert alert-error" style="display:none;">
+            错误
+        </div>
+            <textarea cols="60" rows="5" id="comment-body" placeholder="请输入评论内容..." style="resize: none;"></textarea>
+            <span class="btn btn-medium btn-submit" id="comment-submit">登录后评论</span>
+        <p style="margin-top: 5px;margin-left:10px;">
+            已发表评论数(<span class="comment_cnt">2</span>)
+        </p>
+    </div>
+    <div style="display: block;" class="comments-list">
+        <div class="empty-cmts alert alert-success" style="display:none;">
+            没有更多评论了^^
+        </div>
+    <div class="single" id="c-10531">                            <img class="img avatar" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/0m.png">                            <div class="comment-item" style="padding:0 0 0 5px;">                              <div class="info"><a class="uname" href="http://www.tuicool.com/user/1927271179" target="_blank">心人一枚</a><span class="timestamp">06-29 16:24</span>                              </div>                              <div class="body">楼主，第三步能不能贴图教程一下？！</div>                              </div></div><div class="single" id="c-7531">                            <img class="img avatar" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/1.jpg">                            <div class="comment-item" style="padding:0 0 0 5px;">                              <div class="info"><a class="uname" href="http://www.tuicool.com/user/3516512763" target="_blank">觅泉</a><span class="timestamp">03-09 15:01</span>                              </div>                              <div class="body">get</div>                              </div></div></div>
+    <div class="more-comments" style="display:none;">
+        <a href="">更多评论</a>
+    </div>
+    <div class="load-fail" style="display:none;">
+        评论加载失败，<a href="javascript:reload_comments('V7j6Zfq',1,0,-1);">重新加载</a>
+    </div>
+    </div>
+</div>
+
+    </div>
+         <div class="span4 article_right_side">
+            
+            <div class="right_top">
+    <div class="article_related_site article_detail_bg">
+    <h4 class="article-part-title">相关站点</h4>
+    <div class="article_related_site_body clearfix">
+        <div class="logo">
+            <img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/vQZRB3.png">
+        </div>
+        <div class="name">
+            <div>
+                <a href="http://www.tuicool.com/sites/vQZRB3" target="_blank"> CSDN博客</a>
+            </div>
+            <div>
+                    <input class="btn btn-success right_site_follow" value="+&nbsp;订阅" id="my_follow" data_id="vQZRB3" type="button">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="right-ad">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1092367");</script><div id="BAIDU_DUP_wrapper_1092367_0"><iframe id="baidu_clb_slot_iframe_1092367_0" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/a_004.htm" onload="BAIDU_DUP_CLB_renderFrame('1092367_0')" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" style="border:0; vertical-align:bottom; margin:0; display:block;" frameborder="0" height="150" width="300"></iframe></div><script charset="utf-8" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/ecom_002"></script><script charset="utf-8" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/fixed7o.js"></script>
+
+</div>
+<div class="right-ad" style="margin-top: 8px">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1145010");</script><div id="BAIDU_DUP_wrapper_1145010_0"><iframe id="baidu_clb_slot_iframe_1145010_0" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/a_004.htm" onload="BAIDU_DUP_CLB_renderFrame('1145010_0')" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" style="border:0; vertical-align:bottom; margin:0; display:block;" frameborder="0" height="150" width="350"></iframe></div><script charset="utf-8" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/ecom"></script>
+
+</div>
+<div class="right-ad" style="margin-top: 8px">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1086175");</script><div id="BAIDU_DUP_wrapper_1086175_0"><iframe id="baidu_clb_slot_iframe_1086175_0" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/a_004.htm" onload="BAIDU_DUP_CLB_renderFrame('1086175_0')" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" style="border:0; vertical-align:bottom; margin:0; display:block;" frameborder="0" height="150" width="300"></iframe></div><script charset="utf-8" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/ecom_004"></script>
+
+</div>
+<div class="right-ad" style="margin-top: 8px">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1086186");</script><div id="BAIDU_DUP_wrapper_1086186_0"><iframe id="baidu_clb_slot_iframe_1086186_0" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/a_004.htm" onload="BAIDU_DUP_CLB_renderFrame('1086186_0')" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" style="border:0; vertical-align:bottom; margin:0; display:block;" frameborder="0" height="150" width="300"></iframe></div><script charset="utf-8" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/ecom_003"></script>
+
+</div>
+<div id="right_site_articles" class="article_detail_bg">
+    <div class="article-part-title">
+        <span>热门文章</span>
+    </div>
+    <ul class="side_article_list">
+        <li class="side_article_list_item">
+            1.<a href="http://www.tuicool.com/articles/qy6bYjF" target="_blank" title="浅谈Android 6.0之Runtime Permissions"> 浅谈Android 6.0之Runtime Permissions </a>
+        </li>
+        <li class="side_article_list_item">
+            2.<a href="http://www.tuicool.com/articles/Ub6n6bn" target="_blank" title="Android开发周报：Android 6.0源码发布、React Native For Android架构初探"> Android开发周报：Android 6.0源码发布、React Native For Android架构初探 </a>
+        </li>
+        <li class="side_article_list_item">
+            3.<a href="http://www.tuicool.com/articles/e2MZBzM" target="_blank" title="ViewDragHelper与Transition的示例代码"> ViewDragHelper与Transition的示例代码 </a>
+        </li>
+        <li class="side_article_list_item">
+            4.<a href="http://www.tuicool.com/articles/yAbMj2" target="_blank" title="Android开发技术周报 Issue#51"> Android开发技术周报 Issue#51 </a>
+        </li>
+        <li class="side_article_list_item">
+            5.<a href="http://www.tuicool.com/articles/6JVfQfA" target="_blank" title="viewPager+fragment实现滑页效果"> viewPager+fragment实现滑页效果 </a>
+        </li>
+        <li class="side_article_list_item">
+            6.<a href="http://www.tuicool.com/articles/Q3iYF3j" target="_blank" title="Android UI 设计（11）：ListView 控件使用优化（五）"> Android UI 设计（11）：ListView 控件使用优化（五） </a>
+        </li>
+    </ul>
+</div>
+</div>
+
+<div style="position: fixed; top: 50px;" class="operate_zone">
+    <div class="container-body share-body">
+        <div class="article-part-title">
+            <span>分享本文</span>
+        </div>
+        <div class="share_zone">
+    <div data-bd-bind="1444712619078" class="bdsharebuttonbox bdshare-button-style1-24"> 
+         <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+        <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+        <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_more" data-cmd="more"></a>
+     </div>
+    <script>
+        window._bd_share_config = {
+            "common" : {
+                "bdSnsKey" : {
+                    "tsina" : "3113829255",
+                    "tqq" : "801536792"
+                },
+                "bdText" : "android studio如何使用git (分享自 @推酷网)",
+                "bdMini" : "2",
+                "bdMiniList" : false,
+                "bdPic" : "http://aimg1.tuicool.com/3AfqI3.jpg",
+                "bdStyle" : "1",
+                "bdSize" : "24"
+            },
+            "share" : {}
+        };
+        with (document)
+        0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+    </script>
+</div>
+    </div>
+        <div class="frd_pos">
+        <script async="" src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/adsbygoogle.js"></script>
+<ins data-adsbygoogle-status="done" class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-7054762349007490" data-ad-slot="5705695566"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="250" width="300"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+</div>
+         </div>
+</div>
+
+<div id="myLoginModal" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>用户登录</h3>
+    </div>
+    <div class="modal-body">
+        <form method="post" action="/login" class="form-horizontal" id="login-form">
+            <div class="control-group">
+                <input id="xlEmail" name="email" placeholder="邮箱" type="text">
+            </div>
+            <div class="control-group">
+                <input id="xlPassword" name="password" placeholder="密码" type="password">
+            </div>
+            <div class="control-group">
+                <button type="submit" class="btn btn-primary">
+                    &nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;录&nbsp;&nbsp;
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="read-later-alert">
+</div>
+<div>
+   <a href="#add-article-to-kan" id="add-article-to-kan-btn" class="btn" data-toggle="modal" style="display:none;">添加到推刊</a>
+   <!-- add_article to kan -->
+<div id="add-article-to-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <span class="add-title">收藏到推刊</span>
+    <a href="#new-kan" class="btn pull-right" data-toggle="modal">创建推刊</a>
+    <i class="clearfix"></i>
+  </div>
+  <div class="modal-body">
+    <ul id="add-kan-list">
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <input value="V7j6Zfq" class="article-id" type="hidden"> 
+    <button class="btn btn-primary pull-left add-to-btn">  收 藏  </button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+</div>
+<div class="add-article-to-kan-alert">
+  已收藏到推刊！
+</div>
+
+   <div id="new-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <input name="name" id="new-kan-name" placeholder="推刊名(必填)" required="" data-validation-required-message="请填写推刊名" type="text">
+    <span class="new-ness-name">请填写推刊名</span>
+    <br>
+    <textarea name="desc" id="desc" rows="6" placeholder="推刊描述"></textarea>
+    <span class="new-ness-desc">描述不能大于100个字符!</span>
+    <br>
+    权限设置：<input name="type" value="1" checked="checked" type="radio"> 公开
+    <input name="type" value="0" type="radio"> 仅自己可见
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary pull-left create-kan-btn" disabled="disabled">创建</button>
+    <button class="btn dismiss-new-kan" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+</div>
+
+
+</div>
+<style type="text/css">
+    .btn-large {
+        padding: 0;
+    }
+    .load-fail {
+        display: none;
+    }
+</style>
+<script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/highlight.js"></script>
+<script type="text/javascript">
+    $('table').each(function(i) {
+        var size = $(this).children().size();
+        if (size > 1) {
+            $(this).attr('class',"table table-bordered");
+        } else if (size == 1) {
+            var e11 = $(this).children(":first");
+            var e1 = e11[0];
+            var name = e1.nodeName.toLowerCase();
+            if ("tbody" == name) {
+                if (e11.children().size() > 1) {
+                     $(this).attr('class',"table table-bordered");
+                }
+            }
+        }
+    });
+            related_kan("V7j6Zfq");
+        window.page = 0;
+        window.last = 0;    
+        window.first = true;
+        resize_article_image('#nei', 550);
+                load_comments("V7j6Zfq",1,0,-1);
+                window.uid = -1;
+        open_add_article_to_kan("false");
+        async_do_like2_article(); 
+        $('pre').each(function(i, e) {
+            hljs.highlightBlock(e, "<span class='indent'>  </span>", false)
+        });
+       
+          
+       handle_follow_site("#my_follow","已订阅","+ 订阅");
+</script>
+
+
+  </div>
+
+    <div class="footer">
+    <div class="footer-inner">
+    <dl class="about-link site-link">
+        <dt>
+            网站相关
+        </dt>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/about">关于我们</a>
+        </dd>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/mobile">移动应用</a>
+        </dd>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/bbs/go/issues">建议反馈</a>
+        </dd>
+    </dl>
+    <dl class="site-link follow-link">
+        <dt>
+            关注我们
+        </dt>
+        <dd>
+            <a target="_blank" href="http://e.weibo.com/tuicool2012"><img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/weibo-32.png">推酷网</a>
+        </dd>
+        <dd><img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/weixin-32.png">tuicool2012
+        </dd>
+        <dd><img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/qun-54.png">QQ群:164644910
+        </dd>
+    </dl>
+    <dl class="site-link links">
+        <dt>
+            友情链接
+        </dt>
+        <dd>
+                <a href="http://www.woshipm.com/" title="人人都是产品经理" target="_blank">人人都是产品经理</a>
+                <a href="http://www.tmtforum.com/" title="TMTForum" target="_blank">TMTForum</a>
+                <a href="http://www.moobuu.com/" title="魔部网" target="_blank">魔部网</a>
+                <a href="http://www.pm265.com/" title="PM256" target="_blank">PM256</a>
+                <a href="http://www.pintu360.com/" title="品途网" target="_blank">品途网</a>
+                <a href="http://www.yidonghua.com/" title="移动信息化" target="_blank">移动信息化</a>
+                <a href="http://www.snsiu.com/" title="行晓网" target="_blank">行晓网</a>
+                <a href="http://code4app.com/" title="Code4App" target="_blank">Code4App</a>
+                <a href="http://www.taskcity.com/" title="智城外包网" target="_blank">智城外包网</a>
+                <a href="http://blog.lamper.cn/" title="LAMP人" target="_blank">LAMP人</a>
+                <a href="http://www.apkway.com/forum.php" title="安卓航班网" target="_blank">安卓航班网</a>
+                <a href="http://www.huxiu.com/" title="虎嗅" target="_blank">虎嗅</a>
+                <a href="http://www.ycpai.com/" title="缘创派" target="_blank">缘创派</a>
+                <a href="http://www.iterduo.com/" title="IT耳朵" target="_blank">IT耳朵</a>
+                <a href="http://www.iresearch.cn/" title="艾瑞网" target="_blank">艾瑞网</a>
+                <a href="http://mediaworks.caixin.com/" title="创媒工场" target="_blank">创媒工场</a>
+                <a href="http://www.leiphone.com/" title="雷锋网" target="_blank">雷锋网</a>
+                <a href="http://www.managershare.com/" title="经理人分享" target="_blank">经理人分享</a>
+                <a href="http://www.shichangbu.com/" title="市场部网" target="_blank">市场部网</a>
+                <a href="http://www.ikanchai.com/" title="砍柴网" target="_blank">砍柴网</a>
+                <a href="http://www.cocoachina.com/" title="CocoaChina" target="_blank">CocoaChina</a>
+                <a href="http://www.ibeifeng.com/" title="北风网" target="_blank">北风网</a>
+                <a href="http://www.jiankongbao.com/" title="云智慧" target="_blank">云智慧</a>
+                <a href="http://www.wyzc.com/" title="我赢职场" target="_blank">我赢职场</a>
+                <a href="http://www.thebigdata.cn/" title="大数据时代" target="_blank">大数据时代</a>
+                <a href="http://www.qidic.com/" title="奇笛网" target="_blank">奇笛网</a>
+                <a href="http://www.cngulu.com/" title="咕噜网" target="_blank">咕噜网</a>
+                <a href="http://www.linuxdiyf.com/" title="红联linux" target="_blank">红联linux</a>
+                <a href="http://win10.ithome.com/" title="Win10之家" target="_blank">Win10之家</a>
+                <a href="http://www.niaogebiji.com/" title="鸟哥笔记" target="_blank">鸟哥笔记</a>
+                <a href="http://www.play.cn/" title="爱游戏" target="_blank">爱游戏</a>
+                <a href="http://www.investide.cn/" title="投资潮" target="_blank">投资潮</a>
+                <a href="http://www.31huiyi.com/" title="31会议网" target="_blank">31会议网</a>
+                <a href="https://www.jpush.cn/" title="极光推送" target="_blank">极光推送</a>
+                <a href="https://www.teambition.com/" title="Teambition" target="_blank">Teambition</a>
+                <a href="http://cn.cocos2d-x.org/" title="Cocos引擎中文官网" target="_blank">Cocos引擎中文官网</a>
+                <a href="http://www.guigu.org/" title="硅谷网" target="_blank">硅谷网</a>
+            <a href="http://www.tuicool.com/links">更多链接&gt;&gt;</a>&nbsp;&nbsp;
+        </dd>
+    </dl>
+    <div class="clear"></div>
+    </div>
+</div>
+
+<div style="display:none;">
+   <script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/stat.php" language="JavaScript"></script><script src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/core.php" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=5541078" target="_blank" title="站长统计"><img src="android%20studio%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%20-%20%E6%8E%A8%E9%85%B7_files/pic.gif" border="0" hspace="0" vspace="0"></a>
+</div>
+
+
+
+
+<div style="display: block;" title="返回顶部" class="return"></div></body></html>

@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/fixed7o.js" async="" charset="utf-8"></script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/ecom" async="" charset="utf-8"></script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/ecom_002" async="" charset="utf-8"></script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/ecom_005" async="" charset="utf-8"></script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/ecom_003" async="" charset="utf-8"></script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/ecom_004" async="" charset="utf-8"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta property="qc:admins" content="15317273575564615446375">
+            <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, maximum-scale=1, user-scalable=no">
+        <meta name="alexaVerifyID" content="LkzCRJ7rPEUwt6fVey2vhxiw1vQ">
+    <meta name="apple-itunes-app" content="app-id=958101793, app-argument=">
+    <title>Android利用Cookie实现码源登录效果 - SegmentFault</title>
+
+
+            <meta name="description" content="上一篇讲了界面的实现，详情请戳Android利用Cookie实现码源登录效果（一） - 界面实现，本篇将对功能的实现进行分析。 具体实现 功能实现 使用HttpClient进行post请求 在进行post请求的时候，我们先看看网页版登...">
+    
+            <meta name="keywords" content="android codefrom">
+    
+    <link rel="search" type="application/opensearchdescription+xml" href="http://segmentfault.com/opensearch.xml" title="SegmentFault">
+    <link rel="shortcut icon" href="http://static.segmentfault.com/global/img/favicon.30f7204d.ico">
+    <link rel="apple-touch-icon" href="http://static.segmentfault.com/global/img/touch-icon.c78b1075.png">
+
+    <meta name="msapplication-TileColor" content="#009a61">
+    <meta name="msapplication-square150x150logo" content="http://static.segmentfault.com/global/img/touch-icon.c78b1075.png">
+
+    <meta name="userId" value="" id="SFUserId">
+    <meta name="userRank" value="" id="SFUserRank">
+
+    <link rel="alternate" type="application/atom+xml" title="SegmentFault 最新问题" href="http://segmentfault.com/feeds/questions">
+    <link rel="alternate" type="application/atom+xml" title="SegmentFault 最新文章" href="http://segmentfault.com/feeds/blogs">
+    
+    
+    
+                        <link rel="stylesheet" href="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/global.css">
+                            <link rel="stylesheet" href="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/blog_all.css">
+                            <link rel="stylesheet" href="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/responsive.css">
+                
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="http://static.segmentfault.com/global/css/ie.css?"/>
+    <script src="http://static.segmentfault.com/global/js/html5shiv.js?"></script>
+    <script src="http://static.segmentfault.com/global/js/respond.js?"></script>
+    <![endif]-->
+
+
+</head>
+
+<body class="blog-post"><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/o.htm" id="BAIDU_DUP_fp_iframe"></iframe></div>
+<!--[if lt IE 9]>
+<div class="alert alert-danger topframe" role="alert">你的浏览器实在<strong>太太太太太太旧了</strong>，放学别走，升级完浏览器再说 <a target="_blank"
+                                                                                                        class="alert-link"
+                                                                                                        href="http://browsehappy.com">立即升级</a>
+</div>
+<![endif]-->
+
+
+    <div class="global-nav" xmlns="http://www.w3.org/1999/html">
+        <nav class="container nav">
+            <div class="dropdown m-menu">
+                <a href="javascript:void(0);" id="dLabel" class="visible-xs-block m-toptools" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-align-justify"></span>
+                    <span class="mobile-menu__unreadpoint"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/questions/newest">问答</a></li>
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/blogs">文章</a></li>
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/notes">笔记</a></li>
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/jobs">职位</a></li>
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/events">活动</a></li>
+
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/tags">标签</a></li>
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/users">榜单</a></li>
+                    <li class="mobile-menu__item"><a href="http://segmentfault.com/sites">子站</a></li>
+                                    </ul>
+            </div>
+
+            <h1 class="logo"><a class="sf" href="http://segmentfault.com/">SegmentFault</a></h1>
+
+                            <a href="http://segmentfault.com/user/login" class="visible-xs-block pull-right m-ask m-toptools"><span class="glyphicon glyphicon-log-in"></span></a>
+            
+            <form action="/search" class="header-search pull-left hidden-sm hidden-xs">
+                <button class="btn btn-link">
+                    <span class="sr-only">搜索</span>
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <input id="searchBox" name="q" placeholder="输入关键字搜索" class="form-control" type="text">
+            </form>
+
+            <ul class="menu list-inline pull-left hidden-xs">
+                <li class="menu__item"><a href="http://segmentfault.com/questions">问答</a></li>
+                <li class="menu__item"><a href="http://segmentfault.com/blogs">文章</a></li>
+                <li class="menu__item"><a href="http://segmentfault.com/notes">笔记</a></li>
+                <li class="menu__item"><a href="http://segmentfault.com/jobs">职位</a></li>
+
+
+                <li class="menu__item dropdown hoverDropdown">
+                    <a data-toggle="dropdown" href="http://segmentfault.com/sites" class="more dropdownBtn">
+                        ···<span class="sr-only">更多</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://segmentfault.com/events">活动</a></li>
+                        <li><a href="http://segmentfault.com/users">榜单</a></li>
+                        <li><a href="http://segmentfault.com/tags">标签</a></li>
+                        <li><a href="http://segmentfault.com/sites">子站</a></li>
+                        <li><a href="http://segmentfault.com/app">移动 App</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="opts pull-right list-inline hidden-xs">
+                                    <!-- <li class="opts__item">赶快加入吧 <a id="sfLogin" href="/user/login" class="SFLogin em ml10" onClick="_gaq.push(['_trackEvent', 'Button', 'Click', 'Login']);">立即登录</a></li> -->
+                    <li class="opts__item message has-unread">
+                        <a target="_blank" href="http://segmentfault.com/tour">
+                            <span class="sr-only">消息</span>
+                            <span id="messageCount" class="glyphicon glyphicon-envelope"></span>
+                        </a>
+                    </li>
+                    <li class="opts__item">
+                        <a href="http://segmentfault.com/user/login" class="SFLogin em ml10" onclick="_gaq.push(['_trackEvent', 'Button', 'Click', 'Login']);">注册 · 登录</a>
+                    </li>
+                            </ul>
+        </nav>
+    </div>
+
+<div class="wrap">
+    <div class="post-topheader custom-BicycleWarrior">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <ol class="breadcrumb">
+                        <li><a href="http://segmentfault.com/blogs">文章</a></li>
+                        <li><a href="http://segmentfault.com/blog/BicycleWarrior">Android</a></li>
+                        <li class="active">文章详情</li>
+                    </ol>
+                    <h1 class="h3 title" id="articleTitle" data-id="1190000002877843"><a href="http://segmentfault.com/a/1190000002877843"> Android利用Cookie实现码源登录效果</a></h1>
+                    <div class="author" data-username="BicycleWarrior" data-userslug="BicycleWarrior" data-useravatar="http://sfault-avatar.b0.upaiyun.com/101/990/1019901963-557054d60cb2a_huge128">
+                        <a href="http://segmentfault.com/u/BicycleWarrior" class="mr5"><img class="avatar-24 mr10" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/1019901963-557054d60cb2a_huge128.jpg" alt="BicycleWarrior"><strong>BicycleWarrior</strong></a> <strong class="text-black mr10">140</strong>
+                        6月4日 发布
+                                                                    </div>
+                </div>
+                <div class="col-md-3">
+                    <ul class="widget-action--ver list-unstyled">
+                        <li>
+                                                                                            <button type="button" class="btn btn-success btn-sm" data-id="1190000002877843" id="sideLike">推荐</button>
+                                                                                        <strong id="sideLiked">2</strong> 推荐
+                        </li>
+                        <li>
+                                                                                            <button type="button" id="sideBookmark" class="btn btn-default btn-sm" data-id="1190000002877843" data-type="article">收藏</button>
+                                                                                        <strong id="sideBookmarked">6</strong> 收藏，<strong class="no-stress">2.1k</strong> 浏览
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- end .post-topheader -->
+
+    <div class="container mt30">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main">
+
+                                                <div class="article fmt">
+                    
+<p>上一篇讲了界面的实现，详情请戳<a target="_blank" rel="nofollow" href="http://www.codefrom.com/paper/Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%EF%BC%88%E4%B8%80%EF%BC%89%20-%20%E7%95%8C%E9%9D%A2%E5%AE%9E%E7%8E%B0">Android利用Cookie实现码源登录效果（一） - 界面实现</a>，本篇将对功能的实现进行分析。</p>
+
+<h3 id="articleHeader0">具体实现</h3>
+
+<hr>
+<h4>功能实现</h4>
+
+<ul>
+<li>
+<p><strong>使用HttpClient进行post请求</strong><br>
+在进行post请求的时候，我们先看看<a target="_blank" rel="nofollow" href="http://www.codefrom.com/login">网页版登录</a>是如何发送数据的。<br><img style="cursor: pointer; display: inline;" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/0a55fad2cdb669679c6c88d1dd5d67cf" data-src="http://codefrom.oss-cn-hangzhou.aliyuncs.com/www/2015/06-04/0a55fad2cdb669679c6c88d1dd5d67cf"></p>
+
+<p>打开登录页面，点击键盘上的F12，在<code>Sources</code>中找到<code>login</code>，找到发送ajax请求进行登录的部分，加入断点：<br><img style="cursor: pointer; display: inline;" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/b0e6fced1e90235d9f7ed6eb18aae0fd" data-src="http://codefrom.oss-cn-hangzhou.aliyuncs.com/www/2015/06-04/b0e6fced1e90235d9f7ed6eb18aae0fd"></p>
+
+<p>点击登录，然后在<code>Network</code>中看到有个发送到<a target="_blank" rel="nofollow" href="http://www.codefrom.com/login/ajax">http://www.codefrom.com/login/ajax</a> 的网络请求，点开它，我们看看Header里面有什么数据：<br><img style="cursor: pointer; display: inline;" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/363e93cf19a367a556665175592e1d07" data-src="http://codefrom.oss-cn-hangzhou.aliyuncs.com/www/2015/06-04/363e93cf19a367a556665175592e1d07"></p>
+
+<p>可以看到，有三部分数据：<code>Request URL</code> 、 <code>Request Header</code> 和 <code>Form Data</code>，他们的含义我想大家应该都很清楚。那么我们就尝试在<code>LoginActivity</code>中模拟一下这个操作。</p>
+
+<p>首先，我们写一个方法，封装我们的登录请求：</p>
+
+<div class="widget-codetool" style="display: none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="public String sendPost(String url, String username, String password) {
+    // 根据url获得HttpPost对象
+    HttpPost httpRequest = new HttpPost(url);
+    // 取得默认的HttpClient
+    DefaultHttpClient httpclient = new DefaultHttpClient();
+    String strResult = null;
+    // NameValuePair实现请求参数的封装
+    List&lt;NameValuePair&gt; params = new ArrayList&lt;NameValuePair&gt;();
+    params.add(new BasicNameValuePair(&quot;_tk&quot;, &quot;codefrom&quot;));
+    params.add(new BasicNameValuePair(&quot;name&quot;, username));
+    params.add(new BasicNameValuePair(&quot;pass&quot;, password));
+    httpRequest.addHeader(&quot;Accept&quot;, &quot;application/json, text/javascript, */*; q=0.01&quot;);
+    httpRequest.addHeader(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;);
+    httpRequest.addHeader(&quot;Origin&quot;, &quot;http://www.codefrom.com&quot;);
+    httpRequest.addHeader(&quot;Referer&quot;, &quot;http://www.codefrom.com/login&quot;);
+    httpRequest.addHeader(&quot;X-Requested-With&quot;, &quot;XMLHttpRequest&quot;);
+    try {
+        // 添加请求参数到请求对象
+        httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+        // 获得响应对象
+        HttpResponse httpResponse = httpclient.execute(httpRequest);
+        // 判断是否请求成功
+        if (httpResponse.getStatusLine().getStatusCode() == 200) {
+            // 获得响应返回Json格式数据
+            strResult = EntityUtils.toString(httpResponse.getEntity());
+            return strResult;
+        } else {
+            strResult = &quot;错误响应:&quot; + httpResponse.getStatusLine().toString();
+        }
+    } catch (ClientProtocolException e) {
+        strResult = &quot;错误响应:&quot; + e.getMessage().toString();
+        e.printStackTrace();
+        return strResult;
+    } catch (IOException e) {
+        strResult = &quot;错误响应:&quot; + e.getMessage().toString();
+        e.printStackTrace();
+        return strResult;
+    } catch (Exception e) {
+        strResult = &quot;错误响应:&quot; + e.getMessage().toString();
+        e.printStackTrace();
+        return strResult;
+    }
+    return strResult;
+}
+" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><pre><code class="java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">sendPost</span><span class="hljs-params">(String url, String username, String password)</span> </span>{
+    <span class="hljs-comment">// 根据url获得HttpPost对象</span>
+    HttpPost httpRequest = <span class="hljs-keyword">new</span> HttpPost(url);
+    <span class="hljs-comment">// 取得默认的HttpClient</span>
+    DefaultHttpClient httpclient = <span class="hljs-keyword">new</span> DefaultHttpClient();
+    String strResult = <span class="hljs-keyword">null</span>;
+    <span class="hljs-comment">// NameValuePair实现请求参数的封装</span>
+    List&lt;NameValuePair&gt; params = <span class="hljs-keyword">new</span> ArrayList&lt;NameValuePair&gt;();
+    params.add(<span class="hljs-keyword">new</span> BasicNameValuePair(<span class="hljs-string">"_tk"</span>, <span class="hljs-string">"codefrom"</span>));
+    params.add(<span class="hljs-keyword">new</span> BasicNameValuePair(<span class="hljs-string">"name"</span>, username));
+    params.add(<span class="hljs-keyword">new</span> BasicNameValuePair(<span class="hljs-string">"pass"</span>, password));
+    httpRequest.addHeader(<span class="hljs-string">"Accept"</span>, <span class="hljs-string">"application/json, text/javascript, */*; q=0.01"</span>);
+    httpRequest.addHeader(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/x-www-form-urlencoded; charset=UTF-8"</span>);
+    httpRequest.addHeader(<span class="hljs-string">"Origin"</span>, <span class="hljs-string">"http://www.codefrom.com"</span>);
+    httpRequest.addHeader(<span class="hljs-string">"Referer"</span>, <span class="hljs-string">"http://www.codefrom.com/login"</span>);
+    httpRequest.addHeader(<span class="hljs-string">"X-Requested-With"</span>, <span class="hljs-string">"XMLHttpRequest"</span>);
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-comment">// 添加请求参数到请求对象</span>
+        httpRequest.setEntity(<span class="hljs-keyword">new</span> UrlEncodedFormEntity(params, HTTP.UTF_8));
+        <span class="hljs-comment">// 获得响应对象</span>
+        HttpResponse httpResponse = httpclient.execute(httpRequest);
+        <span class="hljs-comment">// 判断是否请求成功</span>
+        <span class="hljs-keyword">if</span> (httpResponse.getStatusLine().getStatusCode() == <span class="hljs-number">200</span>) {
+            <span class="hljs-comment">// 获得响应返回Json格式数据</span>
+            strResult = EntityUtils.toString(httpResponse.getEntity());
+            <span class="hljs-keyword">return</span> strResult;
+        } <span class="hljs-keyword">else</span> {
+            strResult = <span class="hljs-string">"错误响应:"</span> + httpResponse.getStatusLine().toString();
+        }
+    } <span class="hljs-keyword">catch</span> (ClientProtocolException e) {
+        strResult = <span class="hljs-string">"错误响应:"</span> + e.getMessage().toString();
+        e.printStackTrace();
+        <span class="hljs-keyword">return</span> strResult;
+    } <span class="hljs-keyword">catch</span> (IOException e) {
+        strResult = <span class="hljs-string">"错误响应:"</span> + e.getMessage().toString();
+        e.printStackTrace();
+        <span class="hljs-keyword">return</span> strResult;
+    } <span class="hljs-keyword">catch</span> (Exception e) {
+        strResult = <span class="hljs-string">"错误响应:"</span> + e.getMessage().toString();
+        e.printStackTrace();
+        <span class="hljs-keyword">return</span> strResult;
+    }
+    <span class="hljs-keyword">return</span> strResult;
+}
+</code></pre>
+
+<p>（注：当前版本网络请求只能异步操作）<br>
+ 然后，在<code>UserLoginTask</code>的<code>doInBackground</code>中，当睡眠结束后，我们对登录方法进行调用：</p>
+
+<div class="widget-codetool" style="display:none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="String res = sendPost(&quot;http://www.codefrom.com/login/ajax&quot;, mEmail, mPassword);
+Log.d(&quot;CodeFromLogin&quot;, res);
+" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><pre><code class="java">String res = sendPost(<span class="hljs-string">"http://www.codefrom.com/login/ajax"</span>, mEmail, mPassword);
+Log.d(<span class="hljs-string">"CodeFromLogin"</span>, res);
+</code></pre>
+
+<p>我们运行项目，看看日志中打印：<br><img style="cursor: pointer; display: inline;" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/b532e3d37ebc7f8f9b9db0a0c288235d" data-src="http://codefrom.oss-cn-hangzhou.aliyuncs.com/www/2015/06-04/b532e3d37ebc7f8f9b9db0a0c288235d"></p>
+
+<p>没错，将Unicode转成中文之后，得到“操作成功”的返回信息！<br>
+需要注意一点，一开始，我没有添加<code>httpRequest.addHeader</code>这部分的内容，得到的结果如下：<br><img style="cursor: pointer; display: inline;" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/ce39b2de310f1f3dcb61fa3be6e5831c" data-src="http://codefrom.oss-cn-hangzhou.aliyuncs.com/www/2015/06-04/ce39b2de310f1f3dcb61fa3be6e5831c"><br>
+感兴趣的同学可以尝试一下，服务器返回提示我们操作失败，缺少ajax头部信息！</p>
+</li>
+<li>
+<p><strong>保存来自服务器的Cookie</strong><br>
+能够成功发送数据给服务器，并且服务器能响应结果，那么，我们能否获取更多内容呢？当然可以！<code>HttpClient</code>提供了下面的方法供我们获取Cookie：</p>
+
+<div class="widget-codetool" style="display:none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="// 取得Cookie
+CookieStore mCookieStore = httpclient.getCookieStore();
+List&lt;Cookie&gt; cookies = mCookieStore.getCookies();
+" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><pre><code class="java"><span class="hljs-comment">// 取得Cookie</span>
+CookieStore mCookieStore = httpclient.getCookieStore();
+List&lt;Cookie&gt; cookies = mCookieStore.getCookies();
+</code></pre>
+
+<p>那么，Android又是如何对Cookie进行管理的呢？</p>
+
+<div class="widget-codetool" style="display: none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="// 设置cookie
+public static void synCookies(Context context, String url) {  
+    CookieSyncManager.createInstance(context);  
+    CookieManager cookieManager = CookieManager.getInstance();  
+    cookieManager.setCookie(url, &quot;uid=1243432&quot;);              
+    CookieSyncManager.getInstance().sync();  
+}
+
+// 清除cookie
+private void removeCookie(Context context) {
+    CookieSyncManager.createInstance(context);  
+    CookieManager cookieManager = CookieManager.getInstance(); 
+    cookieManager.removeAllCookie();
+    CookieSyncManager.getInstance().sync();  
+}
+" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><pre><code class="java"><span class="hljs-comment">// 设置cookie</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">synCookies</span><span class="hljs-params">(Context context, String url)</span> </span>{  
+    CookieSyncManager.createInstance(context);  
+    CookieManager cookieManager = CookieManager.getInstance();  
+    cookieManager.setCookie(url, <span class="hljs-string">"uid=1243432"</span>);              
+    CookieSyncManager.getInstance().sync();  
+}
+
+<span class="hljs-comment">// 清除cookie</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeCookie</span><span class="hljs-params">(Context context)</span> </span>{
+    CookieSyncManager.createInstance(context);  
+    CookieManager cookieManager = CookieManager.getInstance(); 
+    cookieManager.removeAllCookie();
+    CookieSyncManager.getInstance().sync();  
+}
+</code></pre>
+
+<p>接下来，我们就可以对<code>sendPost</code>方法进行一些改造了：</p>
+
+<div class="widget-codetool" style="display: none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="public CookieManager cookieManager = null;
+public static String cookies;
+public String sendPost(String url, String username, String password) {
+  CookieSyncManager.createInstance(LoginActivity.this);
+  // 每次登录操作的时候先清除cookie
+  removeAllCookie();
+  // 根据url获得HttpPost对象
+  HttpPost httpRequest = new HttpPost(url);
+  // 取得默认的HttpClient
+  DefaultHttpClient httpclient = new DefaultHttpClient();
+  String strResult = null;
+  // NameValuePair实现请求参数的封装
+  List&lt;NameValuePair&gt; params = new ArrayList&lt;NameValuePair&gt;();
+  params.add(new BasicNameValuePair(&quot;_tk&quot;, &quot;codefrom&quot;));
+  params.add(new BasicNameValuePair(&quot;name&quot;, username));
+  params.add(new BasicNameValuePair(&quot;pass&quot;, password));
+  httpRequest.addHeader(&quot;Accept&quot;, &quot;application/json, text/javascript, */*; q=0.01&quot;);
+  httpRequest.addHeader(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;);
+  httpRequest.addHeader(&quot;Origin&quot;, &quot;http://www.codefrom.com&quot;);
+  httpRequest.addHeader(&quot;Referer&quot;, &quot;http://www.codefrom.com/login&quot;);
+  httpRequest.addHeader(&quot;X-Requested-With&quot;, &quot;XMLHttpRequest&quot;);
+  try {
+      // 添加请求参数到请求对象
+      httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+      // 获得响应对象
+      HttpResponse httpResponse = httpclient.execute(httpRequest);
+      // 判断是否请求成功
+      if (httpResponse.getStatusLine().getStatusCode() == 200) {
+          // 获得响应返回Json格式数据
+          strResult = EntityUtils.toString(httpResponse.getEntity());
+          // 取得Cookie
+          CookieStore mCookieStore = httpclient.getCookieStore();
+          List&lt;Cookie&gt; cookies = mCookieStore.getCookies();
+          if (cookies.isEmpty()) {
+              System.out.println(&quot;Cookies为空&quot;);
+          } else {
+              for (int i = 0; i &lt; cookies.size(); i++) {
+                  // 保存cookie
+                  Cookie cookie = cookies.get(i);
+                  Log.d(&quot;Cookie&quot;, cookies.get(i).getName() + &quot;=&quot; + cookies.get(i).getValue());
+                  cookieManager = CookieManager.getInstance();
+                  String cookieString = cookie.getName() + &quot;=&quot; + cookie.getValue() + &quot;; domain=&quot; + cookie.getDomain();
+                  cookieManager.setCookie(&quot;http://www.codefrom.com/&quot;, cookieString);
+              }
+          }
+          return strResult;
+      } else {
+          strResult = &quot;错误响应:&quot; + httpResponse.getStatusLine().toString();
+      }
+  } catch (ClientProtocolException e) {
+      strResult = &quot;错误响应:&quot; + e.getMessage().toString();
+      e.printStackTrace();
+      return strResult;
+  } catch (IOException e) {
+      strResult = &quot;错误响应:&quot; + e.getMessage().toString();
+      e.printStackTrace();
+      return strResult;
+  } catch (Exception e) {
+      strResult = &quot;错误响应:&quot; + e.getMessage().toString();
+      e.printStackTrace();
+      return strResult;
+  }
+  return strResult;
+}
+
+private void removeAllCookie() {
+  cookieManager = CookieManager.getInstance();
+  cookieManager.removeAllCookie();
+  CookieSyncManager.getInstance().sync();  
+}
+" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><pre><code class="java"><span class="hljs-keyword">public</span> CookieManager cookieManager = <span class="hljs-keyword">null</span>;
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String cookies;
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">sendPost</span><span class="hljs-params">(String url, String username, String password)</span> </span>{
+  CookieSyncManager.createInstance(LoginActivity.<span class="hljs-keyword">this</span>);
+  <span class="hljs-comment">// 每次登录操作的时候先清除cookie</span>
+  removeAllCookie();
+  <span class="hljs-comment">// 根据url获得HttpPost对象</span>
+  HttpPost httpRequest = <span class="hljs-keyword">new</span> HttpPost(url);
+  <span class="hljs-comment">// 取得默认的HttpClient</span>
+  DefaultHttpClient httpclient = <span class="hljs-keyword">new</span> DefaultHttpClient();
+  String strResult = <span class="hljs-keyword">null</span>;
+  <span class="hljs-comment">// NameValuePair实现请求参数的封装</span>
+  List&lt;NameValuePair&gt; params = <span class="hljs-keyword">new</span> ArrayList&lt;NameValuePair&gt;();
+  params.add(<span class="hljs-keyword">new</span> BasicNameValuePair(<span class="hljs-string">"_tk"</span>, <span class="hljs-string">"codefrom"</span>));
+  params.add(<span class="hljs-keyword">new</span> BasicNameValuePair(<span class="hljs-string">"name"</span>, username));
+  params.add(<span class="hljs-keyword">new</span> BasicNameValuePair(<span class="hljs-string">"pass"</span>, password));
+  httpRequest.addHeader(<span class="hljs-string">"Accept"</span>, <span class="hljs-string">"application/json, text/javascript, */*; q=0.01"</span>);
+  httpRequest.addHeader(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/x-www-form-urlencoded; charset=UTF-8"</span>);
+  httpRequest.addHeader(<span class="hljs-string">"Origin"</span>, <span class="hljs-string">"http://www.codefrom.com"</span>);
+  httpRequest.addHeader(<span class="hljs-string">"Referer"</span>, <span class="hljs-string">"http://www.codefrom.com/login"</span>);
+  httpRequest.addHeader(<span class="hljs-string">"X-Requested-With"</span>, <span class="hljs-string">"XMLHttpRequest"</span>);
+  <span class="hljs-keyword">try</span> {
+      <span class="hljs-comment">// 添加请求参数到请求对象</span>
+      httpRequest.setEntity(<span class="hljs-keyword">new</span> UrlEncodedFormEntity(params, HTTP.UTF_8));
+      <span class="hljs-comment">// 获得响应对象</span>
+      HttpResponse httpResponse = httpclient.execute(httpRequest);
+      <span class="hljs-comment">// 判断是否请求成功</span>
+      <span class="hljs-keyword">if</span> (httpResponse.getStatusLine().getStatusCode() == <span class="hljs-number">200</span>) {
+          <span class="hljs-comment">// 获得响应返回Json格式数据</span>
+          strResult = EntityUtils.toString(httpResponse.getEntity());
+          <span class="hljs-comment">// 取得Cookie</span>
+          CookieStore mCookieStore = httpclient.getCookieStore();
+          List&lt;Cookie&gt; cookies = mCookieStore.getCookies();
+          <span class="hljs-keyword">if</span> (cookies.isEmpty()) {
+              System.out.println(<span class="hljs-string">"Cookies为空"</span>);
+          } <span class="hljs-keyword">else</span> {
+              <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; cookies.size(); i++) {
+                  <span class="hljs-comment">// 保存cookie</span>
+                  Cookie cookie = cookies.get(i);
+                  Log.d(<span class="hljs-string">"Cookie"</span>, cookies.get(i).getName() + <span class="hljs-string">"="</span> + cookies.get(i).getValue());
+                  cookieManager = CookieManager.getInstance();
+                  String cookieString = cookie.getName() + <span class="hljs-string">"="</span> + cookie.getValue() + <span class="hljs-string">"; domain="</span> + cookie.getDomain();
+                  cookieManager.setCookie(<span class="hljs-string">"http://www.codefrom.com/"</span>, cookieString);
+              }
+          }
+          <span class="hljs-keyword">return</span> strResult;
+      } <span class="hljs-keyword">else</span> {
+          strResult = <span class="hljs-string">"错误响应:"</span> + httpResponse.getStatusLine().toString();
+      }
+  } <span class="hljs-keyword">catch</span> (ClientProtocolException e) {
+      strResult = <span class="hljs-string">"错误响应:"</span> + e.getMessage().toString();
+      e.printStackTrace();
+      <span class="hljs-keyword">return</span> strResult;
+  } <span class="hljs-keyword">catch</span> (IOException e) {
+      strResult = <span class="hljs-string">"错误响应:"</span> + e.getMessage().toString();
+      e.printStackTrace();
+      <span class="hljs-keyword">return</span> strResult;
+  } <span class="hljs-keyword">catch</span> (Exception e) {
+      strResult = <span class="hljs-string">"错误响应:"</span> + e.getMessage().toString();
+      e.printStackTrace();
+      <span class="hljs-keyword">return</span> strResult;
+  }
+  <span class="hljs-keyword">return</span> strResult;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeAllCookie</span><span class="hljs-params">()</span> </span>{
+  cookieManager = CookieManager.getInstance();
+  cookieManager.removeAllCookie();
+  CookieSyncManager.getInstance().sync();  
+}
+</code></pre>
+
+<p>运行改造之后的代码，我们先进行登录，然后点击按钮打开<a target="_blank" rel="nofollow" href="http://www.codefrom.com/">码源首页</a>，可以看到，首页导航是可以看到登录信息的！</p>
+</li>
+<li>
+<p><strong>使用本地广播更新界面</strong><br>
+完成登录之后，我们需要修改主界面的控件文字，比如我们想显示用户名等等。理论上来讲，使用<code>startActivity</code>将数据通过Intent从登录界面传递给主界面的方法是可行的。但是，我们需要考虑在实际中，如果多个地方校验到用户没有登录，都需要弹出登录界面，然后登录完了之后，我们需要返回的界面不一定都是主界面（如果PM要求返回主界面，当我没说），那我们该怎么办呢？<br>
+这时，我们可以通过本地广播来实现：在主界面（或者其他需要得到登录信息的界面），动态注册一个本地广播，通过广播获取到的Intent来进行数据分析，部分代码如下：</p>
+
+<div class="widget-codetool" style="display:none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="localBroadcastManager = LocalBroadcastManager.getInstance(MainActivity.this);
+IntentFilter intentFilter = new IntentFilter();
+intentFilter.addAction(&quot;com.codefrom.broadcastreceiver.LOGIN_BROADCAST&quot;);//建议把它写一个公共的变量，这里方便阅读就不写了。
+loginBroadcastReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Bundle bundle = intent.getExtras();
+
+        boolean result = bundle.getBoolean(&quot;result&quot;);
+        String user = bundle.getString(&quot;username&quot;);
+        if (result) {
+            username.setText(user);
+            Toast.makeText(MainActivity.this, &quot;登录成功&quot;, Toast.LENGTH_SHORT).show();
+            loginbtn.setText(&quot;退出登录&quot;);
+            isLogin = true;
+        } else {
+            Toast.makeText(MainActivity.this, &quot;登录失败&quot;, Toast.LENGTH_SHORT).show();
+            username.setText(&quot;未登录&quot;);
+            loginbtn.setText(&quot;登录&quot;);
+            isLogin = false;
+        }
+    }
+};
+localBroadcastManager.registerReceiver(loginBroadcastReceiver, intentFilter);
+" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><pre><code class="java">localBroadcastManager = LocalBroadcastManager.getInstance(MainActivity.<span class="hljs-keyword">this</span>);
+IntentFilter intentFilter = <span class="hljs-keyword">new</span> IntentFilter();
+intentFilter.addAction(<span class="hljs-string">"com.codefrom.broadcastreceiver.LOGIN_BROADCAST"</span>);<span class="hljs-comment">//建议把它写一个公共的变量，这里方便阅读就不写了。</span>
+loginBroadcastReceiver = <span class="hljs-keyword">new</span> BroadcastReceiver() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onReceive</span><span class="hljs-params">(Context context, Intent intent)</span> </span>{
+        Bundle bundle = intent.getExtras();
+
+        <span class="hljs-keyword">boolean</span> result = bundle.getBoolean(<span class="hljs-string">"result"</span>);
+        String user = bundle.getString(<span class="hljs-string">"username"</span>);
+        <span class="hljs-keyword">if</span> (result) {
+            username.setText(user);
+            Toast.makeText(MainActivity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"登录成功"</span>, Toast.LENGTH_SHORT).show();
+            loginbtn.setText(<span class="hljs-string">"退出登录"</span>);
+            isLogin = <span class="hljs-keyword">true</span>;
+        } <span class="hljs-keyword">else</span> {
+            Toast.makeText(MainActivity.<span class="hljs-keyword">this</span>, <span class="hljs-string">"登录失败"</span>, Toast.LENGTH_SHORT).show();
+            username.setText(<span class="hljs-string">"未登录"</span>);
+            loginbtn.setText(<span class="hljs-string">"登录"</span>);
+            isLogin = <span class="hljs-keyword">false</span>;
+        }
+    }
+};
+localBroadcastManager.registerReceiver(loginBroadcastReceiver, intentFilter);
+</code></pre>
+
+<p>同时，在登录界面，登录成功之后，我们可以发送一个广播告知其他界面登录结果，由于登录在子线程中进行，我们就需要借助<code>Handler</code>进行广播发送：</p>
+
+<div class="widget-codetool" style="display:none;"><button class="selectCode btn btn-xs">全选</button><button href="javascript:void(0);" class="copyCode btn btn-xs" data-clipboard-text="Handler handler = new Handler() {
+public void handleMessage(android.os.Message msg) {
+    LoginInfo loginInfo = (LoginInfo) msg.obj;
+    Toast.makeText(LoginActivity.this, loginInfo.getStatus() + &quot; - &quot; + loginInfo.getMsg() + &quot; - &quot; + Uri.decode(loginInfo.getMsg()) , Toast.LENGTH_SHORT).show();
+    if(&quot;1&quot;.equals(loginInfo.getStatus())) {
+        Intent intent = new Intent(&quot;com.codefrom.broadcastreceiver.LOGIN_BROADCAST&quot;);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(&quot;result&quot;, true);
+        bundle.putString(&quot;username&quot;, &quot;单车武士&quot;);
+        intent.putExtras(bundle);
+        localBroadcastManager.sendBroadcast(intent);
+    }
+};
+};
+" data-toggle="tooltip" data-placement="top" title="">复制</button><button href="javascript:void(0);" class="saveToNote btn btn-xs">放进笔记</button></div><pre><code class="java">Handler handler = <span class="hljs-keyword">new</span> Handler() {
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">handleMessage</span><span class="hljs-params">(android.os.Message msg)</span> </span>{
+    LoginInfo loginInfo = (LoginInfo) msg.obj;
+    Toast.makeText(LoginActivity.<span class="hljs-keyword">this</span>, loginInfo.getStatus() + <span class="hljs-string">" - "</span> + loginInfo.getMsg() + <span class="hljs-string">" - "</span> + Uri.decode(loginInfo.getMsg()) , Toast.LENGTH_SHORT).show();
+    <span class="hljs-keyword">if</span>(<span class="hljs-string">"1"</span>.equals(loginInfo.getStatus())) {
+        Intent intent = <span class="hljs-keyword">new</span> Intent(<span class="hljs-string">"com.codefrom.broadcastreceiver.LOGIN_BROADCAST"</span>);
+        Bundle bundle = <span class="hljs-keyword">new</span> Bundle();
+        bundle.putBoolean(<span class="hljs-string">"result"</span>, <span class="hljs-keyword">true</span>);
+        bundle.putString(<span class="hljs-string">"username"</span>, <span class="hljs-string">"单车武士"</span>);
+        intent.putExtras(bundle);
+        localBroadcastManager.sendBroadcast(intent);
+    }
+};
+};
+</code></pre>
+
+<p>其实，如果观察<code>LoginActivity</code>，在成功以后，它做的操作是调用Activity的<code>finish()</code>，也就是直接关闭登录界面了，我猜系统应该也是不推荐直接使用startActivity进行显示跳转的。<br>
+由于服务器并没有给我们返回更多用户的信息，我们先返回一个写死的username过去……当然，在网页中是根据cookie来获取用户信息的，这方面的东西在Android上面的实现我们今后再探讨。</p>
+</li>
+</ul>
+<p>以上就是我们实现的模拟<a target="_blank" rel="nofollow" href="http://www.codefrom.com/login">登录码源</a>效果，如果有什么不对的地方或者更好的建议，欢迎回复交流。</p>
+
+<hr>
+<p>附：<a target="_blank" rel="nofollow" href="https://coding.net/u/BicycleWarrior/p/CodeFromLogin/git/archive/master">Demo下载</a></p>
+
+                </div>
+                                
+                <div class="clearfix">
+
+                    <ul class="taglist--inline pull-left">
+                                                <li class="tagPopup"><a class="tag" href="http://segmentfault.com/t/android/blogs" data-toggle="popover" data-img="http://sfault-avatar.b0.upaiyun.com/752/833/752833330-1040000000089658_huge100" data-placement="top" data-original-title="android" data-id="1040000000089658">android</a></li>
+                                                <li class="tagPopup"><a class="tag" href="http://segmentfault.com/t/codefrom/blogs" data-toggle="popover" data-img="" data-placement="top" data-original-title="codefrom" data-id="1040000002877841">codefrom</a></li>
+                                            </ul>
+
+                </div>
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left">
+                        <li><a href="http://segmentfault.com/a/1190000002877843" class="text-muted">链接</a></li>
+                                                                                                <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown">更多<b class="caret"></b></a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li><a href="#911" data-toggle="modal" data-target="#911" data-type="article" data-id="1190000002877843" data-typetext="文章">举报</a></li>
+                                                                        
+                                                                        
+                                                        </ul>
+                        </li>
+                    </ul>
+                    <div class="pull-right post-share">
+                        <div style="display: block;" class="widget-share sharer-0" data-text="Android利用Cookie实现码源登录效果"><ul class="sn-inline"><li data-network="weibo"><a data-original-title="分享至新浪微博" href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="">新浪微博</a></li><li data-network="wechart"><a data-original-title="分享至微信" href="javascript:void(0);" class="entypo-wechart icon-sn-wechat share-2" data-toggle="tooltip" data-placement="top" title="">微信</a></li><li data-network="twitter"><a data-original-title="分享至 Twitter" href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="">Twitter</a></li><li data-network="facebook"><a data-original-title="分享至 Facebook" href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="">Facebook</a></li><li data-network="renren"><a data-original-title="分享至人人网" href="javascript:void(0);" class="entypo-renren icon-sn-renren share-5" data-toggle="tooltip" data-placement="top" title="">人人网</a></li><li data-network="douban"><a data-original-title="分享至豆瓣" href="javascript:void(0);" class="entypo-douban icon-sn-douban share-6" data-toggle="tooltip" data-placement="top" title="">豆瓣</a></li></ul></div>
+
+                    </div>
+                </div>
+
+                <div class="text-center mt10">
+                
+                    <button type="button" id="mainLike" data-id="1190000002877843" class="btn btn-success btn-lg mr10">
+                        2 推荐
+                    </button>
+                
+                                    <button type="button" id="mainBookmark" data-type="article" data-id="1190000002877843" class="btn btn-default btn-lg ">
+                        收藏
+                    </button>
+                                </div>
+
+                
+                                <div class="recommend-post pt30 mt40 mb30 border-top">
+                    <h4 class="mt0">你可能感兴趣的文章</h4>
+                    <ul class="widget-links list-unstyled">
+                                                <li class="widget-links__item">
+                            <a href="http://segmentfault.com/a/1190000003021891" title="Android颜色转换工具类ColorUtil">Android颜色转换工具类ColorUtil</a>
+                            <small class="text-muted">
+                                8 收藏，685 浏览
+                            </small>
+                        </li>
+                                                <li class="widget-links__item">
+                            <a href="http://segmentfault.com/a/1190000003021886" title=" [Parallax Animation]实现知乎 Android 客户端启动页视差滚动效果"> [Parallax Animation]实现知乎 Android 客户端启动页视差滚动效果</a>
+                            <small class="text-muted">
+                                8 收藏，194 浏览
+                            </small>
+                        </li>
+                                                <li class="widget-links__item">
+                            <a href="http://segmentfault.com/a/1190000002969678" title="android基于ZXing和ZBar的二维码扫描项目">android基于ZXing和ZBar的二维码扫描项目</a>
+                            <small class="text-muted">
+                                6 收藏，920 浏览
+                            </small>
+                        </li>
+                                            </ul>
+                </div>
+                                <!-- <ul class="list-unstyled text-muted mt30">
+                                                            <li class="mt5">下一篇：<a href="/a/1190000002886883">使用BigDecimal处理Java中的小数</a></li>
+                                    </ul> -->
+
+                <h2 class="h4 post-comment-title">讨论区</h2>
+                <div class="widget-comments" id="comment-1190000002877843" data-id="1190000002877843"><div class="widget-comments__item hover-show " id="1050000003827717">    <div class="votes widget-vote">        <button class="like " data-id="1050000003827717" type="button" data-do="like" data-type="comment"></button><span class="count">&nbsp;</span>    </div>    <div class="comment-content wordbreak">          <div class="content fmt"><p>请教下：一、假如在Network中看到有个发送到<a target="_blank" href="http://www.codefrom.com/login/ajax">http://www.codefrom.com/login/ajax</a> 的网络请求中，里面的密码是加密过的，那么还能使用这种方式吗？<br>二、这种方法能用到百度账号、京东的登陆上吗？     <br>三、 还有啊，您给的这个<a target="_blank" href="http://www.codefrom.com/">http://www.codefrom.com</a>网址注册都注册不了呐~_~<br>四、如果登陆的网站有验证码，这个可能就要再多一步验证码的获取了吧？</p> </div>        <textarea name="text" rows="3" id="commentText-1050000003827717" class="editTextarea form-control mb10 hidden">请教下：一、假如在Network中看到有个发送到http://www.codefrom.com/login/ajax 的网络请求中，里面的密码是加密过的，那么还能使用这种方式吗？
+二、这种方法能用到百度账号、京东的登陆上吗？     
+三、 还有啊，您给的这个http://www.codefrom.com网址注册都注册不了呐~_~
+四、如果登陆的网站有验证码，这个可能就要再多一步验证码的获取了吧？</textarea>        <p class="comment-meta">            <a href="http://segmentfault.com/c/1050000003827717" class="text-muted">#1</a>&nbsp;<a href="http://segmentfault.com/u/menglihuakai" class="commentUser" data-userid="1030000003827671" data-username="梦里花开" data-userslug="menglihuakai" data-useravatar="http://static.segmentfault.com/global/img/user-40.png"><strong>梦里花开</strong></a> · <span class="createdDate">10月8日</span>                        · <a href="#" class="commentReply" data-userid="1030000003827671" data-id="1050000003827717" data-username="梦里花开">回复</a>                                    <span class="pull-right commentTools hover-show-obj">                                                <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-type="comment" data-id="1050000003827717" data-typetext="评论" data-placement="top" title="举报">举报</a>            </span>        </p>    </div></div><div class="widget-comments__item hover-show " id="1050000003828405">    <div class="votes widget-vote">        <button class="like " data-id="1050000003828405" type="button" data-do="like" data-type="comment"></button><span class="count">&nbsp;</span>    </div>    <div class="comment-content wordbreak">  <span>回复 <a href="http://segmentfault.com/u/menglihuakai">梦里花开</a>：</span>        <div class="content fmt"><p>感谢关注，关于你的问题：</p>
+<p>一、如果是通过js加密后传输的，需要自己实现他的加密方式。提交的form表单的内容，就是前台发送到服务器进行验证的内容，只要和network中的请求一样（包括header等）就可以正常登录的（不排除其他怪异的限制……）<br>二、刚看了下京东的登录页，登录请求的ajax地址是<a target="_blank" href="https://passport.jd.com/uc/loginService?uuid=265e8a94-fdce-4bca-b078-61ad95b7501b&amp;ReturnUrl=http%3A%2F%2Fwww.jd.com%2F&amp;r=0.39838757435791194&amp;version=2015">https://passport.jd.com/uc/loginService?uuid=265e8a94-fdce-4bca-b078-61ad95b7501b&amp;ReturnUrl=http%3A%2F%2Fwww.jd.com%2F&amp;r=0.39838757435791194&amp;version=2015</a>，network中看到的内容来看是可以用我文章中的方法进行登录的。一般现在流行的ajax方式登录应该都可以用这种方式登录。<br>三、这个……开发已经在处理了，不介意的话，下午再试试吧。。（刚看了下，用<a target="_blank" href="http://www.codefrom.com/reg">http://www.codefrom.com/reg</a>这个可以注册，我写这个的时候，网址还没改版，那个登录<a target="_blank" href="http://www.codefrom.com/login">http://www.codefrom.com/login</a>也是以前的，可以正常登录获取服务器，对于模拟登录这个是可以用的。。）<br>四、同样的，应该模拟先请求一次验证码让用户输入。当然这个我还没做过呢，理论上来说是可以的，你试了之后可以告诉的=。=</p>
+ </div>        <textarea name="text" rows="3" id="commentText-1050000003828405" class="editTextarea form-control mb10 hidden">感
+谢关注，关于你的问题：
+
+一、如果是通过js加密后传输的，需要自己实现他的加密方式。提交的form表单的内容，就是前台发送到服务器进行验证的内容，只要和network中的
+请求一样（包括header等）就可以正常登录的（不排除其他怪异的限制……）
+二、刚看了下京东的登录页，登录请求的ajax地址是https://passport.jd.com/uc
+/loginService?uuid=265e8a94-fdce-4bca-b078-61ad95b7501b&amp;
+ReturnUrl=http%3A%2F%2Fwww.jd.com%2F&amp;r=0.39838757435791194&amp;
+version=2015，network中看到的内容来看是可以用我文章中的方法进行登录的。一般现在流行的ajax方式登录应该都可以用这种方式登
+录。
+三、这个……开发已经在处理了，不介意的话，下午再试试吧。。（刚看了下，用http://www.codefrom.com/reg这个可以注册，我写
+这个的时候，网址还没改版，那个登录http://www.codefrom.com/login也是以前的，可以正常登录获取服务器，对于模拟登录这个
+是可以用的。。）
+四、同样的，应该模拟先请求一次验证码让用户输入。当然这个我还没做过呢，理论上来说是可以的，你试了之后可以告诉的=。=</textarea>        <p class="comment-meta">            <a href="http://segmentfault.com/c/1050000003828405" class="text-muted">#2</a>&nbsp;<a href="http://segmentfault.com/u/BicycleWarrior" class="commentUser" data-userid="1030000002511257" data-username="BicycleWarrior" data-userslug="BicycleWarrior" data-useravatar="http://sfault-avatar.b0.upaiyun.com/101/990/1019901963-557054d60cb2a_medium40"><strong>BicycleWarrior</strong></a> · <span class="createdDate">10月8日</span>                        · <a href="#" class="commentReply" data-userid="1030000002511257" data-id="1050000003828405" data-username="BicycleWarrior">回复</a>                                    <span class="pull-right commentTools hover-show-obj">                                                <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-type="comment" data-id="1050000003828405" data-typetext="评论" data-placement="top" title="举报">举报</a>            </span>        </p>    </div></div><div class="widget-comments__item hover-show " id="1050000003829643">    <div class="votes widget-vote">        <button class="like " data-id="1050000003829643" type="button" data-do="like" data-type="comment"></button><span class="count">&nbsp;</span>    </div>    <div class="comment-content wordbreak">  <span>回复 <a href="http://segmentfault.com/u/BicycleWarrior">BicycleWarrior</a>：</span>        <div class="content fmt"><p>针对第二个问题，我看来京东的ajax地址，发现跟你得到的是不一样的，每次都会变化，这样的话，还能用您文章的方法来进行登录吗？<br>另外，您能否顺便讲下webview如何设置cookie，使得下次免输密码直接登录？（我找了网上的一些资料，都介绍得不完整）</p> </div>        <textarea name="text" rows="3" id="commentText-1050000003829643" class="editTextarea form-control mb10 hidden">针对第二个问题，我看来京东的ajax地址，发现跟你得到的是不一样的，每次都会变化，这样的话，还能用您文章的方法来进行登录吗？
+另外，您能否顺便讲下webview如何设置cookie，使得下次免输密码直接登录？（我找了网上的一些资料，都介绍得不完整）</textarea>        <p class="comment-meta">            <a href="http://segmentfault.com/c/1050000003829643" class="text-muted">#3</a>&nbsp;<a href="http://segmentfault.com/u/menglihuakai" class="commentUser" data-userid="1030000003827671" data-username="梦里花开" data-userslug="menglihuakai" data-useravatar="http://static.segmentfault.com/global/img/user-40.png"><strong>梦里花开</strong></a> · <span class="createdDate">10月8日</span>                        · <a href="#" class="commentReply" data-userid="1030000003827671" data-id="1050000003829643" data-username="梦里花开">回复</a>                                    <span class="pull-right commentTools hover-show-obj">                                                <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-type="comment" data-id="1050000003829643" data-typetext="评论" data-placement="top" title="举报">举报</a>            </span>        </p>    </div></div><div class="widget-comments__item hover-show " id="1050000003836561">    <div class="votes widget-vote">        <button class="like " data-id="1050000003836561" type="button" data-do="like" data-type="comment"></button><span class="count">&nbsp;</span>    </div>    <div class="comment-content wordbreak">          <div class="content fmt"><p><a href="http://segmentfault.com/u/BicycleWarrior">@BicycleWarrior</a>  麻烦回复下上面的问题啦，谢谢~</p> </div>        <textarea name="text" rows="3" id="commentText-1050000003836561" class="editTextarea form-control mb10 hidden">@BicycleWarrior  麻烦回复下上面的问题啦，谢谢~</textarea>        <p class="comment-meta">            <a href="http://segmentfault.com/c/1050000003836561" class="text-muted">#4</a>&nbsp;<a href="http://segmentfault.com/u/menglihuakai" class="commentUser" data-userid="1030000003827671" data-username="梦里花开" data-userslug="menglihuakai" data-useravatar="http://static.segmentfault.com/global/img/user-40.png"><strong>梦里花开</strong></a> · <span class="createdDate">10月10日</span>                        · <a href="#" class="commentReply" data-userid="1030000003827671" data-id="1050000003836561" data-username="梦里花开">回复</a>                                    <span class="pull-right commentTools hover-show-obj">                                                <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-type="comment" data-id="1050000003836561" data-typetext="评论" data-placement="top" title="举报">举报</a>            </span>        </p>    </div></div><div class="widget-comments__item hover-show " id="1050000003837107">    <div class="votes widget-vote">        <button class="like " data-id="1050000003837107" type="button" data-do="like" data-type="comment"></button><span class="count">&nbsp;</span>    </div>    <div class="comment-content wordbreak">  <span>回复 <a href="http://segmentfault.com/u/menglihuakai">梦里花开</a>：</span>        <div class="content fmt"><p>1、
+地址确实不一样，京东的登录界面打开的时候从服务器获取了一个隐藏字段uuid，还有一个r参数怎么来的我没研究，但是，这对本篇文章的技术没有影响。只
+要你知道了具体的登录地址（这个地址可能和codefrom一样是固定的，也可能和jd一样是含有动态参数的），传入相应的字段，当然，有时候服务器还会
+校验你浏览器版本等等，这些你都可以伪装。只要你做的和浏览器的一样，就可以从服务器得到相应的返回数据。<br>2、关于设置cookie，文章中有提
+到的。但是，如果你要问更深层的，我只能说浏览器也会有保存cookie到一个本地文件。虽然我没研究过具体源码，但是安卓系统提供的
+CookieManager应该也是用相同的原理来保存服务器返回的回话消息的。我们在调用webview的时候，调用cookiemanager去管理
+我们的cookie就行。如果你想了解更多，可以研究一下源码。</p> </div>        <textarea name="text" rows="3" id="commentText-1050000003837107" class="editTextarea form-control mb10 hidden">1、
+地址确实不一样，京东的登录界面打开的时候从服务器获取了一个隐藏字段uuid，还有一个r参数怎么来的我没研究，但是，这对本篇文章的技术没有影响。只
+要你知道了具体的登录地址（这个地址可能和codefrom一样是固定的，也可能和jd一样是含有动态参数的），传入相应的字段，当然，有时候服务器还会
+校验你浏览器版本等等，这些你都可以伪装。只要你做的和浏览器的一样，就可以从服务器得到相应的返回数据。
+2、关于设置cookie，文章中有提到的。但是，如果你要问更深层的，我只能说浏览器也会有保存cookie到一个本地文件。虽然我没研究过具体源码，
+但是安卓系统提供的CookieManager应该也是用相同的原理来保存服务器返回的回话消息的。我们在调用webview的时候，调用
+cookiemanager去管理我们的cookie就行。如果你想了解更多，可以研究一下源码。</textarea>        <p class="comment-meta">            <a href="http://segmentfault.com/c/1050000003837107" class="text-muted">#5</a>&nbsp;<a href="http://segmentfault.com/u/BicycleWarrior" class="commentUser" data-userid="1030000002511257" data-username="BicycleWarrior" data-userslug="BicycleWarrior" data-useravatar="http://sfault-avatar.b0.upaiyun.com/101/990/1019901963-557054d60cb2a_medium40"><strong>BicycleWarrior</strong></a> · <span class="createdDate">10月10日</span>                        · <a href="#" class="commentReply" data-userid="1030000002511257" data-id="1050000003837107" data-username="BicycleWarrior">回复</a>                                    <span class="pull-right commentTools hover-show-obj">                                                <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-type="comment" data-id="1050000003837107" data-typetext="评论" data-placement="top" title="举报">举报</a>            </span>        </p>    </div></div><div class="widget-comments__item hover-show " id="1050000003837245">    <div class="votes widget-vote">        <button class="like " data-id="1050000003837245" type="button" data-do="like" data-type="comment"></button><span class="count">&nbsp;</span>    </div>    <div class="comment-content wordbreak">  <span>回复 <a href="http://segmentfault.com/u/BicycleWarrior">BicycleWarrior</a>：</span>        <div class="content fmt"><p><a href="http://segmentfault.com/u/BicycleWarrior">@BicycleWarrior</a>
+  
+嗯，感谢您的回复！是啊，针对具体的登录地址这个问题，jd那边是动态参数的，我们传入的相应字段也包含了动态变化的参数，这是不是意味着如果没法知道他
+们的变化规则，我们就无法用文章的方法来登陆了呢？能否加下我的Q:838130385，有问题还想向您请教下~_~</p> </div>        <textarea name="text" rows="3" id="commentText-1050000003837245" class="editTextarea form-control mb10 hidden">@BicycleWarrior
+  
+嗯，感谢您的回复！是啊，针对具体的登录地址这个问题，jd那边是动态参数的，我们传入的相应字段也包含了动态变化的参数，这是不是意味着如果没法知道他
+们的变化规则，我们就无法用文章的方法来登陆了呢？能否加下我的Q:838130385，有问题还想向您请教下~_~</textarea>        <p class="comment-meta">            <a href="http://segmentfault.com/c/1050000003837245" class="text-muted">#6</a>&nbsp;<a href="http://segmentfault.com/u/menglihuakai" class="commentUser" data-userid="1030000003827671" data-username="梦里花开" data-userslug="menglihuakai" data-useravatar="http://static.segmentfault.com/global/img/user-40.png"><strong>梦里花开</strong></a> · <span class="createdDate">10月10日</span>                        · <a href="#" class="commentReply" data-userid="1030000003827671" data-id="1050000003837245" data-username="梦里花开">回复</a>                                    <span class="pull-right commentTools hover-show-obj">                                                <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-type="comment" data-id="1050000003837245" data-typetext="评论" data-placement="top" title="举报">举报</a>            </span>        </p>    </div></div>
+        
+        
+        
+        
+        
+        
+                        
+        <div class="widget-comments__form row">
+                                    <div class="col-md-12">
+                    请先 <a class="commentLogin" href="javascript:void(0);">登录</a> 后评论
+                </div>
+            
+    </div><!-- /.widget-comments__form -->
+    </div><!-- /.widget-comments -->
+
+
+
+                                    
+                
+            </div><!-- /.main -->
+
+
+            <div class="col-xs-12 col-md-3 side">
+                <div class="sfad-sidebar">
+    <div class="sfad-item" data-adn="ad-1119908" id="adid-1119908"><div id="BAIDU_DUP_wrapper_1119908_0"><iframe id="baidu_clb_slot_iframe_1119908_0" src="about:blank" onload="BAIDU_DUP_CLB_renderFrame('1119908_0')" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" style="border:0; vertical-align:bottom; margin:0; display:block;" frameborder="0" height="150" width="233"></iframe></div></div>
+
+</div>
+
+
+                <div class="widget-box no-border">
+                    <p class="text-muted">本文隶属于专栏</p>
+                    <h4 class="fz16"><a href="http://segmentfault.com/blog/BicycleWarrior">Android</a></h4>
+                    <p class="wordbreak">android study</p>
+                                                        <button type="button" class="btn btn-default follow-article" data-do="follow" data-type="blog" data-id="1200000002877837">关注专栏</button>
+                                                    </div>
+
+                
+                                
+                <div style="display: block; width: 233px; top: 0px;" class="post-nav hidden-xs side-outline hidden-sm fixed">
+                    <div class="panel panel-default widget-outline">
+                        <div class="panel-heading">文章目录</div>
+                        <div class="panel-body">
+                            <div style="top: 0px;" class="nav-body">
+                                <div style="display: block; top: 0px; height: 27px;" class="highlight-title"></div>
+                                <ul class="articleIndex"><li class="active"><a href="#articleHeader0">具体实现</a></li></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.side -->
+        </div>
+    </div>
+</div>
+
+<div id="shareToWeiboModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">分享</h4>
+            </div>
+            <div class="modal-body">
+                <p class="sfModal-content">
+                    分享到微博？
+                </p>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-default dont-likeweibo" data-dismiss="modal">取消并且不再弹出</button>
+                <a href="" id="shareLink" class="btn btn-primary done-btn" target="_blank" onclick="$('#shareToWeiboModal').modal('hide')">分享</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="widget-register widget-welcome-question mt20 hidden-xs widget-welcome widget-register-slideUp">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="title h4">与我们一起探索更多的未知</h2>
+            <p>专业的开发者技术社区，为用户提供多样化的线上知识交流，丰富的线下活动及给力的工作机会</p>
+        </div>
+        <form action="/api/user/register/fast" method="post">
+            <div class="col-sm-5">
+                <div class="form-group mb0">
+                    <input class="form-control" placeholder="邮箱地址" name="mail" required="" type="text">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary btn-block">加入只需一步</button>
+            </div>
+            <div class="col-sm-10 mt10 captcha-part" style="display:none;">
+                <div class="row">
+                    <div class="col-sm-4 pr0">
+                        <input class="form-control" name="captcha" placeholder="请输入验证码" disabled="disabled" required="" type="text">
+                    </div>
+                    <div class="col-sm-4 pr0">
+                        <a href="javascript:void(0)"><img src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/1190000002877843.htm" height="35"></a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <a class="close" href="javascript:void(0);"><span>×</span></a>
+    </div>
+</div>
+</div>
+
+<div id="911" class="modal widget-911">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">举报<span class="type-911">问题</span></h4>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-warning" id="J_returnMsg" style="display:none"></p>
+                <p><strong class="required">举报理由：</strong></p>
+                <div id="reportDescription">
+                <div class="radio-911 radio all">
+                    <label>
+                        <input name="descRadio" checked="checked" value="推广（招聘、广告、SEO 等）方面的内容" type="radio">
+                        推广（招聘、广告、SEO 等）方面的内容
+                    </label>
+                </div>
+                <div class="radio-911 radio all">
+                    <label>
+                        <input name="descRadio" value="带有人身攻击、辱骂、仇恨等违反条款的内容" type="radio">
+                        带有人身攻击、辱骂、仇恨等违反条款的内容
+                    </label>
+                </div>
+                <div class="radio-911 radio question-only">
+                    <label>
+                        <input name="descRadio" value="与已有问题重复" type="radio">
+                        与已有问题重复（请编辑该提问指向已有相同问题）
+                    </label>
+                </div>
+                <div class="radio-911 radio all">
+                    <label>
+                        <input name="descRadio" value="不友善内容" type="radio">
+                        不友善内容
+                    </label>
+                </div>
+                <div class="radio-911 radio answer-only">
+                    <label>
+                        <input name="descRadio" value="答非所问，不符合答题要求" type="radio">
+                        答非所问，不符合答题要求
+                    </label>
+                </div>
+                <div class="radio-911 radio all" id="btwRadio">
+                    <label>
+                        <input name="descRadio" value="" type="radio">
+                        其他原因（请补充说明）
+                    </label>
+                </div>
+                <div class="hide btw">
+                    <p class="mt20"><strong>补充说明：</strong></p>
+                    <textarea class="form-control" rows="3" autocomplete="false" id="911Desc"></textarea>
+                </div>
+                                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="911Submit" class="btn btn-primary">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<footer id="footer">
+    <div class="container">
+        <div class="row hidden-xs">
+            <dl class="col-sm-2 site-link">
+                <dt>网站相关</dt>
+                <dd><a href="http://segmentfault.com/about">关于我们</a></dd>
+                <dd><a href="http://segmentfault.com/tos">服务条款</a></dd>
+                <dd><a href="http://segmentfault.com/faq">帮助中心</a></dd>
+                <dd><a href="http://segmentfault.com/repu">声望与权限</a></dd>
+                <dd><a href="http://segmentfault.com/markdown">编辑器语法</a></dd>
+                <dd><a href="http://weekly.segmentfault.com/">每周精选</a></dd>
+                <dd><a href="http://segmentfault.com/app">App 下载</a></dd>
+            </dl>
+            <dl class="col-sm-2 site-link">
+                <dt>联系合作</dt>
+                <dd><a href="http://segmentfault.com/contact">联系我们</a></dd>
+                <dd><a href="http://segmentfault.com/hiring">加入我们</a></dd>
+                <dd><a href="http://segmentfault.com/link">合作伙伴</a></dd>
+                <dd><a href="http://segmentfault.com/press">媒体报道</a></dd>
+                <dd><a href="http://0x.segmentfault.com/">建议反馈</a></dd>
+                <dd><a href="http://pan.baidu.com/share/link?shareid=604288&amp;uk=839272106" target="_blank">Logo 下载</a>
+                </dd>
+            </dl>
+            <dl class="col-sm-2 site-link">
+                <dt>常用链接</dt>
+                <dd><a href="http://mirrors.segmentfault.com/" target="_blank">文档镜像</a></dd>
+                <dd>订阅：<a href="http://segmentfault.com/feeds">问答</a> / <a href="http://segmentfault.com/feeds/blogs">文章</a></dd>
+                <dd><a href="http://segmentfault.com/events?category=4">黑客马拉松</a></dd>
+                <!--             <dd><a href="http://zs.segmentfault.com/" target="_blank">一起涨姿势</a></dd> -->
+                <dd><a href="https://namebeta.com/" target="_blank">域名搜索注册</a></dd>
+            </dl>
+            <dl class="col-sm-2 site-link">
+                <dt>关注我们</dt>
+                <dd><a href="https://twitter.com/segment_fault" target="_blank">Twitter</a></dd>
+                <!-- <dd><a href="http://page.renren.com/699146294" target="_blank">人人网</a></dd> -->
+                <dd><a href="https://www.linkedin.com/company/segmentfault" target="_blank">LinkedIn</a></dd>
+                <dd><a href="http://weibo.com/segmentfault" target="_blank">新浪微博</a></dd>
+                <dd><a href="http://i.youku.com/segmentfault" target="_blank">优酷主页</a></dd>
+                <dd><a href="http://segmentfault.com/giveaways" target="_blank">开发者福利</a></dd>
+                <dd><a href="http://segmentfault.com/blog/segmentfault" target="_blank">开发日志</a></dd>
+            </dl>
+            <dl class="col-sm-4 site-link" id="license">
+                <dt>内容许可</dt>
+                <dd>除特别说明外，用户内容均采用 <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0
+                        中国大陆许可协议</a> 进行许可
+                </dd>
+                <dd>本站由 <a target="_blank" href="http://qingcloud.com/">青云 QingCloud</a> 提供云计算服务<br><a target="_blank" href="https://www.upyun.com/?utm_source=segmentfault&amp;utm_medium=link&amp;utm_campaign=upyun&amp;md=segmentfault">又拍云</a>
+                    提供 CDN 存储服务
+                </dd>
+                <dd>
+                    <a target="_blank" key="55e59bd4efbfb0241247d4e4" logo_size="124x47" logo_type="realname" href="http://www.anquan.org/authenticate/cert/?site=segmentfault.com&amp;at=realname">
+                        <script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/hm.js"></script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/analytics.js" async=""></script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/aq_auth.js"></script><span style="display:none;" class="LOGO_aq_jsonp_wrap_" id="AQ_logo_span_init_1"><script async="true" type="text/javascript" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/a"></script></span>
+                    <img alt="安全联盟认证" style="border: medium none;" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/sm_124x47.png" height="47" width="124"></a>
+                    <!-- Begin DigiCert site seal HTML and JavaScript -->
+                    <div id="DigiCertClickID_2bMgZTfe" data-language="en" style="float: left; margin-right: 10px"><div id="DigiCertClickID_2bMgZTfeSeal" style="text-decoration: none; text-align: center; display: block; vertical-align: baseline; font-size: 100%; font-style: normal; text-indent: 0px; line-height: 1; width: auto; margin: 0px auto; padding: 0px; border: 0px none; background: transparent none repeat scroll 0% 0%; position: relative; top: 0px; right: 0px; bottom: 0px; left: 0px; clear: both; float: none; cursor: default;"><img alt="DigiCert Seal" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/a.png" style="text-decoration: none; text-align: center; display: block; vertical-align: baseline; font-size: 100%; font-style: normal; text-indent: 0px; line-height: 1; width: auto; margin: 0px auto; padding: 0px; border: 0px none; background: transparent none repeat scroll 0% 0%; position: relative; top: 0px; right: 0px; bottom: 0px; left: 0px; clear: both; float: none; cursor: pointer;"></div></div>
+                    <script type="text/javascript">
+                        var __dcid = __dcid || [];
+                        __dcid.push(["DigiCertClickID_2bMgZTfe", "3", "s", "black", "2bMgZTfe"]);
+                        (function () {
+                            var cid   = document.createElement("script");
+                            cid.async = true;
+                            cid.src   = "//seal.digicert.com/seals/cascade/seal.min.js";
+                            var s     = document.getElementsByTagName("script");
+                            var ls    = s[(s.length - 1)];
+                            ls.parentNode.insertBefore(cid, ls.nextSibling);
+                        }());
+                    </script><script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/seal.js" async=""></script>
+                    <!-- End DigiCert site seal HTML and JavaScript -->
+                </dd>
+            </dl>
+        </div>
+        <div class="copyright">
+            Copyright © 2011-2015 SegmentFault. 当前呈现版本 15.11.10<br><a href="http://www.miibeian.gov.cn/" rel="nofollow">浙ICP备15005796号-2</a>
+        </div>
+        <p class="text-center">
+            <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="mobile" href="javascript:;">移动版</a>
+            <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="desktop" href="javascript:;">桌面版</a>
+        </p>
+    </div>
+</footer>
+
+<div id="fixedTools" class="hidden-xs hidden-sm">
+    <a id="backtop" class="border-bottom" href="#">回顶部</a>
+
+    <div class="qrcodeWraper">
+        <a href="http://segmentfault.com/app#qrcode"><span class="glyphicon glyphicon-qrcode"></span></a>
+        <img id="qrcode" class="border" alt="sf-wechat" src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/appQrcode.png">
+
+        <p class="qrcode-text">扫扫下载 App</p>
+    </div>
+    <div class="qrcodeWraper" id="doggeOn" style="display:none; border-top:1px solid #DDD; padding:2px; cursor: pointer;">
+        <img src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/doggeonclick.png" width="30">
+    </div>
+</div>
+
+
+<div class="app-promotion-bar">
+    <a href="javascript:;"><i class="fa fa-close close"></i></a>
+    <div class="icon"></div>
+    <h5 class="title h5">SegmentFault</h5>
+    <p class="describe">一起探索更多未知</p>
+    <a class="download-btn btn btn-sm btn-primary" href="http://segmentfault.com/app#qrcode">下载 App</a>
+</div>
+
+<script id="loginModal" type="text/template">
+<div class="row bg-white login-modal">
+    <div class="col-md-4 col-sm-12 col-md-push-7 login-wrap">
+        <h1 class="h4 text-muted login-title">用户登录</h1>
+        <form action="/api/user/login" method="POST" role="form" class="mt30">
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="email" class="form-control" name="mail" required placeholder="hello@segmentfault.com">
+            </div>
+            <div class="form-group">
+                <label class="control-label">密码</label>
+                <input type="password" class="form-control" name="password" required placeholder="密码">
+            </div>
+            <div class="form-group clearfix">
+                <div class="checkbox pull-left">
+                    <label><input name="remember" type="checkbox" value="1" checked> 记住登录状态</label>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right pl20 pr20">登录</button>
+            </div>
+        </form>
+        <p class="h4 text-muted visible-xs-block h4">快速登录</p>
+        <div class="widget-login mt30">
+            <p class="text-muted mt5 mr10 pull-left hidden-xs">快速登录</p>
+            <a href="/user/oauth/google" class="btn pl5 pr5 mb5 btn-default btn-sm btn-sn-google"><span class="icon-sn-google"></span> <strong class="visible-xs-inline">Google 账号</strong></a>
+            <a href="/user/oauth/github" class="btn pl5 pr5 mb5 btn-default btn-sm btn-sn-github"><span class="icon-sn-github"></span> <strong class="visible-xs-inline">Github 账号</strong></a>
+            <a href="/user/oauth/weibo" class="btn pl5 pr5 mb5 btn-default btn-sm btn-sn-weibo"><span class="icon-sn-weibo"></span> <strong class="visible-xs-inline">新浪微博账号</strong></a>
+            <a href="/user/oauth/qq" class="btn pl5 pr5 mb5 btn-default btn-sm btn-sn-qq"><span class="icon-sn-qq"></span> <strong class="visible-xs-inline">QQ 账号</strong></a>
+            <a href="/user/oauth/weixin" class="btn pl5 pr5 mb5 btn-default btn-sm btn-sn-wechat"><span class="icon-sn-wechat"></span> <strong class="visible-xs-inline">微信账号</strong></a>
+            <button type="button" class="btn mb5 btn-default btn-sm btn-sn-more" id="loginShowMore">...</button>
+            <a href="/user/oauth/twitter" class="btn pl5 pr5 mb5 btn-default btn-sn-twitter btn-sm hidden"><span class="icon-sn-twitter"></span> <strong class="visible-xs-inline">Twitter 账号</strong></a>
+            <a href="/user/oauth/facebook" class="btn pl5 pr5 mb5 btn-default btn-sn-facebook btn-sm hidden"><span class="icon-sn-facebook"></span> <strong class="visible-xs-inline">Facebook 账号</strong></a>
+            <a href="/user/oauth/douban" class="btn pl5 pr5 mb5 btn-default btn-sn-douban btn-sm hidden"><span class="icon-sn-douban"></span> <strong class="visible-xs-inline">豆瓣账号</strong></a>
+        </div>
+    </div>
+    <div class="login-vline hidden-xs hidden-sm"></div>
+    <div class="col-md-4 col-md-pull-3 col-sm-12 login-wrap">
+        <h1 class="h4 text-muted login-title">创建新账号</h1>
+        <form action="/api/user/register" method="POST" role="form" class="mt30">
+            <div class="form-group">
+                <label for="name" class="control-label">用户名</label>
+                <input type="text" class="form-control" name="name" required placeholder="字母、数字等，用户名唯一">
+            </div>
+            <div class="form-group">
+                <label for="mail" class="control-label">Email</label>
+                <input type="hidden" style="display:none" name="mail">
+                <input type="email" autocomplete="off" class="form-control register-mail" name="mail" required placeholder="hello@segmentfault.com">
+            </div>
+            <div class="form-group">
+                <label for="password" class="control-label">密码</label>
+                <input type="password" class="form-control" name="password" required placeholder="不少于 6 位">
+            </div>
+            <div class="form-group" style="display:none;">
+                <label class="required control-label">验证码</label>
+                <input type="text" class="form-control" id="captcha" name="captcha" placeholder="请输入下方的验证码">
+                <div class="mt10"><a id="loginReloadCaptcha"  href="javascript:void(0)"><img data-src="/user/captcha?w=240&h=50" class="captcha" width="240" height="50" /></a></div>
+            </div>
+            <div class="form-group clearfix">
+                <div class="checkbox pull-left">
+                    同意并接受<a href="/tos" target="_blank">《服务条款》</a>
+                </div>
+                <button type="submit" class="btn btn-primary pl20 pr20 pull-right">注册</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="text-center text-muted mt30">
+    <a href="/user/forgot" class="ml5">找回密码</a>
+</div>
+</script>
+
+
+<script>
+    (function (w) {
+        w.SF = {
+            staticUrl: "http://static.segmentfault.com",
+        };
+        w.SF.token = (function () {
+    var _pXtKR = '5fb'//'jW'
++'5'//'MJ'
++//'6'
+'44'+/* 'P'//'P' */''+//'ADa'
+'dc'+'5'//'3'
++/* 'u1'//'u1' */''+''///*'R'*/'R'
++'5c'//'5c'
++//'9Ls'
+'a'+//'97n'
+'97n'+'c8'//'Cc'
++//'K'
+'K'+//'6'
+'f'+/* 'akr'//'akr' */''+//'i'
+'5c9'+'d2f'//'2'
++//'V7m'
+'b'+//'75'
+'4'+'eb7'//'4U'
++'eca'//'pja'
++//'eBX'
+'1'+//'7aA'
+'59'+'cf'//'Ht'
+, _ZQW = [[9,11],[10,13],[12,13]];
+
+    for (var i = 0; i < _ZQW.length; i ++) {
+        _pXtKR = _pXtKR.substring(0, _ZQW[i][0]) + _pXtKR.substring(_ZQW[i][1]);
+    }
+
+    return _pXtKR;
+})();;
+    })(window);
+</script>
+
+    <script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/assets.js"></script>
+    <script>
+    requirejs.config({
+        baseUrl: "http://static.segmentfault.com/build/global/js"
+    });
+    </script>
+            <script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/post.js"></script>
+    
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-918487-8']);
+  _gaq.push(['_trackPageview']);
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-918487-8', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e23800c454aa573c0ccb16b52665ac26";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script src="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/m.js"></script>
+<script>
+if(typeof BAIDU_CLB_fillSlotAsync === 'function') {
+    BAIDU_CLB_fillSlotAsync('981183','adid-981183');
+    BAIDU_CLB_fillSlotAsync('981184','adid-981184');
+    BAIDU_CLB_fillSlotAsync('981694','adid-981694');
+    BAIDU_CLB_fillSlotAsync('981179','adid-981179');
+    BAIDU_CLB_fillSlotAsync('1119908','adid-1119908');
+}
+</script>
+
+
+
+
+<div id="noteWidget" class="noteWidget hidden hidden-xs">
+    <div class="noteWidget-header clearfix">
+        <h2 class="h4 pull-left">记笔记</h2>
+        <ul class="list-inline pull-right mb0">
+            <li id="noteWidgetMinimize"><span class="icon-minimize"></span></li><li id="noteWidgetZoom"><span class="icon-zoom"></span></li><li id="noteWidgetClose"><span class="icon-close"></span></li>
+        </ul>
+    </div>
+    <form method="POST" action="/api/notes/add" role="form">
+        <div class="form-group">
+            <label for="title" class="sr-only">标题</label>
+            <input value="" id="draftId" type="hidden">
+            <input name="title" data-error="" autocomplete="off" class="form-control" placeholder="笔记描述" type="text">
+        </div>
+        <div class="editor-config clearfix">
+            <select name="lang" class="form-control pull-left input-sm">
+                <optgroup label="文本语法">
+                    <option selected="selected" value="text" data-mode="text">纯文本</option>
+                    <option value="markdown" data-mode="markdown">Markdown</option>
+                    <option value="javascript" data-mode="javascript">Javascript</option>
+                    <option value="css" data-mode="css">CSS</option>
+                    <option value="html5" data-mode="htmlmixed">HTML</option>
+                    <option value="php" data-mode="php">PHP</option>
+                    <option value="python" data-mode="python">Python</option>
+                    <option value="ruby" data-mode="ruby">Ruby</option>
+                    <option value="go" data-mode="go">Go</option>
+                    <option value="c" data-mode="clike">C/C++</option>
+                    <option value="java" data-mode="java">Java</option>
+                    <option value="bash" data-mode="shell">Shell/Bash</option>
+                </optgroup>
+            </select>
+            <div class="pull-right hidden-xs">
+                <select name="indentWithTabs" class="form-control inline-block input-sm">
+                    <optgroup label="缩进模式">
+                        <option selected="selected" value="false">空格缩进</option>
+                        <option value="true">Tabs 缩进</option>
+                    </optgroup>
+                </select>
+                <select name="tabSize" class="form-control inline-block input-sm">
+                    <optgroup label="缩进大小">
+                        <option value="2">2</option>
+                        <option value="4" selected="selected">4</option>
+                    </optgroup>
+                </select>
+                <select name="lineWrap" class="form-control inline-block input-sm">
+                    <optgroup label="换行方式">
+                        <option selected="selected" value="true">自动换行</option>
+                        <option value="false">不换行</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <textarea id="codeMirror" class="form-control" style="display: none;"></textarea><div class="CodeMirror cm-s-default CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea tabindex="0" spellcheck="false" autocapitalize="off" autocorrect="off" style="position: absolute; padding: 0px; width: 1px; height: 1em; outline: medium none;" wrap="off"></textarea></div><div style="left: 0px;" class="CodeMirror-hscrollbar"><div style="height: 100%; min-height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="min-width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div draggable="true" tabindex="-1" class="CodeMirror-scroll"><div style="margin-left: 0px;" class="CodeMirror-sizer"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: medium none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"></div><div class="CodeMirror-code"></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters"><div style="width: 1px;" class="CodeMirror-gutter CodeMirror-linenumbers"></div></div></div></div>
+        <div class="mt20 clearfix">
+            <div class="pull-right">
+                <span class="text-muted hidden" id="editorStatus">已保存</span>
+                <a id="dropIt" href="javascript:void(0);" class="mr10 hidden">[舍弃]</a>
+                <button data-type="note" id="publishIt2" class="btn btn-default ml10" data-id="" data-do="add" data-url="" data-text="保存私密笔记" data-name="">保存私密笔记</button>
+                <button data-type="note" id="publishIt" class="btn btn-primary ml10" data-id="" data-do="add" data-url="" data-text="保存公开笔记" data-name="">保存公开笔记</button>
+                </div>
+            </div>
+        </form></div>
+    
+<div style="position: absolute; left: 0px; top: -9999px; width: 1px; height: 1px; z-index: 999999999;" class="global-zeroclipboard-container" id="global-zeroclipboard-html-bridge"><object id="global-zeroclipboard-flash-bridge" name="global-zeroclipboard-flash-bridge" type="application/x-shockwave-flash" data="Android%E5%88%A9%E7%94%A8Cookie%E5%AE%9E%E7%8E%B0%E7%A0%81%E6%BA%90%E7%99%BB%E5%BD%95%E6%95%88%E6%9E%9C%20-%20SegmentFault_files/ZeroClipboard.swf" height="100%" width="100%"><param name="allowScriptAccess" value="always"><param name="allowNetworking" value="all"><param name="menu" value="false"><param name="wmode" value="transparent"><param name="flashvars" value="trustedOrigins=segmentfault.com%2C%2F%2Fsegmentfault.com%2Chttp%3A%2F%2Fsegmentfault.com&amp;swfObjectId=global-zeroclipboard-flash-bridge"></object></div><div id="atwho-container"></div></body></html>

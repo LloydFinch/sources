@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html style="" dropeffect="none" class="no-auth show-app-promotion-bar js flexbox no-touch cssanimations csstransforms csstransitions no-mobile" lang="zh-CN"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+
+<title>
+
+
+如何在Android Studio中使用Maven？ - Android - 知乎
+
+
+</title>
+
+<meta name="apple-itunes-app" content="app-id=432274380, app-argument=zhihu://questions/24367230">
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="mobile-agent" content="format=html5;url=http://www.zhihu.com/question/24367230">
+<meta id="znonce" name="znonce" content="dcd2dff4d86d45fba85b93f356e58e3b">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu%2857px%29.png">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu%2872px%29.png" sizes="72x72">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu%2876px%29.png" sizes="76x76">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu%28114px%29.png" sizes="114x114">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu%28120px%29.png" sizes="120x120">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu%28152px%29.png" sizes="152x152">
+
+
+<link rel="shortcut icon" href="http://static.zhihu.com/static/favicon.ico" type="image/x-icon">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://static.zhihu.com/static/search.xml" title="知乎">
+<link rel="stylesheet" href="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/z.css">
+
+<meta name="google-site-verification" content="FTeR0c8arOPKh8c5DYh_9uu98_zJbaWw53J-Sch9MTg">
+<meta property="qc:admins" content="14414345146201056375">
+
+
+
+<!--[if lt IE 9]>
+<script src="http://static.zhihu.com/static/components/respond/dest/respond.min.js"></script>
+<link href="http://static.zhihu.com/static/components/respond/cross-domain/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+<link href="/static/components/respond/cross-domain/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+<script src="/static/components/respond/cross-domain/respond.proxy.js"></script>
+<![endif]-->
+
+<script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/za-0.js" async="" type="text/javascript"></script><script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/ga.js" async="" type="text/javascript"></script><script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/instant.js"></script>
+
+
+
+
+<style>html.modal-open {overflow:hidden}html.modal-doc-overflow {margin-right:17px}html.modal-doc-overflow .modal-shifting {position:relative; right:8.5px}</style></head>
+
+<body class="zhi no-auth">
+<div role="navigation" class="zu-top">
+<div class="zg-wrap modal-shifting clearfix" id="zh-top-inner">
+<a href="http://www.zhihu.com/" class="zu-top-link-logo" id="zh-top-link-logo">知乎</a>
+
+
+
+<ul class="topnav-noauth clearfix">
+<li>
+<a href="javascript:;" class="js-signup-noauth"><i class="zg-icon zg-icon-dd-home"></i>注册知乎</a>
+</li>
+<li>
+<a href="javascript:;" class="js-signin-noauth">登录</a>
+</li>
+</ul>
+
+
+
+<button class="zu-top-add-question" id="zu-top-add-question">提问</button>
+
+
+<div role="search" id="zh-top-search" class="zu-top-search">
+<form method="GET" action="/search" id="zh-top-search-form" class="zu-top-search-form">
+
+<label for="q" class="hide-text">知乎搜索</label><input aria-haspopup="true" class="zu-top-search-input" id="q" name="q" autocomplete="off" placeholder="搜索话题、问题或人..." type="text">
+<input name="type" value="question" type="hidden">
+<button type="submit" class="zu-top-search-button"><span class="hide-text">搜索</span><span class="sprite-global-icon-magnifier-dark"></span></button>
+</form>
+</div>
+
+
+
+<div id="zg-top-nav" class="zu-top-nav">
+<ul class="zu-top-nav-ul zg-clear">
+
+<li class="zu-top-nav-li " id="zh-top-nav-home">
+<a class="zu-top-nav-link" href="http://www.zhihu.com/" id="zh-top-link-home">首页</a>
+</li>
+<li class="top-nav-topic-selector zu-top-nav-li " id="zh-top-nav-topic">
+<a class="zu-top-nav-link" href="http://www.zhihu.com/topic" id="top-nav-dd-topic">话题</a>
+
+</li>
+<li class="zu-top-nav-li " id="zh-top-nav-explore">
+<a class="zu-top-nav-link" href="http://www.zhihu.com/explore">发现</a>
+</li>
+
+
+</ul>
+<div class="zu-top-nav-live zu-noti7-popup zg-r5px no-hovercard" id="zh-top-nav-live-new" role="popup" tabindex="0">
+<div class="zu-top-nav-live-inner zg-r5px">
+<div class="zu-top-live-icon">&nbsp;</div>
+<div class="zu-home-noti-inner" id="zh-top-nav-live-new-inner">
+<div class="zm-noti7-popup-tab-container clearfix" tabindex="0">
+<button class="zm-noti7-popup-tab-item message">
+<span class="icon">消息</span>
+</button>
+<button class="zm-noti7-popup-tab-item user">
+<span class="icon">用户</span>
+</button>
+<button class="zm-noti7-popup-tab-item thanks">
+<span class="icon">赞同和感谢</span>
+</button>
+</div>
+</div>
+<div class="zm-noti7-frame-border top"></div>
+<div class="zm-noti7-frame">
+<div class="zm-noti7-content">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-frame-border bottom"></div>
+<div class="zm-noti7-popup-footer">
+<a href="http://www.zhihu.com/notifications" class="zm-noti7-popup-footer-all zg-right">查看全部 »</a>
+<a href="http://www.zhihu.com/settings/notification" class="zm-noti7-popup-footer-set" title="通知设置"><i class="zg-icon zg-icon-settings"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="zu-global-notify" id="zh-global-message" style="display:none">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<a class="zu-global-notify-close" href="javascript:;" title="关闭" name="close">x</a>
+<span class="zu-global-notify-icon"></span>
+<span class="zu-global-notify-msg"></span>
+</div>
+</div>
+</div>
+
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-redirect-info" style="display:none"></div>
+
+
+<div class="zu-global-notify zu-global-notify-info" id="zh-question-notification-summary" style="display:none;">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<span class="zu-global-notify-icon"></span>
+<ul class="zu-question-notify-wrap">
+</ul>
+</div>
+</div>
+</div>
+<div role="main" class="zg-wrap zu-main question-page" itemscope="" itemtype="http://schema.org/Question" id="zh-single-question-page" data-urltoken="24367230">
+<meta itemprop="isTopQuestion" content="false">
+<meta itemprop="visitsCount" content="2058">
+<div class="zu-main-content">
+<div class="zu-main-content-inner with-indention-votebar">
+
+
+<div class="zm-tag-editor zg-section">
+<div class="zm-tag-editor-labels zg-clear">
+
+<a class="zm-item-tag" href="http://www.zhihu.com/topic/19603145" data-tip="t$b$19603145" data-token="19603145" data-topicid="17686">
+Android
+</a>
+
+<a class="zm-item-tag" href="http://www.zhihu.com/topic/19629084" data-tip="t$b$19629084" data-token="19629084" data-topicid="26364">
+Maven
+</a>
+
+</div>
+</div>
+<div id="zh-question-title" data-editable="true">
+
+<h2 class="zm-item-title zm-editable-content">
+
+如何在Android Studio中使用Maven？
+
+</h2>
+</div>
+<div id="zh-question-detail" class="zm-item-rich-text" data-resourceid="1928719" data-action="/question/detail">
+
+<div class="zm-editable-content">Android Studio的确很赞，但是gradle编译速度让人抓狂。<br><br>有没有办法在Android Studio中使用maven，而不是gradle。</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el clearfix" id="zh-question-meta-wrap">
+<div class="zm-meta-panel">
+
+<a href="#" name="addcomment" class="toggle-comment meta-item">
+<i class="z-icon-comment"></i>添加评论
+</a>
+<a aria-haspopup="true" tabindex="0" aria-expanded="false" style="-moz-user-select: none;" role="button" href="#" name="share" class="share meta-item goog-inline-block goog-menu-button"><div class="goog-inline-block goog-menu-button-outer-box"><div class="goog-inline-block goog-menu-button-inner-box"><div class="goog-inline-block goog-menu-button-caption"><i class="z-icon-share"></i>分享</div><div class="goog-inline-block goog-menu-button-dropdown">&nbsp;</div></div></div></a>
+
+</div>
+<div class="panel-container">
+
+<div class="question-invite-panel"></div><div style="display: none;" class="zm-comment-box"></div></div>
+</div>
+
+
+<div class="zh-question-answer-summary-wrap zm-item-rich-text" id="zh-question-answer-summary-wrap" style="display:none;">
+<h3>
+<a href="http://www.zhihu.com/question/20014415" target="_blank" class="zg-right zg-link-litblue" style="font-weight:normal">什么是答案总结？</a>
+答案总结</h3>
+<div id="zh-question-answer-summary" class="zg-section" data-resourceid="1928719" data-action="/question/summary">
+
+<div class="zm-editable-content"></div>
+
+</div>
+</div>
+
+<div id="zh-question-answer-wrap" data-pagesize="20" class="zh-question-answer-wrapper navigable" data-widget="navigable" data-navigable-options="{&quot;items&quot;: &quot;&gt;.zm-item-answer&quot;}" data-init="{&quot;params&quot;: {&quot;url_token&quot;: 24367230, &quot;pagesize&quot;: 20, &quot;offset&quot;: 0}, &quot;nodename&quot;: &quot;QuestionAnswerListV2&quot;}"><div tabindex="-1" class="zm-item-answer " itemprop="topAnswer" itemscope="" itemtype="http://schema.org/Answer" data-aid="13316967" data-atoken="44804731" data-collapsed="0" data-created="1429023713" data-deleted="0" data-helpful="1" data-isowner="0" data-copyable="1">
+<a class="zg-anchor-hidden" name="answer-13316967"></a>
+
+
+<div style="" class="zm-votebar goog-scrollfloater">
+<button title="赞同" aria-pressed="false" class="up">
+<i class="icon vote-arrow"></i>
+<span class="label">赞同</span>
+<span class="count">6</span>
+</button>
+<button title="反对，不会显示你的姓名" aria-pressed="false" class="down">
+<i class="icon vote-arrow"></i>
+<span class="label">反对，不会显示你的姓名</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+<div class="zm-item-answer-author-info">
+<h3 class="zm-item-answer-author-wrap">
+
+
+<a class="zm-item-link-avatar" href="javascript:void(0);">
+<img src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/da8e974dc_s.jpg" class="zm-list-avatar" data-source="https://pic1.zhimg.com/da8e974dc_s.jpg">
+</a>
+
+
+
+知乎用户，<strong title="Android Developer,写代码就像写诗一样，那样会更好。" class="zu-question-my-bio">Android Developer,写代码就像写诗一样，…</strong>
+
+</h3>
+<a href="javascript:;" name="collapse" class="collapse meta-item zg-right"><i class="z-icon-fold"></i>收起</a>
+</div>
+<div class="zm-item-vote-info " data-votecount="6">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$er-he-tao-27" href="http://www.zhihu.com/people/er-he-tao-27" class="zg-link" title="二核桃">二核桃</a>、</span><span class="user-block"><a data-tip="p$t$gong-ze-long" href="http://www.zhihu.com/people/gong-ze-long" class="zg-link" title="龚泽龙">龚泽龙</a>、</span><span class="user-block"><a data-tip="p$t$jia-ya-guang-30" href="http://www.zhihu.com/people/jia-ya-guang-30" class="zg-link" title="贾亚光">贾亚光</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text" data-resourceid="1928719" data-action="/answer/content">
+
+<div class="zm-editable-content clearfix">
+<b>诚如你所说gradle构建方式，编译会较慢，特别是第一次使用的时候启动也会较慢。这有大致几个原因:</b><br><ul><li><b>Gradle相关插件需要下载，Maven依赖的jar包需要下载</b></li><li><b>Gradle命令行编译慢，是由于配置不完善,Android Studio IDE环境亦然</b></li><li><b>机器性能差</b></li></ul><b>参考方法，具体细节请参阅gradle官方文档，android官方文档等</b><br><ul><li><b>  下载并配置gradle离线包,配置Maven本地仓库</b><br></li><li><b>  命令行编译的话, 配置 daemon=true(开启gradle守护进程)等,Android Studio 勾选 offlinework选项</b></li></ul><p>    在下面的目录下面创建gradle.properties文件：</p><ul><li>/home/&lt;username&gt;/.gradle/ (Linux)</li><li>/Users/&lt;username&gt;/.gradle/ (Mac)</li><li>C:\Users\&lt;username&gt;\.gradle (Windows) </li></ul>并在文件中增加：org.gradle.daemon=true<br>其他更详细的不在此处赘述<br>--------------------------<br>update:给到一些相关参考<br><ol><li><a href="http://gradle.org/docs/current/userguide/gradle_daemon.html" class=" wrap external" target="_blank" rel="nofollow noreferrer">Chapter 19. The Gradle Daemon<i class="icon-external"></i></a><br></li><li><a href="http://blog.isming.me/2015/03/18/android-build-speed-up/" class=" wrap external" target="_blank" rel="nofollow noreferrer">加速Android Studio/Gradle构建<i class="icon-external"></i></a> 顺手摘了一篇，类似博客不少<br></li><li><a href="http://rinvay.github.io/android/2015/04/09/Build-Android-with-Gradle/" class=" wrap external" target="_blank" rel="nofollow noreferrer">使用Gradle构建Android程序<i class="icon-external"></i></a><br></li><li><a href="http://rinvay.github.io/android/2015/03/26/Gradle-Plugin-User-Guide%28Translation%29/" class=" wrap external" target="_blank" rel="nofollow noreferrer">Gradle插件用户指南(译)<i class="icon-external"></i></a></li></ol>其他具体细节请通过官方文档,google搜索，参考他人博客解决，此处仅提供参考。
+
+</div>
+
+</div>
+<a class="zg-anchor-hidden ac" name="13316967-comment"></a>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2015-04-14" target="_blank" href="http://www.zhihu.com/question/24367230/answer/44804731">编辑于 2015-04-14</a>
+</span>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a aria-haspopup="true" tabindex="0" aria-expanded="false" style="-moz-user-select: none;" role="button" href="#" class="meta-item zu-autohide goog-inline-block goog-menu-button" name="share"><div class="goog-inline-block goog-menu-button-outer-box"><div class="goog-inline-block goog-menu-button-inner-box"><div class="goog-inline-block goog-menu-button-caption"><i class="z-icon-share"></i>分享</div><div class="goog-inline-block goog-menu-button-dropdown">&nbsp;</div></div></div></a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">•</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">•</span>
+<a aria-haspopup="true" tabindex="0" aria-expanded="false" style="-moz-user-select: none;" role="button" href="#" name="report" class="meta-item zu-autohide goog-inline-block goog-menu-button"><div class="goog-inline-block goog-menu-button-outer-box"><div class="goog-inline-block goog-menu-button-inner-box"><div class="goog-inline-block goog-menu-button-caption">举报</div><div class="goog-inline-block goog-menu-button-dropdown">&nbsp;</div></div></div></a>
+
+
+
+<span class="zg-bull">•</span>
+
+<a href="http://www.zhihu.com/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+
+</div>
+</div>
+</div>
+
+
+
+
+
+</div>
+
+
+<div id="zh-question-collapsed-link" class="zu-question-collap-title" style="display:none">
+<a href="javascript:;" name="expand" class="zg-link-gray" id="zh-question-collapsed-switcher">
+<span id="zh-question-collapsed-num">0</span> 个回答被折叠
+</a>
+（<a target="_blank" href="http://www.zhihu.com/question/20120168" class="zg-link-gray">为什么？</a>）
+</div>
+<div id="zh-question-collapsed-wrap" class="zh-question-answer-wrapper" style="display:none"></div>
+<a name="draft"></a>
+<div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap">
+<div style="display: none;" class="zm-editable-tip zu-answer-form-disabled-wrap"></div>
+<div style="display: none;" class="zm-editable-content"><p></p><a href="javascript:;" class="zu-edit-button" name="edit"><i class="zu-edit-button-icon"></i>修改</a></div><div style="" class="zm-editable-editor-wrap"><div class="zh-answer-form clearfix"><div><div class="zu-answer-form-title">我来回答这个问题<span></span></div></div></div><div class="zm-editable-editor-outer"><div class="zm-editable-toolbar-container goog-scrollfloater"><div tabindex="-1" role="toolbar" style="-moz-user-select: none;" class="goog-toolbar goog-toolbar-horizontal"><div id="toggleFullScreen" style="-moz-user-select: none;" role="button" title="写作模式" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-max"></div></div></div></div><div id="+bold" aria-pressed="false" style="-moz-user-select: none;" role="button" title="粗体 (ctrl+b)" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-bold"></div></div></div></div><div id="+italic" aria-pressed="false" style="-moz-user-select: none;" role="button" title="斜体 (ctrl+i)" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-italic"></div></div></div></div><div id="+underline" aria-pressed="false" style="-moz-user-select: none;" role="button" title="下划线 (ctrl+u)" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-underline"></div></div></div></div><div id=":g" role="separator" aria-disabled="true" style="-moz-user-select: none;" class="goog-toolbar-separator goog-toolbar-separator-disabled goog-inline-block">&nbsp;</div><div id="+blockquote" aria-pressed="false" style="-moz-user-select: none;" role="button" title="引用内容" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-blockquote"></div></div></div></div><div id="+code" aria-pressed="false" style="-moz-user-select: none;" role="button" title="插入代码" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-code"></div></div></div></div><div id="+insertOrderedList" aria-pressed="false" style="-moz-user-select: none;" role="button" title="有序列表" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-insertOrderedList"></div></div></div></div><div id="+insertUnorderedList" aria-pressed="false" style="-moz-user-select: none;" role="button" title="无序列表" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-insertUnorderedList"></div></div></div></div><div id="+equation" style="-moz-user-select: none;" role="button" title="插入公式" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-equation"></div></div></div></div><div id=":h" role="separator" aria-disabled="true" style="-moz-user-select: none;" class="goog-toolbar-separator goog-toolbar-separator-disabled goog-inline-block">&nbsp;</div><div id="image" style="-moz-user-select: none;" role="button" title="插入图片" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-image"></div></div></div></div><div id="video" style="-moz-user-select: none;" role="button" title="插入视频" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-video"></div></div></div></div><div id=":i" role="separator" aria-disabled="true" style="-moz-user-select: none;" class="goog-toolbar-separator goog-toolbar-separator-disabled goog-inline-block">&nbsp;</div><div id="+removeFormat" style="-moz-user-select: none;" role="button" title="清除格式" class="goog-inline-block goog-toolbar-button"><div class="goog-inline-block goog-toolbar-button-outer-box"><div class="goog-inline-block goog-toolbar-button-inner-box"><div class="tr-icon tr-removeFormat"></div></div></div></div><div class="tr-spinner spinner-gray" style="display: none;"></div></div></div><div class="zm-editable-editor-field-wrap"><div style="font-style: italic;" role="textbox" g_editable="true" class="zm-editable-editor-field-element editable" id="mock:e" contenteditable="true"><p><span style="font-style: normal;color: #999;">写回答…</span></p></div><div class="editable-dropzone"><div class="row"><div class="cell"><div>拖拽至此处上传</div></div></div></div></div><div class="signin-mask-tip-answer"></div><div style="display: none;" class="mention-popup"><div class="writing-bg"><input autocomplete="off" aria-haspopup="true"></div><div class="tip">想用 @ 提到谁？</div></div></div><div class="zm-command"><a class="zg-r3px zg-btn-blue" href="javascript:;">我要回答</a></div><div style="display: none;" class="zm-command clearfix"><label style="-moz-user-select: none;" class="zg-left anno-box"><input style="-moz-user-select: none;" name="anno-checkbox" type="checkbox"> 匿名 <span style="-moz-user-select: none;">&nbsp;</span></label> <label class="zg-left copyright-box"><input name="copyright-checkbox" type="checkbox">未经许可，禁止转载<a href="http://www.zhihu.com/terms#sec-licence-6" target="_blank"><i class="zg-icon zg-icon-question-mark" style="margin-left: 5px;" id="copyright_question_mark" data-copyright-demo="true"></i></a></label> <span class=" zg-right"><a class="submit-button zg-btn-blue" name="save" href="javascript:;">发布回答</a></span><div class="draft-controls zg-right "><span style="display: none;" class="draft-saved-info"><a class="draft-clear-button goog-inline-block" href="#" data-tip="s$b$删除草稿"><i class="zg-icon zg-icon-bin"></i><span class="hide-text">清除草稿</span></a><span class="draft-saved-time"></span></span></div></div></div>
+</div>
+
+<!-- end of content -->
+</div>
+</div>
+<div class="zu-main-sidebar">
+
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<div class="well login-reg-box">
+<span>知乎是一个真实的问答社区，在这里分享知识、经验和见解，发现更大的世界。<br>
+<a id="js-reg-with-mail-in-top" href="#">使用手机或邮箱注册</a>
+<!-- <span>·</span><a id="js-reg-with-qq-in-top" href="#">使用 QQ 登录</a> -->
+</span>
+<div class="clearfix">
+<a id="js-reg-with-wechat-in-top" href="#" class="zg-btn-green"><span class="z-ico-wechat-right-panel"></span>使用微信登录</a>
+<a id="js-reg-with-sina-in-top" href="#" class="zg-btn-red"><span class="icon-big-white-sina"></span>使用微博登录</a>
+<a id="js-reg-with-qq-in-top" href="#" class="zg-btn-blue"><span class="icon-big-white-qq"></span>使用 QQ 登录</a>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner zg-gray-normal" id="zh-question-side-header-wrap">
+<button data-follow="q:m:button" class="follow-button zg-follow zg-btn-green" data-id="1928719">关注问题</button>
+
+13
+人关注该问题
+
+</div>
+</div>
+
+<div class="zm-side-section shameimaru-section" id="shameimaru-question-up-noauth-3c93c2092" data-location="question_up_noauth" data-id="3c93c2092">
+<div class="zm-side-section-inner">
+<div class="zg-clear zh-shameimaru-3c93c2092">
+    <a class="shameimaru-link" target="_blank" href="http://www.zhihu.com/shameimaru/click?id=3c93c2092&amp;location=question_up_noauth"></a>
+    <a class="shameimaru-close z-ico-shameimaru-close" data-tip="s$b$不再显示"></a>
+<img src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/hat.gif" class="shameimaru-abs" alt="Advertisement"></div>
+</div>
+</div>
+<style type="text/css">
+.zh-shameimaru-3c93c2092 {
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+}
+.zh-shameimaru-3c93c2092 .shameimaru-link {
+    display: block;
+    background: url("http://pic4.zhimg.com/75661e5eeec7b627d83491da2786e545.png") no-repeat;
+    width: 270px;
+    height: 150px;
+}
+.zh-shameimaru-3c93c2092 .shameimaru-close {
+    display: none;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    text-indent: -9999px;
+    opacity: .7;
+}
+.zh-shameimaru-3c93c2092 .shameimaru-close:hover {
+    opacity: .9;
+}
+.zh-shameimaru-3c93c2092:hover .shameimaru-close {
+    display: block;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    .zh-shameimaru-3c93c2092 .shameimaru-link {
+        background: url("http://pic4.zhimg.com/30b685796f0ecad55b6da2b0d8ed72ef.png");
+        background-size: 270px 150px;
+    }
+}
+
+.shameimaru-abs {
+  position: absolute;
+  left: -999em;
+}
+</style>
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<div id="zh-question-related-questions" class="zh-question-related-questions clearfix">
+
+<a class="zg-right next">换一换</a>
+
+<h3>相关问题</h3>
+<ul itemprop="relatedQuestion" itemscope="" itemtype="http://schema.org/ItemList">
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question"><a class="question_link" href="http://www.zhihu.com/question/19773839">总觉得maven项目在eclipse中调试太难</a> <span class="num">12 个回答</span><meta itemprop="followerCount" content="75"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question"><a class="question_link" href="http://www.zhihu.com/question/20519240">一年时间，学习Java EE还是学习Android，或者iOS？</a> <span class="num">9 个回答</span><meta itemprop="followerCount" content="55"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question"><a class="question_link" href="http://www.zhihu.com/question/19652262">Android 为什么不直接支持 java 软件？</a> <span class="num">4 个回答</span><meta itemprop="followerCount" content="28"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question"><a class="question_link" href="http://www.zhihu.com/question/19908744">Java 中 Enum 如何继承？</a> <span class="num">10 个回答</span><meta itemprop="followerCount" content="23"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question"><a class="question_link" href="http://www.zhihu.com/question/19724316">Android 为什么要用 Java 开发软件？Java 的运行效率不是很低吗？</a> <span class="num">23 个回答</span><meta itemprop="followerCount" content="160"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question" hidden=""><a class="question_link" href="http://www.zhihu.com/question/19921062">Go 语言在将来会不会顶替现在 Java 在 Android 开发中的地位？</a> <span class="num">24 个回答</span><meta itemprop="followerCount" content="305"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question" hidden=""><a class="question_link" href="http://www.zhihu.com/question/19719092">在 Spring 中，annotation 的 @autowired 的原理是什么？</a> <span class="num">8 个回答</span><meta itemprop="followerCount" content="33"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question" hidden=""><a class="question_link" href="http://www.zhihu.com/question/19807531">有 Java 基础，Android 如何快速上手？</a> <span class="num">4 个回答</span><meta itemprop="followerCount" content="25"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question" hidden=""><a class="question_link" href="http://www.zhihu.com/question/20718551">Android为什么选择Java作为开发语言？</a> <span class="num">19 个回答</span><meta itemprop="followerCount" content="206"></li>
+
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Question" hidden=""><a class="question_link" href="http://www.zhihu.com/question/19766003">有 Java 基础的人如何学习 Android ?</a> <span class="num">17 个回答</span><meta itemprop="followerCount" content="240"></li>
+
+</ul>
+</div>
+</div>
+</div>
+
+
+</div>
+<div class="zg-clear"></div>
+<!-- 版权演示 -->
+
+<script type="text/x-template" id="copyright-demo-template">
+<article>
+
+<section>
+<p class="copyright-demo-title"> 这是你的回答正文 </p>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+</section>
+
+<section>
+<p class="copyright-demo-title"> 当其他人想复制你的一段回答 </p>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region1">
+<span class="copyright-ico-indicator" id="copyright-demo-indicator"></span>
+</div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region2"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region3"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region4"></div>
+<div class="copyright-demo-region"></div>
+</section>
+
+<section id="copyright-demo-frame3">
+<p class="copyright-demo-title"> 复制将受限，同时会弹出提醒 </p>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region"></div>
+<span class="copyright-ico-pointer copyright-demo-pointer"></span>
+</section>
+</article>
+</script>
+
+
+</div>
+
+<div id="zh-footer" class="zh-footer">
+<div class="zg-wrap clearfix">
+<ul>
+<li><a href="https://liukanshan.zhihu.com/" target="_blank">刘看山</a></li>
+
+<li><a href="http://www.zhihu.com/app" target="_blank">移动应用</a></li>
+<li><a href="http://www.zhihu.com/careers">加入知乎</a></li>
+<li><a href="http://www.zhihu.com/terms" target="_blank">知乎协议</a></li>
+<li><a href="mailto:bd@zhihu.com">商务合作</a></li>
+</ul>
+<span class="copy">© 2015 知乎</span>
+</div>
+</div>
+
+<script type="text/json" class="json-inline" data-name="guiders2">{}</script>
+
+<script type="text/template" class="register-template">
+<div class="title register">
+<h1>加入知乎</h1>
+<h2>与世界分享你的知识、经验和见解</h2>
+</div>
+<div class="view register">
+<form action="/register/email">
+<div class="input-wrapper">
+<input type="text" name="fullname" placeholder="姓名" required>
+</div>
+<div class="input-wrapper">
+<input type="text" name="account" class="account" placeholder="手机号或邮箱" required>
+</div>
+<div class="input-wrapper toggle-password">
+<input type="password" hidden> 
+<input type="password" name="password" placeholder="密码（不少于 6 位）" required>
+<span class="z-ico-show-password"></span>
+</div>
+<div class="input-wrapper captcha">
+<input type="text" name="captcha" placeholder="验证码" required>
+<div class="captcha" data-tip="s$b$看不清楚？换一张">
+<img>
+</div>
+</div>
+<div class="actions">
+<button type="button" class="switch-to-login">已有帐号？</button>
+<button class="submit blue-button">注册</button>
+</div>
+</form>
+<div class="sns clearfix">
+<h1>社交帐号登录</h1>
+<button type="button" class="wechat"><span class="ico z-ico-wechat"></span>微信</button>
+<button type="button" class="weibo"><span class="ico z-ico-weibo"></span>微博</button>
+<button type="button" class="qq"><span class="ico z-ico-qq"></span>QQ</button>
+</div>
+</div>
+<div class="title verification">
+<h1>验证手机</h1>
+<h2>请输入你收到的 6 位数短信验证码</h2>
+</div>
+<div class="view verification">
+<form>
+<div class="input-wrapper">
+<input type="text" name="phone_num" placeholder="手机号" required>
+</div>
+<div class="input-wrapper verification-code">
+<input type="text" name="verification_code" placeholder="6 位数验证码" maxlength="6" required>
+<button type="button" class="send-code">重发验证码</button>
+</div>
+<button class="submit blue-button">进入知乎</button>
+</form>
+</div>
+</script>
+<script type="text/template" class="login-template">
+<div class="title login">
+<h1>加入知乎</h1>
+<h2>与世界分享你的知识、经验和见解</h2>
+</div>
+<div class="view login">
+<form>
+<div class="input-wrapper">
+<input type="text" name="account" class="account" placeholder="手机号或邮箱" required>
+</div>
+<div class="input-wrapper toggle-password">
+<input type="password" name="password" placeholder="密码" required>
+<span class="z-ico-show-password"></span>
+</div>
+<div class="input-wrapper captcha">
+<input type="text" name="captcha" placeholder="验证码" required>
+<div class="captcha" data-tip="s$b$看不清楚？换一张">
+<img>
+</div>
+</div>
+<div class="actions">
+<label class="remember-me"><input type="checkbox" name="remember_me" checked value="true">记住我</label>
+<span class="middot">·</span>
+<button class="unable-login" type="button">无法登录？</button>
+<button class="submit blue-button">登录</button>
+</div>
+</form>
+<div class="sns clearfix">
+<h1>社交帐号登录</h1>
+<button type="button" class="wechat"><span class="ico z-ico-wechat"></span>微信</button>
+<button type="button" class="weibo"><span class="ico z-ico-weibo"></span>微博</button>
+<button type="button" class="qq"><span class="ico z-ico-qq"></span>QQ</button>
+</div>
+</div>
+</script>
+<script type="text/template" class="unable-login-template">
+<div class="title start">
+<h1>无法登录</h1>
+<h2>我们提供两种方式帮助你重新登录知乎</h2>
+</div>
+<div class="view start">
+<button class="blue-button reset-password">找回密码</button>
+<button class="blue-button sms-login">使用手机验证码登录</button>
+</div>
+<div class="title reset-password-verification">
+<h1>找回密码</h1>
+<h2>验证码将会发送至你的注册邮箱或手机</h2>
+</div>
+<div class="view reset-password-verification">
+<form>
+<div class="input-wrapper">
+<input type="text" name="account" class="account" placeholder="手机号或邮箱" required>
+</div>
+<div class="input-wrapper captcha">
+<input type="text" name="captcha" placeholder="验证码" required>
+<div class="captcha" data-tip="s$b$看不清楚？换一张">
+<img>
+</div>
+</div>
+<button class="submit blue-button">获取验证码</button>
+</form>
+</div>
+<div class="title reset-password">
+<h1>重设密码</h1>
+<h2>验证码将会发送至你的注册邮箱或手机</h2>
+</div>
+<div class="view reset-password">
+<form action="/resetpassword/email">
+<div class="input-wrapper">
+<input type="text" name="account" class="account" placeholder="手机号或邮箱" required>
+</div>
+<div class="input-wrapper toggle-password">
+<input type="password" hidden> 
+<input type="password" name="password" placeholder="新密码" required>
+<span class="z-ico-show-password"></span>
+</div>
+<div class="input-wrapper verification-code">
+<input type="text" name="verification_code" placeholder="邮箱收到的 6 位数验证码" maxlength="6" required>
+<button type="button" class="send-code">重发验证码</button>
+</div>
+<button class="submit blue-button">重设密码</button>
+</form>
+</div>
+<div class="title sms-login-verification">
+<h1>登录知乎</h1>
+<h2>验证码将会发送至你的手机</h2>
+</div>
+<div class="view sms-login-verification">
+<form>
+<div class="input-wrapper">
+<input type="text" name="phone_num" placeholder="手机号" required>
+</div>
+<div class="input-wrapper captcha">
+<input type="text" name="captcha" placeholder="验证码" required>
+<div class="captcha" data-tip="s$b$看不清楚？换一张">
+<img>
+</div>
+</div>
+<button class="submit blue-button">获取验证码</button>
+</form>
+</div>
+<div class="title sms-login">
+<h1>登录知乎</h1>
+<h2>输入你收到的 6 位数短信验证码</h2>
+</div>
+<div class="view sms-login">
+<form>
+<div class="input-wrapper">
+<input type="text" name="phone_num" placeholder="手机号" required>
+</div>
+<div class="input-wrapper verification-code">
+<input type="text" name="verification_code" placeholder="6 位数验证码" maxlength="6" required>
+<button type="button" class="send-code">重发验证码</button>
+</div>
+<button class="submit blue-button">登录知乎</button>
+</form>
+</div>
+</script>
+<script type="text/template" class="oauth-register-template">
+<div class="title register">
+<h1>填写姓名</h1>
+<h2>请填写你的真实姓名</h2>
+</div>
+<div class="view register">
+<form>
+<div class="input-wrapper">
+<input type="text" name="fullname" placeholder="姓名" required>
+</div>
+<div class="input-wrapper captcha">
+<input type="text" name="captcha" placeholder="验证码" required>
+<div class="captcha" data-tip="s$b$看不清楚？换一张">
+<img>
+</div>
+</div>
+<button class="submit blue-button">进入知乎</button>
+</form>
+</div>
+<div class="title bound">
+<h1>登录知乎</h1>
+<h2>该微博曾绑定过以下帐号</h2>
+</div>
+<div class="view bound">
+<img src="" width="50px" height="50px">
+<span class="name"></span>
+<button class="blue-button bind-login">绑定此帐号并登录</button>
+<button class="button register">不绑定，用微博创建新帐号</button>
+</div>
+<div class="title registered">
+<h1>微博邮箱已注册知乎</h1>
+<h2>已注册至如下帐号</h2>
+</div>
+<div class="view registered">
+<img src="" width="50px" height="50px">
+<span class="name"></span>
+<button class="blue-button bind-login">绑定此帐号并登录</button>
+<button class="button register">不绑定，用微博创建新帐号</button>
+</div>
+<div class="title bind-login">
+<h1>登录知乎</h1>
+<h2>与世界分享你的知识、经验和见解</h2>
+</div>
+<div class="view bind-login">
+<form>
+<div class="input-wrapper">
+<input type="text" name="account" class="account" placeholder="手机号或邮箱" required disabled>
+</div>
+<div class="input-wrapper toggle-password">
+<input type="password" name="password" placeholder="密码" required>
+<span class="z-ico-show-password"></span>
+</div>
+<div class="actions">
+<button class="unable-login" type="button">无法登录？</button>
+<button class="submit blue-button">绑定并登录</button>
+</div>
+</form>
+</div>
+</script>
+<script type="text/json" class="json-inline" data-name="current_user">["","","","-1","",0,0]</script>
+<script type="text/json" class="json-inline" data-name="env">["zhihu.com","comet.zhihu.com",false,null]</script>
+<script type="text/json" class="json-inline" data-name="permissions">[]</script>
+
+
+<script type="text/json" class="json-inline" data-name="ga_vars">{"user_created":0,"now":1445440819000,"abtest_mask":"------------------------------","user_attr":[0,0,0,"-","-"],"user_hash":0}</script>
+
+<script type="text/json" class="json-inline" data-name="current_question">{"status":"normal","isLocked":0,"detailEditReasonRequired":true,"editPermission":false,"isAnon":0,"qid":1928719,"urlToken":24367230,"showInvitePanel":false,"askAboutMember":0}</script>
+<script type="text/json" class="json-inline" data-name="current_question_owner">false</script>
+<script type="text/json" class="json-inline" data-name="draft">[]</script>
+<script type="text/json" class="json-inline" data-name="my_answer">{}</script>
+
+<script type="text/json" class="json-inline" data-name="redirect_to">""</script>
+
+
+
+<script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/vendor.js"></script>
+<script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/app_core.js"></script>
+<script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/sign.js"></script>
+<script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/app.js"></script>
+<script src="%E5%A6%82%E4%BD%95%E5%9C%A8Android%20Studio%E4%B8%AD%E4%BD%BF%E7%94%A8Maven%EF%BC%9F%20-%20Android%20-%20%E7%9F%A5%E4%B9%8E_files/rich_text_editor.js"></script>
+
+<script type="text/zscript" znonce="dcd2dff4d86d45fba85b93f356e58e3b">
+ZH.entrySQ();
+</script>
+
+<input name="_xsrf" value="603bc210986ac7b1ec1c9dfedd2fd4ec" type="hidden">
+
+<div class="zh-backtotop" style="display:none"><a data-action="backtotop" data-tip="s$r$回到顶部" href="javascript:;" class="btn-backtotop btn-action"><div class="arrow"></div><div class="stick"></div></a></div><div id="copyright-demo-helper" style="display: none; position: absolute;"><p class="copyright-demo-helper-intro"> 勾选后，我们将限制其他用户的复制操作，并给予提醒 </p><p class="copyright-demo-helper-btn"> 查看演示 </p></div><div id="zh-tooltip"></div><div style="display: none; opacity: 0.5;" class="modal-dialog-bg"></div><div aria-labelledby=":f" role="dialog" style="display: none; width: 462px;" tabindex="0" class="modal-dialog"><div class="modal-dialog-title modal-dialog-title-draggable"><span role="heading" id=":f" class="modal-dialog-title-text">禁止转载演示</span><span aria-label="Close" tabindex="0" role="button" class="modal-dialog-title-close"></span></div><div class="modal-dialog-content"><div class="carousel copyright-demo"><div class="carousel-navigation-btn"><div class="carousel-left-btn copyright-ico-prev"> </div></div><div class="carousel-content"><section style="display: block;" class="carousel-inner-content">
+<p class="copyright-demo-title"> 这是你的回答正文 </p>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+<div class="copyright-demo-region"></div>
+</section><section class="carousel-inner-content">
+<p class="copyright-demo-title"> 当其他人想复制你的一段回答 </p>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region1">
+<span class="copyright-ico-indicator" id="copyright-demo-indicator"></span>
+</div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region2"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region3"></div>
+<div class="copyright-demo-region frame2-region" id="copyright-demo-region4"></div>
+<div class="copyright-demo-region"></div>
+</section><section class="carousel-inner-content" id="copyright-demo-frame3">
+<p class="copyright-demo-title"> 复制将受限，同时会弹出提醒 </p>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region copyright-demo-region-selected"></div>
+<div class="copyright-demo-region"></div>
+<span class="copyright-ico-pointer copyright-demo-pointer"></span>
+<div class="copyright-notification copyright-demo-noty"><div class="user-image-container"><img class="user-image" src=""></div><div class="tooltip right noty-tooltip"><div class="tooltip-arrow arrow"> </div><div class="tooltip-inner inner"> 如需转载，请通过私信或评论联系我 </div></div></div></section><div class="carousel-navigation-dot-group"><div class="carousel-dot carousel-dot-selected"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div></div><div class="carousel-navigation-btn"><div class="carousel-right-btn copyright-ico-next"> </div></div></div></div><div style="display: none;" class="modal-dialog-buttons"></div></div><span tabindex="0" style="display: none; position: absolute;"></span><div style="display: none;"><div class="lang-select collapsed"><div style="-moz-user-select: none;" class="title-button">选择语言</div><i class="zg-icon zg-icon-double-arrow"></i><div class="input-wrapper"><input aria-haspopup="true" class="filter-input zg-form-text-input" placeholder="搜索语言"></div></div></div><div></div></body></html>

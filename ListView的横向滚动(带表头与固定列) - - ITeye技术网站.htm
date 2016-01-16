@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ListView的横向滚动(带表头与固定列) -  - ITeye技术网站</title>
+    <meta name="description" content="  问题背景：在做图表展示的时候，ListView可以上下左右滑动，但最左边一列在向右滑动时，保持不变，表头在向下滑动时保持不变。  有用两个ListView实现的，但测试过，好像有些问题  这个例子是通过（ListView + HorizontalScrollView）实现的  效果图：  &nbsp;  &nbsp;  /**   *    * 带滑动表头与固定列的ListView   */  public cla ...">
+    <meta name="keywords" content="代码源文件 ListView的横向滚动(带表头与固定列)">
+    <link rel="shortcut icon" href="http://yq135314.iteye.com/images/favicon.ico" type="image/x-icon">
+    <link rel="search" type="application/opensearchdescription+xml" href="http://yq135314.iteye.com/open_search.xml" title="ITeye">
+    <link href="http://yq135314.iteye.com/rss" rel="alternate" title="" type="application/rss+xml">
+    <link href="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blue.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/ga.js" async="" type="text/javascript"></script><script src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/application.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/shCoreCommon.js" type="text/javascript"></script>
+<script src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/hotkey.js" type="text/javascript"></script>
+  <script src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/code_favorites.js" type="text/javascript"></script>
+<script src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/weiboshare.js" type="text/javascript"></script>
+  <style type="text/css">.dp-default .number { color: #C00000; }</style><style type="text/css">.dp-default .number { color: #C00000; }</style></head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="http://yq135314.iteye.com/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="http://yq135314.iteye.com/login">登录</a>
+    <a href="http://yq135314.iteye.com/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="http://yq135314.iteye.com/">yq135314</a></h1>
+        </div>
+        <div id="fd"></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class="blog_navbar_for"><a href="http://yq135314.iteye.com/"><strong>博客</strong></a></li>
+            <li><a href="http://yq135314.iteye.com/weibo">微博</a></li>
+            <li><a href="http://yq135314.iteye.com/album">相册</a></li>
+            <li><a href="http://yq135314.iteye.com/link">收藏</a></li>
+            <li><a href="http://yq135314.iteye.com/blog/guest_book">留言</a></li>
+            <li><a href="http://yq135314.iteye.com/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text">
+              <input class="submit_search" value="" type="submit">
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style="display:none">
+  <a href="http://yq135314.iteye.com/" class="p-author" target="_blank">yq135314</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="http://yq135314.iteye.com/blog/1872396">ListView的横向滚动(带表头与固定列)</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class="blog_categories"><strong>博客分类：</strong> <li><a href="http://yq135314.iteye.com/category/193802">Android</a></li> </ul>
+        <div class="news_tag"><a href="http://www.iteye.com/blogs/tag/%E4%BB%A3%E7%A0%81%E6%BA%90%E6%96%87%E4%BB%B6">代码源文件</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <div style="font-size: 14px;" class="iteye-blog-content-contain">
+<p>问题背景：在做图表展示的时候，ListView可以上下左右滑动，但最左边一列在向右滑动时，保持不变，表头在向下滑动时保持不变。</p>
+<p>有用两个ListView实现的，但测试过，好像有些问题</p>
+<p>这个例子是通过（ListView + HorizontalScrollView）实现的</p>
+<p>效果图：</p>
+<p>&nbsp;<img alt="" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/978a3718-71d3-324c-88b4-72058b86d4f2.gif" height="489" width="329"></p>
+<p>&nbsp;</p>
+<div id="" class="dp-highlighter"><div class="bar"><div class="tools">Activity代码代码 <embed wmode="transparent" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=%2F**%0A%20*%20%0A%20*%20%E5%B8%A6%E6%BB%91%E5%8A%A8%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%E7%9A%84ListView%0A%20*%2F%0Apublic%20class%20HListActivity%20extends%20Activity%7B%0A%09%20private%20ListView%20mListView%3B%0A%09%20%2F%2F%E6%96%B9%E4%BE%BF%E6%B5%8B%E8%AF%95%EF%BC%8C%E7%9B%B4%E6%8E%A5%E5%86%99%E7%9A%84public%20%0A%09%20public%20HorizontalScrollView%20mTouchView%3B%0A%09%20%2F%2F%E8%A3%85%E5%85%A5%E6%89%80%E6%9C%89%E7%9A%84HScrollView%0A%09%20protected%20List%3CCHScrollView%3E%20mHScrollViews%20%3Dnew%20ArrayList%3CCHScrollView%3E()%3B%0A%09%0A%09%40Override%0A%09protected%20void%20onCreate(Bundle%20savedInstanceState)%20%7B%0A%09%09super.onCreate(savedInstanceState)%3B%0A%09%09setContentView(R.layout.scroll)%3B%0A%09%09initViews()%3B%0A%09%7D%0A%09%0A%09private%20void%20initViews()%20%7B%0A%09%09List%3CMap%3CString%2C%20String%3E%3E%20datas%20%3D%20new%20ArrayList%3CMap%3CString%2CString%3E%3E()%3B%0A%09%09Map%3CString%2C%20String%3E%20data%20%3D%20null%3B%0A%09%09CHScrollView%20headerScroll%20%3D%20(CHScrollView)%20findViewById(R.id.item_scroll_title)%3B%0A%09%09%2F%2F%E6%B7%BB%E5%8A%A0%E5%A4%B4%E6%BB%91%E5%8A%A8%E4%BA%8B%E4%BB%B6%20%0A%09%09mHScrollViews.add(headerScroll)%3B%0A%09%09mListView%20%3D%20(ListView)%20findViewById(R.id.scroll_list)%3B%0A%09%09for(int%20i%20%3D%200%3B%20i%20%3C%20100%3B%20i%2B%2B)%20%7B%0A%09%09%09data%20%3D%20new%20HashMap%3CString%2C%20String%3E()%3B%0A%09%09%09data.put(%22title%22%2C%20%22Title_%22%20%2B%20i)%3B%0A%09%09%09data.put(%22data_%22%20%2B%201%2C%20%22Date_%22%20%2B%201%20%2B%20%22_%22%20%2Bi%20)%3B%0A%09%09%09data.put(%22data_%22%20%2B%202%2C%20%22Date_%22%20%2B%202%20%2B%20%22_%22%20%2Bi%20)%3B%0A%09%09%09data.put(%22data_%22%20%2B%203%2C%20%22Date_%22%20%2B%203%20%2B%20%22_%22%20%2Bi%20)%3B%0A%09%09%09data.put(%22data_%22%20%2B%204%2C%20%22Date_%22%20%2B%204%20%2B%20%22_%22%20%2Bi%20)%3B%0A%09%09%09data.put(%22data_%22%20%2B%205%2C%20%22Date_%22%20%2B%205%20%2B%20%22_%22%20%2Bi%20)%3B%0A%09%09%09data.put(%22data_%22%20%2B%206%2C%20%22Date_%22%20%2B%206%20%2B%20%22_%22%20%2Bi%20)%3B%0A%09%09%09datas.add(data)%3B%0A%09%09%7D%0A%09%09SimpleAdapter%20adapter%20%3D%20new%20ScrollAdapter(this%2C%20datas%2C%20R.layout.item%0A%09%09%09%09%09%09%09%2C%20new%20String%5B%5D%20%7B%20%22title%22%2C%20%22data_1%22%2C%20%22data_2%22%2C%20%22data_3%22%2C%20%22data_4%22%2C%20%22data_5%22%2C%20%22data_6%22%2C%20%7D%0A%09%09%09%09%09%09%09%2C%20new%20int%5B%5D%20%7B%20R.id.item_title%20%0A%09%09%09%09%09%09%09%09%09%09%2C%20R.id.item_data1%0A%09%09%09%09%09%09%09%09%09%09%2C%20R.id.item_data2%0A%09%09%09%09%09%09%09%09%09%09%2C%20R.id.item_data3%0A%09%09%09%09%09%09%09%09%09%09%2C%20R.id.item_data4%0A%09%09%09%09%09%09%09%09%09%09%2C%20R.id.item_data5%0A%09%09%09%09%09%09%09%09%09%09%2C%20R.id.item_data6%20%7D)%3B%0A%09%09mListView.setAdapter(adapter)%3B%0A%09%7D%0A%09%0A%09public%20void%20addHViews(final%20CHScrollView%20hScrollView)%20%7B%0A%09%09if(!mHScrollViews.isEmpty())%20%7B%0A%09%09%09int%20size%20%3D%20mHScrollViews.size()%3B%0A%09%09%09CHScrollView%20scrollView%20%3D%20mHScrollViews.get(size%20-%201)%3B%0A%09%09%09final%20int%20scrollX%20%3D%20scrollView.getScrollX()%3B%0A%09%09%09%2F%2F%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%BB%A1%E5%B1%8F%E5%90%8E%EF%BC%8C%E5%90%91%E4%B8%8B%E6%BB%91%E5%8A%A8%EF%BC%8C%E6%9C%89%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE%E5%9C%A8%E5%BC%80%E5%A7%8B%E6%97%B6%E6%9C%AA%E5%8A%A0%E5%85%A5%0A%09%09%09if(scrollX%20!%3D%200)%20%7B%0A%09%09%09%09mListView.post(new%20Runnable()%20%7B%0A%09%09%09%09%09%40Override%0A%09%09%09%09%09public%20void%20run()%20%7B%0A%09%09%09%09%09%09%2F%2F%E5%BD%93listView%E5%88%B7%E6%96%B0%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%8A%8A%E8%AF%A5%E6%9D%A1%E7%A7%BB%E5%8A%A8%E5%88%B0%E6%9C%80%E7%BB%88%E4%BD%8D%E7%BD%AE%0A%09%09%09%09%09%09hScrollView.scrollTo(scrollX%2C%200)%3B%0A%09%09%09%09%09%7D%0A%09%09%09%09%7D)%3B%0A%09%09%09%7D%0A%09%09%7D%0A%09%09mHScrollViews.add(hScrollView)%3B%0A%09%7D%0A%09%0A%09public%20void%20onScrollChanged(int%20l%2C%20int%20t%2C%20int%20oldl%2C%20int%20oldt)%7B%0A%09%09for(CHScrollView%20scrollView%20%3A%20mHScrollViews)%20%7B%0A%09%09%09%2F%2F%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%BB%91%E5%8A%A8%0A%09%09%09if(mTouchView%20!%3D%20scrollView)%0A%09%09%09%09scrollView.smoothScrollTo(l%2C%20t)%3B%0A%09%09%7D%0A%09%7D%0A%09%0A%09class%20ScrollAdapter%20extends%20SimpleAdapter%20%7B%0A%0A%09%09private%20List%3C%3F%20extends%20Map%3CString%2C%20%3F%3E%3E%20datas%3B%0A%09%09private%20int%20res%3B%0A%09%09private%20String%5B%5D%20from%3B%0A%09%09private%20int%5B%5D%20to%3B%0A%09%09private%20Context%20context%3B%0A%09%09public%20ScrollAdapter(Context%20context%2C%0A%09%09%09%09List%3C%3F%20extends%20Map%3CString%2C%20%3F%3E%3E%20data%2C%20int%20resource%2C%0A%09%09%09%09String%5B%5D%20from%2C%20int%5B%5D%20to)%20%7B%0A%09%09%09super(context%2C%20data%2C%20resource%2C%20from%2C%20to)%3B%0A%09%09%09this.context%20%3D%20context%3B%0A%09%09%09this.datas%20%3D%20data%3B%0A%09%09%09this.res%20%3D%20resource%3B%0A%09%09%09this.from%20%3D%20from%3B%0A%09%09%09this.to%20%3D%20to%3B%0A%09%09%7D%0A%09%09%0A%09%09%40Override%0A%09%09public%20View%20getView(int%20position%2C%20View%20convertView%2C%20ViewGroup%20parent)%20%7B%0A%09%09%09View%20v%20%3D%20convertView%3B%0A%09%09%09if(v%20%3D%3D%20null)%20%7B%0A%09%09%09%09v%20%3D%20LayoutInflater.from(context).inflate(res%2C%20null)%3B%0A%09%09%09%09%2F%2F%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%97%B6%E5%80%99%E8%A3%85%E8%BF%9B%E6%9D%A5%0A%09%09%09%09addHViews((CHScrollView)%20v.findViewById(R.id.item_scroll))%3B%0A%09%09%09%09View%5B%5D%20views%20%3D%20new%20View%5Bto.length%5D%3B%0A%09%09%09%09for(int%20i%20%3D%200%3B%20i%20%3C%20to.length%3B%20i%2B%2B)%20%7B%0A%09%09%09%09%09View%20tv%20%3D%20v.findViewById(to%5Bi%5D)%3B%3B%0A%09%09%09%09%09tv.setOnClickListener(clickListener)%3B%0A%09%09%09%09%09views%5Bi%5D%20%3D%20tv%3B%0A%09%09%09%09%7D%0A%09%09%09%09v.setTag(views)%3B%0A%09%09%09%7D%0A%09%09%09View%5B%5D%20holders%20%3D%20(View%5B%5D)%20v.getTag()%3B%0A%09%09%09int%20len%20%3D%20holders.length%3B%0A%09%09%09for(int%20i%20%3D%200%20%3B%20i%20%3C%20len%3B%20i%2B%2B)%20%7B%0A%09%09%09%09((TextView)holders%5Bi%5D).setText(this.datas.get(position).get(from%5Bi%5D).toString())%3B%0A%09%09%09%7D%0A%09%09%09return%20v%3B%0A%09%09%7D%0A%09%7D%0A%09%0A%09%2F%2F%E6%B5%8B%E8%AF%95%E7%82%B9%E5%87%BB%E7%9A%84%E4%BA%8B%E4%BB%B6%20%0A%09protected%20View.OnClickListener%20clickListener%20%3D%20new%20View.OnClickListener()%20%7B%0A%09%09%40Override%0A%09%09public%20void%20onClick(View%20v)%20%7B%0A%09%09%09Toast.makeText(HListActivity.this%2C%20((TextView)v).getText()%2C%20Toast.LENGTH_SHORT).show()%3B%0A%09%09%7D%0A%09%7D%3B%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-default" start="1"><li><span><span>/**&nbsp;&nbsp;</span></span></li><li><span>&nbsp;*&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;*&nbsp;带滑动表头与固定列的ListView&nbsp;&nbsp;</span></li><li><span>&nbsp;*/&nbsp;&nbsp;</span></li><li><span>public&nbsp;class&nbsp;HListActivity&nbsp;extends&nbsp;Activity{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;ListView&nbsp;mListView;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//方便测试，直接写的public&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;HorizontalScrollView&nbsp;mTouchView;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//装入所有的HScrollView&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;protected&nbsp;List&lt;CHScrollView&gt;&nbsp;mHScrollViews&nbsp;=new&nbsp;ArrayList&lt;CHScrollView&gt;();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;@Override&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;protected&nbsp;void&nbsp;onCreate(Bundle&nbsp;savedInstanceState)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.onCreate(savedInstanceState);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.scroll);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initViews();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;void&nbsp;initViews()&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;Map&lt;String,&nbsp;String&gt;&gt;&nbsp;datas&nbsp;=&nbsp;new&nbsp;ArrayList&lt;Map&lt;String,String&gt;&gt;();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String,&nbsp;String&gt;&nbsp;data&nbsp;=&nbsp;null;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHScrollView&nbsp;headerScroll&nbsp;=&nbsp;(CHScrollView)&nbsp;findViewById(R.id.item_scroll_title);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//添加头滑动事件&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mHScrollViews.add(headerScroll);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mListView&nbsp;=&nbsp;(ListView)&nbsp;findViewById(R.id.scroll_list);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int&nbsp;i&nbsp;=&nbsp;<span class="number">0</span><span>;&nbsp;i&nbsp;&lt;&nbsp;</span><span class="number">100</span><span>;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;=&nbsp;new&nbsp;HashMap&lt;String,&nbsp;String&gt;();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.put(<span class="string">"title"</span><span>,&nbsp;</span><span class="string">"Title_"</span><span>&nbsp;+&nbsp;i);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.put(<span class="string">"data_"</span><span>&nbsp;+&nbsp;</span><span class="number">1</span><span>,&nbsp;</span><span class="string">"Date_"</span><span>&nbsp;+&nbsp;</span><span class="number">1</span><span>&nbsp;+&nbsp;</span><span class="string">"_"</span><span>&nbsp;+i&nbsp;);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.put(<span class="string">"data_"</span><span>&nbsp;+&nbsp;</span><span class="number">2</span><span>,&nbsp;</span><span class="string">"Date_"</span><span>&nbsp;+&nbsp;</span><span class="number">2</span><span>&nbsp;+&nbsp;</span><span class="string">"_"</span><span>&nbsp;+i&nbsp;);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.put(<span class="string">"data_"</span><span>&nbsp;+&nbsp;</span><span class="number">3</span><span>,&nbsp;</span><span class="string">"Date_"</span><span>&nbsp;+&nbsp;</span><span class="number">3</span><span>&nbsp;+&nbsp;</span><span class="string">"_"</span><span>&nbsp;+i&nbsp;);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.put(<span class="string">"data_"</span><span>&nbsp;+&nbsp;</span><span class="number">4</span><span>,&nbsp;</span><span class="string">"Date_"</span><span>&nbsp;+&nbsp;</span><span class="number">4</span><span>&nbsp;+&nbsp;</span><span class="string">"_"</span><span>&nbsp;+i&nbsp;);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.put(<span class="string">"data_"</span><span>&nbsp;+&nbsp;</span><span class="number">5</span><span>,&nbsp;</span><span class="string">"Date_"</span><span>&nbsp;+&nbsp;</span><span class="number">5</span><span>&nbsp;+&nbsp;</span><span class="string">"_"</span><span>&nbsp;+i&nbsp;);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.put(<span class="string">"data_"</span><span>&nbsp;+&nbsp;</span><span class="number">6</span><span>,&nbsp;</span><span class="string">"Date_"</span><span>&nbsp;+&nbsp;</span><span class="number">6</span><span>&nbsp;+&nbsp;</span><span class="string">"_"</span><span>&nbsp;+i&nbsp;);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datas.add(data);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SimpleAdapter&nbsp;adapter&nbsp;=&nbsp;new&nbsp;ScrollAdapter(this,&nbsp;datas,&nbsp;R.layout.item&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;new&nbsp;String[]&nbsp;{&nbsp;<span class="string">"title"</span><span>,&nbsp;</span><span class="string">"data_1"</span><span>,&nbsp;</span><span class="string">"data_2"</span><span>,&nbsp;</span><span class="string">"data_3"</span><span>,&nbsp;</span><span class="string">"data_4"</span><span>,&nbsp;</span><span class="string">"data_5"</span><span>,&nbsp;</span><span class="string">"data_6"</span><span>,&nbsp;}&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;new&nbsp;int[]&nbsp;{&nbsp;R.id.item_title&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;R.id.item_data1&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;R.id.item_data2&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;R.id.item_data3&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;R.id.item_data4&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;R.id.item_data5&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;R.id.item_data6&nbsp;});&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mListView.setAdapter(adapter);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;addHViews(final&nbsp;CHScrollView&nbsp;hScrollView)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!mHScrollViews.isEmpty())&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;size&nbsp;=&nbsp;mHScrollViews.size();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHScrollView&nbsp;scrollView&nbsp;=&nbsp;mHScrollViews.get(size&nbsp;-&nbsp;<span class="number">1</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;int&nbsp;scrollX&nbsp;=&nbsp;scrollView.getScrollX();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//第一次满屏后，向下滑动，有一条数据在开始时未加入&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(scrollX&nbsp;!=&nbsp;<span class="number">0</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mListView.post(new&nbsp;Runnable()&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Override&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;run()&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+当listView刷新完成之后，把该条移动到最终位置&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hScrollView.scrollTo(scrollX,&nbsp;<span class="number">0</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mHScrollViews.add(hScrollView);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;onScrollChanged(int&nbsp;l,&nbsp;int&nbsp;t,&nbsp;int&nbsp;oldl,&nbsp;int&nbsp;oldt){&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(CHScrollView&nbsp;scrollView&nbsp;:&nbsp;mHScrollViews)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//防止重复滑动&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(mTouchView&nbsp;!=&nbsp;scrollView)&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollView.smoothScrollTo(l,&nbsp;t);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ScrollAdapter&nbsp;extends&nbsp;SimpleAdapter&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;List&lt;?&nbsp;extends&nbsp;Map&lt;String,&nbsp;?&gt;&gt;&nbsp;datas;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;int&nbsp;res;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;String[]&nbsp;from;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;int[]&nbsp;to;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;Context&nbsp;context;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;ScrollAdapter(Context&nbsp;context,&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;?&nbsp;extends&nbsp;Map&lt;String,&nbsp;?&gt;&gt;&nbsp;data,&nbsp;int&nbsp;resource,&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[]&nbsp;from,&nbsp;int[]&nbsp;to)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(context,&nbsp;data,&nbsp;resource,&nbsp;from,&nbsp;to);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.context&nbsp;=&nbsp;context;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.datas&nbsp;=&nbsp;data;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.res&nbsp;=&nbsp;resource;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.from&nbsp;=&nbsp;from;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.to&nbsp;=&nbsp;to;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Override&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;View&nbsp;getView(int&nbsp;position,&nbsp;View&nbsp;convertView,&nbsp;ViewGroup&nbsp;parent)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View&nbsp;v&nbsp;=&nbsp;convertView;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(v&nbsp;==&nbsp;null)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;=&nbsp;LayoutInflater.from(context).inflate(res,&nbsp;null);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//第一次初始化的时候装进来&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addHViews((CHScrollView)&nbsp;v.findViewById(R.id.item_scroll));&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View[]&nbsp;views&nbsp;=&nbsp;new&nbsp;View[to.length];&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int&nbsp;i&nbsp;=&nbsp;<span class="number">0</span><span>;&nbsp;i&nbsp;&lt;&nbsp;to.length;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View&nbsp;tv&nbsp;=&nbsp;v.findViewById(to[i]);;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tv.setOnClickListener(clickListener);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;views[i]&nbsp;=&nbsp;tv;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v.setTag(views);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View[]&nbsp;holders&nbsp;=&nbsp;(View[])&nbsp;v.getTag();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;len&nbsp;=&nbsp;holders.length;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int&nbsp;i&nbsp;=&nbsp;<span class="number">0</span><span>&nbsp;;&nbsp;i&nbsp;&lt;&nbsp;len;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((TextView)holders[i]).setText(this.datas.get(position).get(from[i]).toString());&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;v;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;//测试点击的事件&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;protected&nbsp;View.OnClickListener&nbsp;clickListener&nbsp;=&nbsp;new&nbsp;View.OnClickListener()&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Override&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;onClick(View&nbsp;v)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Toast.makeText(HListActivity.this,&nbsp;((TextView)v).getText(),&nbsp;Toast.LENGTH_SHORT).show();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;};&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="ListView的横向滚动(带表头与固定列)" pre_index="0" source_url="http://yq135314.iteye.com/blog/1872396" codeable_type="Blog" codeable_id="1872396" style="display: none;" class="Activity代码" name="code">/**
+ * 
+ * 带滑动表头与固定列的ListView
+ */
+public class HListActivity extends Activity{
+	 private ListView mListView;
+	 //方便测试，直接写的public 
+	 public HorizontalScrollView mTouchView;
+	 //装入所有的HScrollView
+	 protected List&lt;CHScrollView&gt; mHScrollViews =new ArrayList&lt;CHScrollView&gt;();
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.scroll);
+		initViews();
+	}
+	
+	private void initViews() {
+		List&lt;Map&lt;String, String&gt;&gt; datas = new ArrayList&lt;Map&lt;String,String&gt;&gt;();
+		Map&lt;String, String&gt; data = null;
+		CHScrollView headerScroll = (CHScrollView) findViewById(R.id.item_scroll_title);
+		//添加头滑动事件 
+		mHScrollViews.add(headerScroll);
+		mListView = (ListView) findViewById(R.id.scroll_list);
+		for(int i = 0; i &lt; 100; i++) {
+			data = new HashMap&lt;String, String&gt;();
+			data.put("title", "Title_" + i);
+			data.put("data_" + 1, "Date_" + 1 + "_" +i );
+			data.put("data_" + 2, "Date_" + 2 + "_" +i );
+			data.put("data_" + 3, "Date_" + 3 + "_" +i );
+			data.put("data_" + 4, "Date_" + 4 + "_" +i );
+			data.put("data_" + 5, "Date_" + 5 + "_" +i );
+			data.put("data_" + 6, "Date_" + 6 + "_" +i );
+			datas.add(data);
+		}
+		SimpleAdapter adapter = new ScrollAdapter(this, datas, R.layout.item
+							, new String[] { "title", "data_1", "data_2", "data_3", "data_4", "data_5", "data_6", }
+							, new int[] { R.id.item_title 
+										, R.id.item_data1
+										, R.id.item_data2
+										, R.id.item_data3
+										, R.id.item_data4
+										, R.id.item_data5
+										, R.id.item_data6 });
+		mListView.setAdapter(adapter);
+	}
+	
+	public void addHViews(final CHScrollView hScrollView) {
+		if(!mHScrollViews.isEmpty()) {
+			int size = mHScrollViews.size();
+			CHScrollView scrollView = mHScrollViews.get(size - 1);
+			final int scrollX = scrollView.getScrollX();
+			//第一次满屏后，向下滑动，有一条数据在开始时未加入
+			if(scrollX != 0) {
+				mListView.post(new Runnable() {
+					@Override
+					public void run() {
+						//当listView刷新完成之后，把该条移动到最终位置
+						hScrollView.scrollTo(scrollX, 0);
+					}
+				});
+			}
+		}
+		mHScrollViews.add(hScrollView);
+	}
+	
+	public void onScrollChanged(int l, int t, int oldl, int oldt){
+		for(CHScrollView scrollView : mHScrollViews) {
+			//防止重复滑动
+			if(mTouchView != scrollView)
+				scrollView.smoothScrollTo(l, t);
+		}
+	}
+	
+	class ScrollAdapter extends SimpleAdapter {
+
+		private List&lt;? extends Map&lt;String, ?&gt;&gt; datas;
+		private int res;
+		private String[] from;
+		private int[] to;
+		private Context context;
+		public ScrollAdapter(Context context,
+				List&lt;? extends Map&lt;String, ?&gt;&gt; data, int resource,
+				String[] from, int[] to) {
+			super(context, data, resource, from, to);
+			this.context = context;
+			this.datas = data;
+			this.res = resource;
+			this.from = from;
+			this.to = to;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if(v == null) {
+				v = LayoutInflater.from(context).inflate(res, null);
+				//第一次初始化的时候装进来
+				addHViews((CHScrollView) v.findViewById(R.id.item_scroll));
+				View[] views = new View[to.length];
+				for(int i = 0; i &lt; to.length; i++) {
+					View tv = v.findViewById(to[i]);;
+					tv.setOnClickListener(clickListener);
+					views[i] = tv;
+				}
+				v.setTag(views);
+			}
+			View[] holders = (View[]) v.getTag();
+			int len = holders.length;
+			for(int i = 0 ; i &lt; len; i++) {
+				((TextView)holders[i]).setText(this.datas.get(position).get(from[i]).toString());
+			}
+			return v;
+		}
+	}
+	
+	//测试点击的事件 
+	protected View.OnClickListener clickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(HListActivity.this, ((TextView)v).getText(), Toast.LENGTH_SHORT).show();
+		}
+	};
+}</pre>
+<p>&nbsp;</p>
+<div id="" class="dp-highlighter"><div class="bar"><div class="tools">滑动view代码 <embed wmode="transparent" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=%2F**%0A*%20%E6%BB%91%E5%8A%A8%E4%BB%A3%E7%A0%81%0A*%2F%0Apublic%20class%20CHScrollView%20extends%20HorizontalScrollView%20%7B%0A%09%0A%09HListActivity%20activity%3B%0A%09%0A%09public%20CHScrollView(Context%20context%2C%20AttributeSet%20attrs%2C%20int%20defStyle)%20%7B%0A%09%09super(context%2C%20attrs%2C%20defStyle)%3B%0A%09%09activity%20%3D%20(HListActivity)%20context%3B%0A%09%7D%0A%0A%09%0A%09public%20CHScrollView(Context%20context%2C%20AttributeSet%20attrs)%20%7B%0A%09%09super(context%2C%20attrs)%3B%0A%09%09activity%20%3D%20(HListActivity)%20context%3B%0A%09%7D%0A%0A%09public%20CHScrollView(Context%20context)%20%7B%0A%09%09super(context)%3B%0A%09%09activity%20%3D%20(HListActivity)%20context%3B%0A%09%7D%0A%09%0A%09%40Override%0A%09public%20boolean%20onTouchEvent(MotionEvent%20ev)%20%7B%0A%09%09%2F%2F%E8%BF%9B%E8%A1%8C%E8%A7%A6%E6%91%B8%E8%B5%8B%E5%80%BC%0A%09%09activity.mTouchView%20%3D%20this%3B%0A%09%09return%20super.onTouchEvent(ev)%3B%0A%09%7D%0A%09%0A%09%40Override%0A%09protected%20void%20onScrollChanged(int%20l%2C%20int%20t%2C%20int%20oldl%2C%20int%20oldt)%20%7B%0A%09%09%2F%2F%E5%BD%93%E5%BD%93%E5%89%8D%E7%9A%84CHSCrollView%E8%A2%AB%E8%A7%A6%E6%91%B8%E6%97%B6%EF%BC%8C%E6%BB%91%E5%8A%A8%E5%85%B6%E5%AE%83%0A%09%09if(activity.mTouchView%20%3D%3D%20this)%20%7B%0A%09%09%09activity.onScrollChanged(l%2C%20t%2C%20oldl%2C%20oldt)%3B%0A%09%09%7Delse%7B%0A%09%09%09super.onScrollChanged(l%2C%20t%2C%20oldl%2C%20oldt)%3B%0A%09%09%7D%0A%09%7D%0A%7D%0A" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-default" start="1"><li><span><span>/**&nbsp;&nbsp;</span></span></li><li><span>*&nbsp;滑动代码&nbsp;&nbsp;</span></li><li><span>*/&nbsp;&nbsp;</span></li><li><span>public&nbsp;class&nbsp;CHScrollView&nbsp;extends&nbsp;HorizontalScrollView&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;HListActivity&nbsp;activity;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;CHScrollView(Context&nbsp;context,&nbsp;AttributeSet&nbsp;attrs,&nbsp;int&nbsp;defStyle)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(context,&nbsp;attrs,&nbsp;defStyle);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity&nbsp;=&nbsp;(HListActivity)&nbsp;context;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;CHScrollView(Context&nbsp;context,&nbsp;AttributeSet&nbsp;attrs)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(context,&nbsp;attrs);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity&nbsp;=&nbsp;(HListActivity)&nbsp;context;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;CHScrollView(Context&nbsp;context)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(context);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity&nbsp;=&nbsp;(HListActivity)&nbsp;context;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;@Override&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;boolean&nbsp;onTouchEvent(MotionEvent&nbsp;ev)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//进行触摸赋值&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity.mTouchView&nbsp;=&nbsp;this;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;super.onTouchEvent(ev);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;@Override&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;protected&nbsp;void&nbsp;onScrollChanged(int&nbsp;l,&nbsp;int&nbsp;t,&nbsp;int&nbsp;oldl,&nbsp;int&nbsp;oldt)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//当当前的CHSCrollView被触摸时，滑动其它&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(activity.mTouchView&nbsp;==&nbsp;this)&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity.onScrollChanged(l,&nbsp;t,&nbsp;oldl,&nbsp;oldt);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.onScrollChanged(l,&nbsp;t,&nbsp;oldl,&nbsp;oldt);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="ListView的横向滚动(带表头与固定列)" pre_index="1" source_url="http://yq135314.iteye.com/blog/1872396" codeable_type="Blog" codeable_id="1872396" style="display: none;" class="滑动View" name="code">/**
+* 滑动代码
+*/
+public class CHScrollView extends HorizontalScrollView {
+	
+	HListActivity activity;
+	
+	public CHScrollView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		activity = (HListActivity) context;
+	}
+
+	
+	public CHScrollView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		activity = (HListActivity) context;
+	}
+
+	public CHScrollView(Context context) {
+		super(context);
+		activity = (HListActivity) context;
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		//进行触摸赋值
+		activity.mTouchView = this;
+		return super.onTouchEvent(ev);
+	}
+	
+	@Override
+	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+		//当当前的CHSCrollView被触摸时，滑动其它
+		if(activity.mTouchView == this) {
+			activity.onScrollChanged(l, t, oldl, oldt);
+		}else{
+			super.onScrollChanged(l, t, oldl, oldt);
+		}
+	}
+}
+</pre>
+</div>
+  </div>
+
+  
+  <div class="attachments">
+    
+      
+        <ul>
+          <li><a href="http://dl.iteye.com/topics/download/a35abddd-9451-35f7-896b-cdb16507ae4e">ListScroll.rar</a> (146.4 KB)</li>
+          
+          <li>下载次数: 755</li>
+        </ul>
+      
+    
+    
+  </div>
+
+
+  
+  
+  <iframe src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/187.htm" scrolling="no" frameborder="0" height="60" width="468"></iframe>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="http://yq135314.iteye.com/blog/1880425" class="next" title="Visual C++ 6.0添加代码自动补全插件">Visual C++ 6.0添加代码自动补全插件</a>
+      |
+      <a href="http://yq135314.iteye.com/blog/1739584" class="pre" title="C++的未来,到底该不该学C++?  ">C++的未来,到底该不该学C++?  </a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2013-05-20 22:02</li>
+      <li>浏览 10462</li>
+      <li><a href="#comments">评论(7)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/mobile">移动开发</a></li>      
+      <li class="last"><a href="http://www.iteye.com/wiki/blog/1872396" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2356094">
+  <div class="comment_title">
+    7 楼
+    <a href="http://qingfeng812.iteye.com/" target="_blank" title="qingfeng812">qingfeng812</a>
+    2014-08-12&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">布局配置文件都不能显示，有错误；不是好的解决方案！</div>
+</div>
+
+<div id="bc2353950">
+  <div class="comment_title">
+    6 楼
+    <a href="http://201110111926.iteye.com/" target="_blank" title="qkdyzwp">qkdyzwp</a>
+    2014-07-17&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><img src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_sad.gif"> 哥们说一下思路啊你的源码被人家篡改了一下载就是视频，你里面的几个id好乱啊，都不知道你是怎么嵌套的</div>
+</div>
+
+<div id="bc2341596">
+  <div class="comment_title">
+    5 楼
+    <a href="http://guanting207.iteye.com/" target="_blank" title="guanting207">guanting207</a>
+    2014-03-07&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">点击如何获取当前的行列啊 我settag position 错乱了，楼主快快现身解解惑</div>
+</div>
+
+<div id="bc2340656">
+  <div class="comment_title">
+    4 楼
+    <a href="http://xlbeijing2008.iteye.com/" target="_blank" title="xlbeijing2008">xlbeijing2008</a>
+    2014-02-26&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">能把完整的源码发到我QQ：178530945@qq.com邮箱吗？谢谢了！</div>
+</div>
+
+<div id="bc2340655">
+  <div class="comment_title">
+    3 楼
+    <a href="http://xlbeijing2008.iteye.com/" target="_blank" title="xlbeijing2008">xlbeijing2008</a>
+    2014-02-26&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">就是啊，楼主，ListView的item点击没反应！怎么实现呢？</div>
+</div>
+
+<div id="bc2330483">
+  <div class="comment_title">
+    2 楼
+    <a href="http://wystyle1.iteye.com/" target="_blank" title="wystyle1">wystyle1</a>
+    2013-11-06&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">谢谢你分享代码，我在项目中用到了你的代码，但是有两个问题：
+<br>1、当把表头向左滑动一些，在向下滑动ListView你会发现，表格有时会错乱，就是上下不对齐。
+<br>2、你的表格中每个具体数据可以点击。但是将表格的一行无法响应点击事件，即ListView的item点击没反应！
+<br>求楼主给我指导指导！谢谢！</div>
+</div>
+
+<div id="bc2327801">
+  <div class="comment_title">
+    1 楼
+    <a href="http://1024346374.iteye.com/" target="_blank" title="沐子雨">沐子雨</a>
+    2013-10-11&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">学习了~<img src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_idea.gif"> </div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="http://yq135314.iteye.com/login" style="background-color:white;"> <img src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="http://yq135314.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1872396;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'ListView的横向滚动(带表头与固定列)');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'ListView的横向滚动(带表头与固定列)');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="http://yq135314.iteye.com/"><img alt="yq135314的博客" class="logo" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo.gif" title="yq135314的博客: " width=""></a></div>
+  <div id="blog_owner_name">yq135314</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 108525 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_minigender_1.gif" title="男"></li>
+              <li>来自: 上海</li>
+              <li><img src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/offline.gif"></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;"><a href="http://yq135314.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://t-an123.iteye.com/" target="_blank"><img alt="t_an123的博客" class="logo" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="t_an123的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://t-an123.iteye.com/" target="_blank" title="t_an123">t_an123</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://mcyandy.iteye.com/" target="_blank"><img alt="mcyandy的博客" class="logo" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="mcyandy的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://mcyandy.iteye.com/" target="_blank" title="mcyandy">mcyandy</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://strongpaul.iteye.com/" target="_blank"><img alt="StrongPaul的博客" class="logo" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="StrongPaul的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://strongpaul.iteye.com/" target="_blank" title="StrongPaul">StrongPaul</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://wangyao5018.iteye.com/" target="_blank"><img alt="wangyao5018的博客" class="logo" src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="wangyao5018的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://wangyao5018.iteye.com/" target="_blank" title="wangyao5018">wangyao5018</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="http://yq135314.iteye.com/">全部博客 (41)</a></li>
+                
+                  <li><a href="http://yq135314.iteye.com/category/193802">Android (28)</a></li>
+                
+                  <li><a href="http://yq135314.iteye.com/category/225849">Java (4)</a></li>
+                
+                  <li><a href="http://yq135314.iteye.com/category/280158">C++ (1)</a></li>
+                
+                  <li><a href="http://yq135314.iteye.com/category/212437">数据库 (2)</a></li>
+                
+                  <li><a href="http://yq135314.iteye.com/category/241606">告自己 (1)</a></li>
+                
+                  <li><a href="http://yq135314.iteye.com/category/199179">其它 (3)</a></li>
+                
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="http://yq135314.iteye.com/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="http://yq135314.iteye.com/blog/post">我的论坛</a> (0)
+                </li>
+                <li><a href="http://yq135314.iteye.com/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="http://yq135314.iteye.com/blog/monthblog/2014-03">2014-03</a> (1)</li>
+                
+                  <li><a href="http://yq135314.iteye.com/blog/monthblog/2014-01">2014-01</a> (1)</li>
+                
+                  <li><a href="http://yq135314.iteye.com/blog/monthblog/2013-12">2013-12</a> (2)</li>
+                
+                <li><a href="http://yq135314.iteye.com/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href="http://lx-yoyo.iteye.com/" target="_blank" title="lx_yoyo">lx_yoyo</a>： 
+                  楼主如何在热点区域设置背景颜色<br>
+                  <a href="http://yq135314.iteye.com/blog/1997676#bc2376401">图片热区点击之二(边界反弹,缩放,移动)</a>
+                </li>
+                
+                <li>
+                  <a href="http://89997915.iteye.com/" target="_blank" title="89997915">89997915</a>： 
+                  楼主，我想在你这个基础上，增加点击区域的效果，麻烦楼主提示下<br>
+                  <a href="http://yq135314.iteye.com/blog/1997676#bc2366992">图片热区点击之二(边界反弹,缩放,移动)</a>
+                </li>
+                
+                <li>
+                  <a href="http://89997915.iteye.com/" target="_blank" title="89997915">89997915</a>： 
+                  楼主，膜拜了~<br>
+                  <a href="http://yq135314.iteye.com/blog/1997676#bc2365967">图片热区点击之二(边界反弹,缩放,移动)</a>
+                </li>
+                
+                <li>
+                  <a href="http://lwhhuahua.iteye.com/" target="_blank" title="lwhhuahua">lwhhuahua</a>： 
+                  太强大了太强大了<br>
+                  <a href="http://yq135314.iteye.com/blog/1997676#bc2360130">图片热区点击之二(边界反弹,缩放,移动)</a>
+                </li>
+                
+                <li>
+                  <a href="http://lwhhuahua.iteye.com/" target="_blank" title="lwhhuahua">lwhhuahua</a>： 
+                  test162543 写道-0-Devil 写道求教，怎么获得 ...<br>
+                  <a href="http://yq135314.iteye.com/blog/1883315#bc2360121">android 图片区域点击（图片热区）</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br>
+          © 2003-2015 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/a.gif" height="0" width="0">
+
+<script src="ListView%E7%9A%84%E6%A8%AA%E5%90%91%E6%BB%9A%E5%8A%A8%28%E5%B8%A6%E8%A1%A8%E5%A4%B4%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%88%97%29%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tracking.js" type="text/javascript"></script>
+
+    
+    
+  
+
+</body></html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>MobclickAgent -  - ITeye技术网站</title>
+    <meta name="description" content="&nbsp;     1-&nbsp;导入Analytics_Android_SDK_2.1.jar       &nbsp; &nbsp; &nbsp; &nbsp;Eclipse用户&nbsp;&nbsp;&nbsp;右键您的工程根目录，选择Properties -&gt; Java Build Path -&gt; Libraries， 然后点击Add External JARs... 选择指向Analytics_Android_SDK_2.1.jar的路径，点击OK，即导入成功。 ...">
+    <meta name="keywords" content=" MobclickAgent">
+    <link rel="shortcut icon" href="http://scofield-android.iteye.com/images/favicon.ico" type="image/x-icon">
+    <link rel="search" type="application/opensearchdescription+xml" href="http://scofield-android.iteye.com/open_search.xml" title="ITeye">
+    <link href="http://scofield-android.iteye.com/rss" rel="alternate" title="" type="application/rss+xml">
+    <link href="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blue.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/ga.js" async="" type="text/javascript"></script><script src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/application.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/shCoreCommon.js" type="text/javascript"></script>
+<script src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/hotkey.js" type="text/javascript"></script>
+  <script src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/code_favorites.js" type="text/javascript"></script>
+<script src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/weiboshare.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="http://scofield-android.iteye.com/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="http://scofield-android.iteye.com/login">登录</a>
+    <a href="http://scofield-android.iteye.com/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="http://scofield-android.iteye.com/">scofield-android</a></h1>
+        </div>
+        <div id="fd"></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class="blog_navbar_for"><a href="http://scofield-android.iteye.com/"><strong>博客</strong></a></li>
+            <li><a href="http://scofield-android.iteye.com/weibo">微博</a></li>
+            <li><a href="http://scofield-android.iteye.com/album">相册</a></li>
+            <li><a href="http://scofield-android.iteye.com/link">收藏</a></li>
+            <li><a href="http://scofield-android.iteye.com/blog/guest_book">留言</a></li>
+            <li><a href="http://scofield-android.iteye.com/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text">
+              <input class="submit_search" value="" type="submit">
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style="display:none">
+  <a href="http://scofield-android.iteye.com/" class="p-author" target="_blank">Scofield-Android</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="http://scofield-android.iteye.com/blog/1350499">MobclickAgent</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class="blog_categories"><strong>博客分类：</strong> <li><a href="http://scofield-android.iteye.com/category/198360">Android入门</a></li> </ul>
+        <div class="news_tag">&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <p>&nbsp;
+</p>
+<table style="font-family: Arial;" class="addapptab" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td style="">
+<div style="font-family: Arial; font-size: 14px;" class="pnum"><strong><a name="basic_1">1-&nbsp;</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;">导入Analytics_Android_SDK_2.1.jar</span></strong></div>
+<div style="font-family: Arial; font-size: 14px;" class="pnum"><br></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox">
+<div style="" class="paragraph">
+<strong>&nbsp; &nbsp; &nbsp; &nbsp;Eclipse用户&nbsp;&nbsp;&nbsp;</strong>右
+键您的工程根目录，选择Properties -&gt; Java Build Path -&gt; Libraries， 然后点击Add 
+External JARs... 选择指向Analytics_Android_SDK_2.1.jar的路径，点击OK，即导入成功。</div>
+<div style="" class="paragraph">
+<strong>&nbsp; &nbsp; &nbsp; Android SDK tools&nbsp;&nbsp;&nbsp;</strong>如果您是直接使用android SDK tools，只要将Analytics_Android_SDK_2.1.jar放在应用程序的libs目录下，and task会自动识别出来。</div>
+<div style="" class="paragraph"><br></div>
+</div>
+</td>
+</tr>
+<tr>
+<td style="">
+<div style="font-family: Arial; font-size: 14px;" class="pnum"><strong><a name="basic_2">2- &nbsp;</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;">配置AndroidManifest.xml</span></strong></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox"><ol>
+<li>
+<div style="" class="paragraph"><strong>android.permission.INTERNET&nbsp;&nbsp;</strong></div>
+<div style="" class="paragraph">向我们的服务器发送用户分析数据。</div>
+</li>
+<li>
+<div style="" class="paragraph"><strong>android.permission.READ_PHONE_STATE&nbsp;</strong></div>
+<div style="" class="paragraph">
+<strong>&nbsp;</strong>这个权限仅为了获取用户手机的IMEI，用来唯一的标识用户。</div>
+</li>
+<li>
+<div style="" class="paragraph">
+<strong>android.permission.READ_LOGS&nbsp;&nbsp;</strong>(可选),</div>
+<div style="" class="paragraph">&nbsp;如果您想获得客户端crash的报告, 需要添加这个权限。具体见高级功能<a href="http://www.umeng.com/sdk/analysis/android#advance_3">错误报告</a>
+</div>
+</li>
+<li>
+<div style="" class="paragraph">
+<strong>将应用程序的Appkey </strong>(需要先添加应用程序获得Appkey)</div>
+<div style="" class="paragraph">&nbsp;写到AndroidManifest.xml的meta-data里。</div>
+<div style="" class="code">
+<div style="">&lt;application......&gt;</div>
+<div style="">...</div>
+<div style="">&lt;meta-data android:value="<strong class="code_appkey">XXXXXXYOURAPPKEYXXXXXXX</strong>"&nbsp;</div>
+<div style="">&nbsp; &nbsp; android:name="<strong>UMENG_APPKEY</strong>"&gt;</div>
+<div style="">&lt;/meta-data&gt;</div>
+<div style="">...</div>
+<div style="">&lt;/application&gt;</div>
+</div>
+</li>
+</ol></div>
+</td>
+</tr>
+<tr>
+<td style="">
+<div style="font-family: Arial; font-size: 14px;" class="pnum"><strong><a name="basic_3">3.</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;">添加代码</span></strong></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox">
+<ol>
+<li>
+<div style="" class="paragraph"><strong>添加 import com.mobclick.android.MobClickAgent</strong></div>
+</li>
+<li>
+<div style="" class="paragraph">在每个Activity的onResume方法中调用 MobclickAgent.onResume(Context), 传入的参数为当前context的引用，<strong>这个方法将会自动地从AndroidManifest.xml文件里读取Appkey</strong>。&nbsp;</div>
+<div style="" class="paragraph">这里请不要将全局的application context传入。</div>
+<div style="" class="code">
+<div style="">public void onResume() {</div>
+<div style="">&nbsp;&nbsp;super.onResume();</div>
+<div style="">&nbsp;&nbsp;<strong>MobclickAgent.onResume(this);</strong>
+</div>
+<div style="">}</div>
+</div>
+</li>
+<li>
+<div style="" class="paragraph">在每个Activity的onPause方法中调用MobclickAgent.onPause(Context),&nbsp;</div>
+<div style="" class="paragraph">只需传入一个参数当前activity的context.</div>
+<div style="" class="code">
+<div style="">public void onPause() {</div>
+<div style="">&nbsp;&nbsp;super.onPause();</div>
+<div style="">&nbsp;<strong>&nbsp;MobclickAgent.onPause(this);</strong>
+</div>
+<div style="">}</div>
+</div>
+</li>
+</ol>
+<div style="" class="paragraph">&nbsp; &nbsp; &nbsp; 一个应用程序在多个activity之间连续切换时，将会被视为同一个session，</div>
+<div style="" class="paragraph">所以需要您确保在所有的activity中都调用 MobclickAgent.onResume()和MobclickAgent.onPause()方法，这两个调用将不会阻塞应用程序的主线程，也不 会影响应用程序的行能。</div>
+<div style="" class="paragraph">&nbsp; &nbsp; &nbsp; <strong>&nbsp;当用户两次使用之间间隔超过30秒时，将被认为是两个的独立的session</strong>，</div>
+<div style="" class="paragraph">例如用户回到home，或进入其他程序，经过一段时间后再返回之前的应用。</div>
+</div>
+</td>
+</tr>
+<tr>
+<td style="">
+<div style="font-family: Arial; font-size: 14px;" class="pnum">
+<a name="basic_4">4&nbsp;</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;">测试</span>
+</div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox"><ol>
+<li>
+<div style="" class="paragraph">确认所需的权限都已经添加：</div>
+<div style="" class="paragraph">INTERNET, READ_PHONE_STATE, (READ_LOGS for crash report)</div>
+</li>
+<li>
+<div style="" class="paragraph">确认APPKEY已经正确的写入manifest.xml</div>
+</li>
+<li>
+<div style="" class="paragraph">确认所有的Activity中都调用了onResume和onPause方法</div>
+</li>
+<li>
+<div style="" class="paragraph">确认测试手机(或者模拟器)已成功连入网络</div>
+</li>
+<li>
+<div style="" class="paragraph">启动应用程序，几分钟之后您应该已经可以看到相应的报表.</div>
+</li>
+<li>
+<div style="" class="paragraph">如果几分钟后报表中仍然没有收到数据，请与我们的技术支持联系 QQ1589487991 或者邮件到support@umeng.com我们会尽快回复您</div>
+</li>
+</ol></div>
+</td>
+</tr>
+</tbody></table>
+<div style="font-family: Arial; font-size: 14px; color: #333333;" class="sdkbar"><a name="advance"><strong>高级功能</strong></a></div>
+<div style="font-family: Arial; font-size: 14px; color: #333333;" class="sdkbar"><br></div>
+&nbsp;&nbsp;
+<table style="font-family: Arial;" class="addapptab" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td style="">
+<div style="font-family: Arial;" class="pnum"><strong><span style="font-size: small;"><a name="advance_3">1--</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif;">错误报告 (crash report)</span></span></strong></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox">
+<div style="" class="paragraph">&nbsp; &nbsp; 友盟统计分析工具，还可以帮助您捕捉用户在使用应用程序过程中出现的异常退出(FC), 并在应用程序<strong>下次启动</strong>时将错误报告发送给服务器。</div>
+<div style="" class="paragraph">&nbsp; 错误报告包含应用程序版本，操作系统版本和设备型号以及程序出现异常时的Stacktrace，这些数据将帮助您修正应用程序Bug。</div>
+<div style="" class="paragraph">您需要在AndroidManifest.xml里面添加权限<strong>android.permission.READ_LOGS</strong>，</div>
+<div style="" class="paragraph">并且在程序的Main Activity (应用程序入口)的<strong>onCreate方法里调用MobclickAgent.onError(Context):</strong>
+</div>
+<div style="" class="code">
+<div style=""><br></div>
+<div style="">public void onCreate(Bundle savedinstanceState) {</div>
+<div style="">&nbsp;&nbsp;&nbsp;&nbsp;super.onCreate(savedInstanceState);</div>
+<div style="">&nbsp;&nbsp;&nbsp;&nbsp;<strong>MobclickAgent.onError(this);</strong>
+</div>
+<div style="">&nbsp;&nbsp;&nbsp;&nbsp;...</div>
+<div style="">}</div>
+</div>
+<div style="" class="sample_pic">
+<a href="http://www.umeng.com/images/crash.jpg"><img alt="" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/54725ad1e86838caa1ec9c63.gif" width="600px"></a>
+<div style="" class="image_link"><a href="http://www.umeng.com/images/crash.jpg">错误报告报表示例</a></div>
+<div style="" class="image_link"><br></div>
+</div>
+</div>
+<div style="font-family: Arial;" class="pnum"><span style="font-size: small;"><strong><a name="advance_1">2</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif;">自定义事件分析</span></strong></span></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox">
+<div style="" class="paragraph">&nbsp; &nbsp; &nbsp;除了的基本统计分析功能外，我们还支持您自定义的事件分析，</div>
+<div style="" class="paragraph">例如您可以统计游戏中通过不同关卡的人数，广告的点击次数或者视频被播放的次数等等。</div>
+<div style="" class="paragraph">这里我们将提供几个简单而通用的接口：</div>
+<ol>
+<li>
+<div style="" class="paragraph"><strong>简单事件</strong></div>
+<div style="" class="code">MobclickAgent.onEvent(Context context, String event_id);</div>
+<div style="" class="paragraph">将统计event_id对应事件的发生次数，变化趋势，例如广告点击，短信数量等等。参数<strong>context</strong>为当前context的引用。<strong>event_id</strong>为当前统计的事件ID，您可以在程序里直接定义，但是我们推荐您在&nbsp;<a target="_blank" href="http://www.umeng.com/u/demouser/apps/%E6%98%9F%E5%BA%A7%E7%BD%97%E7%9B%98/events">这里</a>&nbsp;预先定义。</div>
+<div style="" class="paragraph">一个例子，监测应用程序里广告的点击次数，事件ID为“ad_click”。那么需要在程序里每次广告点击后调用 MobclickAgent.onEvent(this, "ad_click") 通知服务器一个广告点击事件。</div>
+<div style="" class="sample_pic">
+<a href="http://www.umeng.com/images/sdk_sample_pic2.png"><img alt="" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/c056a98e8187a1bf503d9263.gif" width="560px"></a>
+<div style="" class="image_link"><a href="http://www.umeng.com/images/sdk_sample_pic1.png">简单事件分析图表示例</a></div>
+</div>
+</li>
+<li>
+<div style="" class="paragraph"><strong>多标签事件</strong></div>
+<div style="" class="code">MobclickAgent.onEvent(Context context, String event_id, String label);</div>
+<div style="" class="paragraph">除了能够统计event_id所对应事件的发生次数，变化趋势外，还能统计事件中具体标签所占的比例。<strong>label</strong>为当前标签。</div>
+<div style="" class="paragraph">例如在我们的demo应用程序“星座罗盘”中，定义了一个事件“星座关注分布”，每个星座对应这个事件中的一个标签。我们可以在生产的统计图表中看到用户关注不同星座的比例。</div>
+<div style="" class="sample_pic">
+<a href="http://www.umeng.com/images/sdk_sample_pic1.png"><img alt="" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/66681e967c85942854fb9663.gif" width="560px"></a>
+<div style="" class="image_link"><a href="http://www.umeng.com/images/sdk_sample_pic1.png">多标签事件分析图表示例</a></div>
+</div>
+</li>
+<li>
+<div style="" class="paragraph"><strong>事件累计</strong></div>
+<div style="" class="paragraph">在应用程序中某些自定义事件可能会被频繁触发，例如用户点击某个按钮。开发者可以在程序中维护一个计数器，这样某个事件被多次触发但只需要生成一个消息，这个消息中包括该事件被触发的次数。为了支持这个功能，这里我们简单重载了之前的两个接口：</div>
+<div style="" class="code">
+<div style="">MobclickAgent.onEvent(Context context, String event_id, int acc);</div>
+<div style="">MobclickAgent.onEvent(Context context, String event_id, String label, int acc);</div>
+</div>
+<div style="" class="paragraph">参数acc是对应事件 （和对应标签）被触发的次数。</div>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+<tr>
+<td style="">
+<div style="font-family: Arial;" class="pnum"><span style="font-size: small;"><strong><a name="advance_2">3&nbsp;</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif;">分发渠道分析</span></strong></span></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox">
+<div style="" class="paragraph">&nbsp; &nbsp; &nbsp;我们还提供方法帮助您分析应用程序的分发渠道，</div>
+<div style="" class="paragraph">例如有多少用户来自于联想乐phone,又有多少用户通过Google android market下载到您的应用程序。</div>
+<div style="" class="paragraph"><strong>简单的您只需要在AndroidManifest.xml里添加meta-data:。</strong></div>
+<div style="" class="code">
+<div style="">&lt;meta-data android:value="<strong>Channel ID</strong>" android:name="<strong>UMENG_CHANNEL</strong>"&gt;</div>
+</div>
+<div style="" class="paragraph"><strong>当然，这需要您在不同渠道发布应用程序时，重新编译打包。</strong></div>
+</div>
+</td>
+</tr>
+</tbody></table>
+<div style="font-family: Arial; font-size: 14px; color: #333333;" class="sdkbar"><br></div>
+<div style="font-family: Arial; font-size: 14px; color: #333333;" class="sdkbar"><br></div>
+<div style="font-family: Arial; color: #333333;" class="sdkbar"><a name="policy"><strong><span style="font-size: small;">发送策略</span></strong></a></div>
+<div style="font-family: Arial; color: #333333;" class="sdkbar"><br></div>
+<table style="font-family: Arial;" class="addapptab" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td style="">
+<div style="font-family: Arial;" class="pnum"><span style="font-size: x-small;"><strong><a name="policy_1">1--</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif;">实时发送</span></strong></span></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox">
+<div style="" class="paragraph">&nbsp; &nbsp; &nbsp; 应用程序产生每条消息(包括启动信息，自定义消息，退出消息)时都会立即发送到服务器，</div>
+<div style="" class="paragraph">设置实时发送需要在应用程序Main Activity的onCreate()中调用。</div>
+<div style="" class="code">&nbsp; &nbsp; &nbsp;<strong> &nbsp;MobclickAgent.setReportPolicy(ReportPolicy.REALTIME);</strong>
+</div>
+<div style="" class="code"><br></div>
+</div>
+</td>
+</tr>
+<tr>
+<td style="">
+<div style="font-family: Arial; font-size: 14px;" class="pnum"><strong><a name="policy_2">2--</a><span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;">启动时发送</span></strong></div>
+<div style="font-family: Arial; font-size: 14px;" class="fffbox">
+<div style="" class="paragraph">&nbsp; &nbsp; &nbsp; &nbsp;应用程序每次只会在启动时会向服务器发送一次消息，在应用程序过程中产生的所有消息(包括自定义事件和本次使用时长)都会在下次启动时候发送。</div>
+<div style="" class="paragraph">&nbsp; &nbsp; &nbsp; &nbsp;如果应用程序启动时处在不联网状态，那么消息将会缓存在本地，下次再尝试发送。 </div>
+<div style="" class="paragraph">发送策略默认为启动时发送。</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+  </div>
+
+  
+
+  
+  
+  <iframe src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/187.htm" scrolling="no" frameborder="0" height="60" width="468"></iframe>
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      
+      
+      <a href="http://scofield-android.iteye.com/blog/1340098" class="pre" title="SQLite中字符串链接">SQLite中字符串链接</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2012-01-16 16:01</li>
+      <li>浏览 10249</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/mobile">移动开发</a></li>      
+      <li class="last"><a href="http://www.iteye.com/wiki/blog/1350499" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="http://scofield-android.iteye.com/login" style="background-color:white;"> <img src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="http://scofield-android.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1350499;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'MobclickAgent');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'MobclickAgent');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="http://scofield-android.iteye.com/"><img alt="Scofield-Android的博客" class="logo" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/c994cbb2-63c7-35fc-b645-a06781fc245f.jpg" title="Scofield-Android的博客: " width=""></a></div>
+  <div id="blog_owner_name">Scofield-Android</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 23992 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_minigender_1.gif" title="男"></li>
+              <li>来自: 上海</li>
+              <li><img src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/offline.gif"></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;"><a href="http://scofield-android.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://dadi520.iteye.com/" target="_blank"><img alt="dadi520的博客" class="logo" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="dadi520的博客: 小七飞天" width="48px"></a></div>
+                <div class="left"><a href="http://dadi520.iteye.com/" target="_blank" title="dadi520">dadi520</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://moofee.iteye.com/" target="_blank"><img alt="moofee的博客" class="logo" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="moofee的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://moofee.iteye.com/" target="_blank" title="moofee">moofee</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://justzcq.iteye.com/" target="_blank"><img alt="justzcq的博客" class="logo" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="justzcq的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://justzcq.iteye.com/" target="_blank" title="justzcq">justzcq</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://iaiai.iteye.com/" target="_blank"><img alt="iaiai的博客" class="logo" src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/2db20ce6-673c-3179-9533-e7b99990944f-thumb.jpg" title="iaiai的博客: 丸子" width="48px"></a></div>
+                <div class="left"><a href="http://iaiai.iteye.com/" target="_blank" title="iaiai">iaiai</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="http://scofield-android.iteye.com/">全部博客 (16)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198357">UML (0)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198361">设计模式 (0)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198360">Android入门 (7)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198506">Android 深入学习 (1)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198358">ExtJS (0)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198507">SSH223 (0)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198612">Axis2 (0)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198362">细节部分 (5)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198895">生活的思考 (0)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/198953">MySQL (2)</a></li>
+                
+                  <li><a href="http://scofield-android.iteye.com/category/200206">SQLite (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="http://scofield-android.iteye.com/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="http://scofield-android.iteye.com/blog/post">我的论坛</a> (0)
+                </li>
+                <li><a href="http://scofield-android.iteye.com/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="http://scofield-android.iteye.com/blog/monthblog/2012-01">2012-01</a> (4)</li>
+                
+                  <li><a href="http://scofield-android.iteye.com/blog/monthblog/2011-12">2011-12</a> (12)</li>
+                
+                <li><a href="http://scofield-android.iteye.com/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br>
+          © 2003-2015 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/a.gif" height="0" width="0">
+
+<script src="MobclickAgent%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tracking.js" type="text/javascript"></script>
+
+    
+    
+  
+
+</body></html>

@@ -1,0 +1,1195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>   
+    
+     
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>HttpURLConnection简单用法-java模拟HTTP请求 - 点滴之水
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="目前SplashActivity的设计目前市场上的应用在启动时基本上都会先启动一个SplashActivity，作为一个欢迎界面，为什么这样设计呢？ 个人总结有三个优点：1、可以给用户更好的体验比如：可以由后台动态的改变欢迎的图片，或者显欢迎xxx回来，新浪微博的就是这种交互。2、可以缩减App的启动时间由上一篇博文中知道app启动的耗时主要是在Application初始化中和MainActivi" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/dark1/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/jojo52013145/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+</head>
+<body>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/jojo52013145">点滴之水</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/jojo52013145?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/jojo52013145?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/jojo52013145/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "jojo52013145";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/jojo52013145";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://huiyi.csdn.net/activity/product/goods_list?project_id=2741">
+<font color=red>2016软考项目经理实战班
+</font></a>
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://edu.csdn.net/yearPromotion">
+<font color=blue>学院周年礼-顶尖课程钜惠呈现
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/blogdevteam/article/details/50495973">
+<font color=red>有奖征文：在云上开发的无限可能 </font>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/blogdevteam/article/details/50509672">
+<font color=blue>2015年度社区之星 放榜啦
+</font></a>
+
+</div>                        </div>
+                        
+
+<!--AdForward Begin:-->
+<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|fumeiti&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+<!--AdForward End-->
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/jojo52013145/article/details/5828312">
+        HttpURLConnection简单用法-java模拟HTTP请求            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/string' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">string</a><a href='http://www.csdn.net/tag/servlet' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">servlet</a><a href='http://www.csdn.net/tag/exception' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">exception</a><a href='http://www.csdn.net/tag/import' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">import</a><a href='http://www.csdn.net/tag/object' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">object</a><a href='http://www.csdn.net/tag/url' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">url</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2010-08-21 11:13</span>
+            <span class="link_view" title="阅读次数">6330人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(1)</span>
+            <span class="link_collect"> <a href="javascript:void(0);" onclick="javascript:collectArticle('HttpURLConnection简单用法-java模拟HTTP请求','5828312');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(5828312,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('717971','jojo52013145','top','5828312');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">JAVA学习-实用篇<em>（21）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/jojo52013145/article/category/717971">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_717971">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+<p><span style="font-size: medium;">HttpURLConnection为javaAPI提供的一种Rest访问的方式。其支持对Post,Delete,Get,Put等方式的访问。<br />
+<br />
+以下为对于HttpURLConnection对Post等方式访问的一段代码。<br />
+<br />
+view plaincopy to clipboardprint?<br />
+<br />
+&nbsp; package com.jago.cdn.util;<br />
+<br />
+import java.io.BufferedReader;<br />
+import java.io.InputStreamReader;<br />
+import java.io.OutputStream;<br />
+import java.net.HttpURLConnection;<br />
+import java.net.URL;<br />
+import java.util.HashMap;<br />
+import java.util.Map;<br />
+<br />
+public class URLConnectionUtil {<br />
+&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; &nbsp;private static final String SERVLET_POST = &quot;POST&quot; ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp; private static final String SERVLET_GET = &quot;GET&quot; ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp; private static final String SERVLET_DELETE = &quot;DELETE&quot; ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp; private static final String SERVLET_PUT = &quot;PUT&quot; ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; private static String prepareParam(Map&lt;String,Object&gt; paramMap){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StringBuffer sb = new StringBuffer();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(paramMap.isEmpty()){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return &quot;&quot; ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(String key: paramMap.keySet()){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String value = (String)paramMap.get(key);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(sb.length()&lt;1){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sb.append(key).append(&quot;=&quot;).append(value);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sb.append(&quot;&amp;&quot;).append(key).append(&quot;=&quot;).append(value);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return sb.toString();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; public static void&nbsp; doPost(String urlStr,Map&lt;String,Object&gt; paramMap ) throws Exception{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URL url = new URL(urlStr);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HttpURLConnection conn = (HttpURLConnection)url.openConnection();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setRequestMethod(SERVLET_POST);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String paramStr = prepareParam(paramMap);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setDoInput(true);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setDoOutput(true);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OutputStream os = conn.getOutputStream();&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.write(paramStr.toString().getBytes(&quot;utf-8&quot;));&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.close();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String line ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String result =&quot;&quot;;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while( (line =br.readLine()) != null ){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result += &quot;/n&quot;+line;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(result);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br.close();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; public static void&nbsp; doGet(String urlStr,Map&lt;String,Object&gt; paramMap ) throws Exception{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String paramStr = prepareParam(paramMap);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(paramStr == null || paramStr.trim().length()&lt;1){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; urlStr +=&quot;?&quot;+paramStr;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(urlStr);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URL url = new URL(urlStr);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HttpURLConnection conn = (HttpURLConnection)url.openConnection();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setRequestMethod(SERVLET_GET);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setRequestProperty(&quot;Content-Type&quot;,&quot;text/html; charset=UTF-8&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.connect();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String line ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String result =&quot;&quot;;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while( (line =br.readLine()) != null ){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result += &quot;/n&quot;+line;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(result);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br.close();<br />
+&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; public static void doPut(String urlStr,Map&lt;String,Object&gt; paramMap) throws Exception{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URL url = new URL(urlStr);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HttpURLConnection conn = (HttpURLConnection)url.openConnection();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setRequestMethod(SERVLET_PUT);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String paramStr = prepareParam(paramMap);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setDoInput(true);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setDoOutput(true);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OutputStream os = conn.getOutputStream();&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.write(paramStr.toString().getBytes(&quot;utf-8&quot;));&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.close();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String line ;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String result =&quot;&quot;;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while( (line =br.readLine()) != null ){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result += &quot;/n&quot;+line;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(result);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br.close();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; public static void doDelete(String urlStr,Map&lt;String,Object&gt; paramMap) throws Exception{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String paramStr = prepareParam(paramMap);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(paramStr == null || paramStr.trim().length()&lt;1){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; urlStr +=&quot;?&quot;+paramStr;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(urlStr);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URL url = new URL(urlStr);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HttpURLConnection conn = (HttpURLConnection)url.openConnection();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setDoOutput(true);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.setRequestMethod(SERVLET_DELETE);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(conn.getResponseCode() ==200){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(&quot;成功&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(conn.getResponseCode());<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; public static void main(String[] args) throws Exception{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String urlStr = &quot;http://localhost:8080/SwTest/ReceiveDataServlet&quot;;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Map&lt;String,Object&gt; map = new HashMap&lt;String,Object&gt;();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.put(&quot;username&quot;,&quot;张三&quot;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.put(&quot;password&quot;,&quot;88888&quot;);<br />
+&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URLConnectionUtil.doGet(urlStr, map);<br />
+&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URLConnectionUtil.doPost(urlStr, map);<br />
+&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URLConnectionUtil.doPut(urlStr, map);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URLConnectionUtil.doDelete(urlStr, map);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;}<br />
+<br />
+方法中是存在重复的。有些方法是可以通过参数的改变来达到统一，但是那样的做法对于程序的扩展性会有很大的局限性。<br />
+<br />
+还是对于每一种方式提供一个单独的方法进行访问比较好。<br />
+<br />
+在Servlet端，获取参数可以通过<br />
+<br />
+request.getInputStream,及request.getParamter来进行。<br />
+<br />
+其中，当Rest访问传入参数是通过conn的outputStream来进行的，可以通过request.getInputStream来进行参数获取（Post方式可通用）；<br />
+<br />
+当以url?key=value方法传递参数时，可以通过request.getParamter来进行参数获取。（Post方式可通用）<br />
+<br />
+其中request.getInputStream和request.getParamter两种方式不能同时出现。当 request.getParamter运行的过程，也是输入流的读取过程。当输入流读取完成后，再次调用时无效的。<br />
+<br />
+附上Servlet端程序<br />
+<br />
+view plaincopy to clipboardprint?<br />
+<br />
+&nbsp;&nbsp; 1. package com.sw.servlet; <br />
+&nbsp;&nbsp; 2.&nbsp; <br />
+&nbsp;&nbsp; 3. import java.io.BufferedReader; <br />
+&nbsp;&nbsp; 4. import java.io.IOException; <br />
+&nbsp;&nbsp; 5. import java.io.InputStreamReader; <br />
+&nbsp;&nbsp; 6. import java.io.OutputStream; <br />
+&nbsp;&nbsp; 7.&nbsp; <br />
+&nbsp;&nbsp; 8. import javax.servlet.ServletException; <br />
+&nbsp;&nbsp; 9. import javax.servlet.ServletInputStream; <br />
+&nbsp; 10. import javax.servlet.http.HttpServlet; <br />
+&nbsp; 11. import javax.servlet.http.HttpServletRequest; <br />
+&nbsp; 12. import javax.servlet.http.HttpServletResponse; <br />
+&nbsp; 13.&nbsp; <br />
+&nbsp; 14. /**<br />
+&nbsp; 15.&nbsp; * Servlet implementation class ReceiveDataServlet<br />
+&nbsp; 16.&nbsp; */ <br />
+&nbsp; 17. public class ReceiveDataServlet extends HttpServlet { <br />
+&nbsp; 18.&nbsp;&nbsp;&nbsp;&nbsp; private static final long serialVersionUID = 1L; <br />
+&nbsp; 19.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 20.&nbsp;&nbsp;&nbsp;&nbsp; /**<br />
+&nbsp; 21.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * @see HttpServlet#HttpServlet()<br />
+&nbsp; 22.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */ <br />
+&nbsp; 23.&nbsp;&nbsp;&nbsp;&nbsp; public ReceiveDataServlet() { <br />
+&nbsp; 24.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; super(); <br />
+&nbsp; 25.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // TODO Auto-generated constructor stub <br />
+&nbsp; 26.&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp; 27.&nbsp; <br />
+&nbsp; 28.&nbsp;&nbsp;&nbsp;&nbsp; /**<br />
+&nbsp; 29.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)<br />
+&nbsp; 30.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */ <br />
+&nbsp; 31.&nbsp;&nbsp;&nbsp;&nbsp; protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { <br />
+&nbsp; 32.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(&quot;----------get--------------&quot;);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 33.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String username = new String(request.getParameter(&quot;username&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;); <br />
+&nbsp; 34.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String password = new String(request.getParameter(&quot;password&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;); <br />
+&nbsp; 35.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(username); <br />
+&nbsp; 36.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(password); <br />
+&nbsp; 37.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OutputStream os = response.getOutputStream(); <br />
+&nbsp; 38.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.write(&quot;get&quot;.getBytes(&quot;utf-8&quot;)); <br />
+&nbsp; 39.&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp; 40.&nbsp; <br />
+&nbsp; 41.&nbsp;&nbsp;&nbsp;&nbsp; /**<br />
+&nbsp; 42.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)<br />
+&nbsp; 43.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */ <br />
+&nbsp; 44.&nbsp;&nbsp;&nbsp;&nbsp; protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { <br />
+&nbsp; 45.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(&quot;----------post--------------&quot;); <br />
+&nbsp; 46.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)request.getInputStream())); <br />
+&nbsp; 47.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String line = null; <br />
+&nbsp; 48.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StringBuilder sb = new StringBuilder(); <br />
+&nbsp; 49.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while((line = br.readLine())!=null){ <br />
+&nbsp; 50.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sb.append(line); <br />
+&nbsp; 51.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 52.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(sb.toString()); <br />
+&nbsp; 53.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br.close(); <br />
+&nbsp; 54. /*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String username = new String(request.getParameter(&quot;username&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;);<br />
+&nbsp; 55.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String password = new String(request.getParameter(&quot;password&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;);<br />
+&nbsp; 56.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(username);<br />
+&nbsp; 57.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(password);<br />
+&nbsp; 58. */&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OutputStream os = response.getOutputStream(); <br />
+&nbsp; 59.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.write(&quot;post&quot;.getBytes(&quot;utf-8&quot;)); <br />
+&nbsp; 60.&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp; 61.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 62.&nbsp;&nbsp;&nbsp;&nbsp; @Override <br />
+&nbsp; 63.&nbsp;&nbsp;&nbsp;&nbsp; protected void doDelete(HttpServletRequest request, HttpServletResponse response) <br />
+&nbsp; 64.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throws ServletException, IOException { <br />
+&nbsp; 65.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(&quot;----------delete--------------&quot;); <br />
+&nbsp; 66.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String username = new String(request.getParameter(&quot;username&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;); <br />
+&nbsp; 67.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String password = new String(request.getParameter(&quot;password&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;); <br />
+&nbsp; 68.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(username); <br />
+&nbsp; 69.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(password); <br />
+&nbsp; 70.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OutputStream os = response.getOutputStream(); <br />
+&nbsp; 71.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.write(&quot;delete&quot;.getBytes(&quot;utf-8&quot;));&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 72.&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp; 73.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 74.&nbsp;&nbsp;&nbsp;&nbsp; @Override <br />
+&nbsp; 75.&nbsp;&nbsp;&nbsp;&nbsp; protected void doPut(HttpServletRequest request, HttpServletResponse response) <br />
+&nbsp; 76.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throws ServletException, IOException { <br />
+&nbsp; 77.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(&quot;----------put--------------&quot;); <br />
+&nbsp; 78.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 79.&nbsp;&nbsp;&nbsp;&nbsp; /*&nbsp; BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)request.getInputStream()));<br />
+&nbsp; 80.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String line = null;<br />
+&nbsp; 81.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StringBuilder sb = new StringBuilder();<br />
+&nbsp; 82.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while((line = br.readLine())!=null){<br />
+&nbsp; 83.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sb.append(line);<br />
+&nbsp; 84.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 85.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(sb.toString());<br />
+&nbsp; 86.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; br.close();*/ <br />
+&nbsp; 87.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 88.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String username = new String(request.getParameter(&quot;username&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;); <br />
+&nbsp; 89.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String password = new String(request.getParameter(&quot;password&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;); <br />
+&nbsp; 90.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(username); <br />
+&nbsp; 91.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(password); <br />
+&nbsp; 92.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OutputStream os = response.getOutputStream(); <br />
+&nbsp; 93.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; os.write(&quot;put&quot;.getBytes(&quot;utf-8&quot;));&nbsp;&nbsp; <br />
+&nbsp; 94.&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp; 95.&nbsp; <br />
+&nbsp; 96. } <br />
+<br />
+程序中对于request.getInputStream和getParameter的获取方式可能说明的会多少有些问题，我也是通过几组测试后得出的结论。肯定有我没有测试到得。如果有问题，请指出，我会再看到评论后进行测试，修改。<br />
+<br />
+另外，Apache的HttpClient非常好。封装的详细。在我的工作中也用到过，在以后会对于HttpClient进行有些单独的程序笔记。<br />
+<br />
+这里HttpUrlConnection是同事在别的项目中用到的，用法比较简单，我大体给他简单讲解了一下，简明扼要，功能完备，还是很方便，<br />
+<br />
+所以在这里记下来，留个笔记吧。<br />
+<br />
+btw,最近工作比较忙，有2个月没有写些东西了，在工作中确实还遇到了不少有意思的问题，最近刚好快闲下来了，慢慢整理一下。<br />
+</span>
+</p>   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox" style="float: right;">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.14-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" ArticleId="5828312">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/jojo52013145/article/details/5826296';">上一篇</span><a href="/jojo52013145/article/details/5826296" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">Java Exception性能问题</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/jojo52013145/article/details/5831482';">下一篇</span><a href="/jojo52013145/article/details/5831482" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">Java常用FTP文件操作说明 Apache.FTPClient,ftp4j,jftp</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('717971','jojo52013145','foot','5828312');">JAVA学习-实用篇<em>（21）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('717971', 'jojo52013145','foot','5828312');
+        });
+    </script>
+      
+</div>
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/jojo52013145/svc/GetSuggestContent/5828312",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "5828312",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'HttpURLConnection简单用法-java模拟HTTP请求' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>   
+
+    <div id="ad_cen">        
+<!--AdForward Begin:-->
+<script type="text/javascript" src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|banner2&db=csdnim&border=0&local=yes&js=ie" charset="gbk"></script>
+<!--AdForward End-->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '5828312';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/jojo52013145/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });
+        },200);  
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }    
+
+</script>
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/jojo52013145" target="_blank">
+    <img src="http://avatar.csdn.net/3/B/3/1_jojo52013145.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/jojo52013145" class="user_name" target="_blank">jojo52013145</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=jojo52013145','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>556265次</span></li>
+    <li>积分：<span>6259</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog6.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：6259 </div>
+        </span>  </li>
+    <li>排名：<span>第2058名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>133篇</span></li>
+    <li>转载：<span>79篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>209条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/jojo52013145/article/category/902652" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">其他</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/835732" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">CSS学习-实用篇</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/720805" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA学习-web发布</a><span>(15)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/717762" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA学习-基础篇</a><span>(14)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/717971" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA学习-实用篇</a><span>(22)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/717764" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA学习-杂谈篇</a><span>(16)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/720905" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA学习笔记</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1068357" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle SQL学习</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/719126" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle PLSQL学习</a><span>(26)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1068365" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle 基础原理</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/902633" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle 数据管理</a><span>(36)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/853470" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle 学习积累</a><span>(24)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/902651" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle 优化措施</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1221991" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle 部署</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/842741" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">通讯技术学习笔记-随笔</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1221984" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Linux 学习</a><span>(10)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1234951" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Oracle 数据备份</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1363571" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MySQL 基础</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1396336" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据分析师</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1893409" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Hadoop</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1893417" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Hive</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1894597" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">HDFS</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jojo52013145/article/category/1896047" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MapReduce</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/jojo52013145/article/month/2014/02">2014年02月</a><span>(13)</span></li><li><a href="/jojo52013145/article/month/2013/12">2013年12月</a><span>(1)</span></li><li><a href="/jojo52013145/article/month/2013/11">2013年11月</a><span>(2)</span></li><li><a href="/jojo52013145/article/month/2013/10">2013年10月</a><span>(3)</span></li><li><a href="/jojo52013145/article/month/2013/07">2013年07月</a><span>(1)</span></li><li><a href="/jojo52013145/article/month/2013/03">2013年03月</a><span>(2)</span></li><li><a href="/jojo52013145/article/month/2012/12">2012年12月</a><span>(3)</span></li><li><a href="/jojo52013145/article/month/2012/11">2012年11月</a><span>(10)</span></li><li><a href="/jojo52013145/article/month/2012/10">2012年10月</a><span>(2)</span></li><li><a href="/jojo52013145/article/month/2012/09">2012年09月</a><span>(6)</span></li><li><a href="/jojo52013145/article/month/2012/08">2012年08月</a><span>(8)</span></li><li><a href="/jojo52013145/article/month/2012/07">2012年07月</a><span>(4)</span></li><li><a href="/jojo52013145/article/month/2012/06">2012年06月</a><span>(4)</span></li><li><a href="/jojo52013145/article/month/2012/05">2012年05月</a><span>(3)</span></li><li><a href="/jojo52013145/article/month/2012/04">2012年04月</a><span>(5)</span></li><li><a href="/jojo52013145/article/month/2012/03">2012年03月</a><span>(1)</span></li><li><a href="/jojo52013145/article/month/2012/02">2012年02月</a><span>(7)</span></li><li><a href="/jojo52013145/article/month/2012/01">2012年01月</a><span>(2)</span></li><li><a href="/jojo52013145/article/month/2011/12">2011年12月</a><span>(4)</span></li><li><a href="/jojo52013145/article/month/2011/11">2011年11月</a><span>(8)</span></li><li><a href="/jojo52013145/article/month/2011/10">2011年10月</a><span>(7)</span></li><li><a href="/jojo52013145/article/month/2011/09">2011年09月</a><span>(8)</span></li><li><a href="/jojo52013145/article/month/2011/08">2011年08月</a><span>(13)</span></li><li><a href="/jojo52013145/article/month/2011/07">2011年07月</a><span>(14)</span></li><li><a href="/jojo52013145/article/month/2011/06">2011年06月</a><span>(6)</span></li><li><a href="/jojo52013145/article/month/2011/05">2011年05月</a><span>(5)</span></li><li><a href="/jojo52013145/article/month/2011/03">2011年03月</a><span>(1)</span></li><li><a href="/jojo52013145/article/month/2010/12">2010年12月</a><span>(4)</span></li><li><a href="/jojo52013145/article/month/2010/10">2010年10月</a><span>(1)</span></li><li><a href="/jojo52013145/article/month/2010/09">2010年09月</a><span>(11)</span></li><li><a href="/jojo52013145/article/month/2010/08">2010年08月</a><span>(53)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/jojo52013145/article/details/5783677" title="EJB到底是什么，真的那么神秘吗？？">EJB到底是什么，真的那么神秘吗？？</a><span>(74860)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/7966047" title="Oracle 数据泵详解">Oracle 数据泵详解</a><span>(35273)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6585833" title="Oracle 存储过程异常处理">Oracle 存储过程异常处理</a><span>(30008)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6998984" title="Oracle 时间差计算">Oracle 时间差计算</a><span>(24303)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6679678" title="Oracle用户、授权、角色管理">Oracle用户、授权、角色管理</a><span>(19318)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6533991" title="Log4j日志输出详细">Log4j日志输出详细</a><span>(17867)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6558957" title="Table垂直居中">Table垂直居中</a><span>(12522)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/7460121" title="Oracle Parallel 多线程">Oracle Parallel 多线程</a><span>(10741)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/7805220" title="Oracle的unlimited tablespace系统权限">Oracle的unlimited tablespace系统权限</a><span>(8260)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6579750" title="oracle 10g建立本地数据库">oracle 10g建立本地数据库</a><span>(7469)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/jojo52013145/article/details/5783677" title="EJB到底是什么，真的那么神秘吗？？">EJB到底是什么，真的那么神秘吗？？</a><span>(168)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/7966047" title="Oracle 数据泵详解">Oracle 数据泵详解</a><span>(4)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/5801928" title="web.xml 中的listener、 filter、servlet 加载顺序及其详解">web.xml 中的listener、 filter、servlet 加载顺序及其详解</a><span>(3)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/5785167" title="JAVA异常解读">JAVA异常解读</a><span>(3)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6533991" title="Log4j日志输出详细">Log4j日志输出详细</a><span>(3)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/5784919" title="JAVA内存处理--堆和栈">JAVA内存处理--堆和栈</a><span>(3)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/6801959" title="oracle 查询执行顺序">oracle 查询执行顺序</a><span>(2)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/5785006" title="程序员的修炼三层境界">程序员的修炼三层境界</a><span>(2)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/5801962" title="Java反射应用">Java反射应用</a><span>(2)</span>
+</li>
+<li>
+<a href="/jojo52013145/article/details/5784948" title="JAVA性能优化">JAVA性能优化</a><span>(1)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/baimafujinji/article/details/50467970" 
+
+target="_blank">*机器学习与数据挖掘网上资源搜罗——良心推荐</a></li>
+<li><a href="http://blog.csdn.net/foruok/article/details/50416725" 
+
+target="_blank">*架构设计：系统间通信（17）——服务治理与Dubbo 中篇（分析）</a></li>
+<li><a href="http://blog.csdn.net/u011225629/article/details/50492403" 
+
+target="_blank">*数据库性能优化之SQL语句优化</a></li>
+<li><a 
+
+href="http://blog.csdn.net/yanbober/article/details/46417531"target="_blank">*Android应用开发allowBackup敏感信息泄露的一点反思</a></li>
+<li><a href="http://blog.csdn.net/nk_test/article/details/50449470" 
+
+target="_blank">*Linux多线程实践（四 ）线程的特定数据</a></li>
+<li><a href="http://blog.csdn.net/u010687392/article/details/50518343"  
+
+target="_blank">* Android性能优化之加快应用启动速度</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/jojo52013145/article/details/5783677#comments">EJB到底是什么，真的那么神秘吗？？</a>
+    <p style="margin:0px;"><a href="/u013045437" class="user_name">u013045437</a>:
+写的非常的好
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/5783677#comments">EJB到底是什么，真的那么神秘吗？？</a>
+    <p style="margin:0px;"><a href="/u010927139" class="user_name">u010927139</a>:
+学习了
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/5783677#comments">EJB到底是什么，真的那么神秘吗？？</a>
+    <p style="margin:0px;"><a href="/zhang__gang" class="user_name">zhang__gang</a>:
+受益匪浅！感谢博主
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/5801962#comments">Java反射应用</a>
+    <p style="margin:0px;"><a href="/hexi_sijin" class="user_name">hexi_sijin</a>:
+很好
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/7225705#comments">exists和not exists用法 代替in和not in</a>
+    <p style="margin:0px;"><a href="/jacky_wang_123" class="user_name">jacky_wang_123</a>:
+not  in 和 not exists 执行效率有什么区别呢？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/7225705#comments">EJB到底是什么，真的那么神秘吗？？</a>
+    <p style="margin:0px;"><a href="/u010308749" class="user_name">u010308749</a>:
+很通俗，很詳細，感謝！！！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/7225705#comments">EJB到底是什么，真的那么神秘吗？？</a>
+    <p style="margin:0px;"><a href="/u011458469" class="user_name">u011458469</a>:
+很给力。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/7225705#comments">EJB到底是什么，真的那么神秘吗？？</a>
+    <p style="margin:0px;"><a href="/zhanghongjie0302" class="user_name">zhanghongjie0302</a>:
+大神，学习了！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/5785006#comments">程序员的修炼三层境界</a>
+    <p style="margin:0px;"><a href="/sinat_32940785" class="user_name">sinat_32940785</a>:
+很深奥
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jojo52013145/article/details/5785006#comments">EJB到底是什么，真的那么神秘吗？？</a>
+    <p style="margin:0px;"><a href="/luobotang" class="user_name">luobotang</a>:
+学习了
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=898757"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+</body>
+</html>   
+ 

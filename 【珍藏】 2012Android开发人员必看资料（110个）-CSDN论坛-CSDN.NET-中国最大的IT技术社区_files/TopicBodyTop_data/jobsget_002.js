@@ -1,0 +1,1 @@
+document.write('<li><a href="http://www.csdn.net/article/2015-09-24/2825788" target=_blank>OpenCL是异构计算的最佳选择</a></li><li><a href="http://www.csdn.net/article/2015-09-24/2825784" target=_blank>互联网创业必备工具盘点</a></li>');

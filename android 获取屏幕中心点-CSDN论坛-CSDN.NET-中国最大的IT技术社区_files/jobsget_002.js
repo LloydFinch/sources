@@ -1,0 +1,1 @@
+document.write('<li><a href="http://www.csdn.net/article/2015-10-03/2825842" target=_blank>Facebook如何使用“我们”的数据去构建人工智能</a></li><li><a href="http://www.csdn.net/article/2015-10-02/2825841" target=_blank>你不会因为实施了Scrum而变敏捷</a></li>');

@@ -1,0 +1,559 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>requestWindowFeature使用详解 -  - ITeye技术网站</title>
+    <meta name="description" content=" requestWindowFeature可以设置的值有：&nbsp;// 1.DEFAULT_FEATURES：系统默认状态，一般不需要指定&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 2.FEATURE_CONTEXT_MENU：启用ContextMenu，默认该项已启用，一般无需指定&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 3.FEATURE_CUSTOM_TITLE：自定义标题。当需要自定义标题时必须指定。如：标题是一个按钮时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / ...">
+    <meta name="keywords" content="requestWindowFeature, android requestWindowFeature使用详解">
+    <link rel="shortcut icon" href="http://zhanhao.iteye.com/images/favicon.ico" type="image/x-icon">
+    <link rel="search" type="application/opensearchdescription+xml" href="http://zhanhao.iteye.com/open_search.xml" title="ITeye">
+    <link href="http://zhanhao.iteye.com/rss" rel="alternate" title="" type="application/rss+xml">
+    <link href="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/blue.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/ga.js" async="" type="text/javascript"></script><script src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/application.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/shCoreCommon.js" type="text/javascript"></script>
+<script src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/hotkey.js" type="text/javascript"></script>
+  <script src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/code_favorites.js" type="text/javascript"></script>
+<script src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/weiboshare.js" type="text/javascript"></script>
+  <style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style></head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="http://zhanhao.iteye.com/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="http://zhanhao.iteye.com/login">登录</a>
+    <a href="http://zhanhao.iteye.com/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="http://zhanhao.iteye.com/">zhanhao</a></h1>
+        </div>
+        <div id="fd"></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class="blog_navbar_for"><a href="http://zhanhao.iteye.com/"><strong>博客</strong></a></li>
+            <li><a href="http://zhanhao.iteye.com/weibo">微博</a></li>
+            <li><a href="http://zhanhao.iteye.com/album">相册</a></li>
+            <li><a href="http://zhanhao.iteye.com/link">收藏</a></li>
+            <li><a href="http://zhanhao.iteye.com/blog/guest_book">留言</a></li>
+            <li><a href="http://zhanhao.iteye.com/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text">
+              <input class="submit_search" value="" type="submit">
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style="display:none">
+  <a href="http://zhanhao.iteye.com/" class="p-author" target="_blank">zhanhao</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="http://zhanhao.iteye.com/blog/1174914">requestWindowFeature使用详解</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class="blog_categories"><strong>博客分类：</strong> <li><a href="http://zhanhao.iteye.com/category/162665">android</a></li> </ul>
+        <div class="news_tag"><a href="http://www.iteye.com/blogs/tag/requestWindowFeature">requestWindowFeature</a><a href="http://www.iteye.com/blogs/tag/android">android</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <div class="iteye-blog-content-contain" style="font-size: 14px;">
+<p><strong>requestWindowFeature可以设置的值有：<br></strong>&nbsp;// 1.DEFAULT_FEATURES：系统默认状态，一般不需要指定<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 2.FEATURE_CONTEXT_MENU：启用ContextMenu，默认该项已启用，一般无需指定<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 3.FEATURE_CUSTOM_TITLE：自定义标题。当需要自定义标题时必须指定。如：标题是一个按钮时<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 4.FEATURE_INDETERMINATE_PROGRESS：不确定的进度<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 5.FEATURE_LEFT_ICON：标题栏左侧的图标<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 6.FEATURE_NO_TITLE：无标题<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 7.FEATURE_OPTIONS_PANEL：启用“选项面板”功能，默认已启用。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 8.FEATURE_PROGRESS：进度指示器功能<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 9.FEATURE_RIGHT_ICON:标题栏右侧的图标<br><br><strong>效果图：<br></strong>&nbsp;default：<br><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/12ddefa9-ca1e-32f3-b6c6-e7442e208da1.png" alt=""><br>&nbsp;<br>&nbsp;progress：</p>
+<p><br><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/76431e5c-6bc9-3dd6-92a6-071d512f8b06.png" alt=""></p>
+<p>no title：</p>
+<p><br><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/fec9a99f-0a53-35ef-ad47-09c174d1ed27.png" alt=""><br>&nbsp;<br>&nbsp;lefticon：</p>
+<p><br><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/91e2a287-b17d-349c-aaac-36d61cdbac75.png" alt=""><br>&nbsp;fullscreen：<br><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/d14c7f38-41cb-342d-896f-0b5a7e400ca8.png" alt=""><br>&nbsp;indeterminate_progress:<br><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/e4f517e6-7b2d-3cca-a333-4427210c4e53.png" alt=""><br>&nbsp;</p>
+<p>customtitle:</p>
+<p><br><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/767089ab-e279-3b7c-bcc5-310af9d14882.png" alt=""><br>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>代码：<br></strong></p>
+<div id="" class="dp-highlighter"><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/clipboard_new.swf" flashvars="clipboard=package%20com.my%3B%0Aimport%20android.app.Activity%3B%0Aimport%20android.os.Bundle%3B%0Aimport%20android.os.Handler%3B%0Aimport%20android.os.Message%3B%0Aimport%20android.view.Window%3B%0Aimport%20android.view.WindowManager%3B%0Apublic%20class%20WindowFeatureDemoActivity%20extends%20Activity%20%7B%0A%20%20%20%20%40Override%0A%20%20%20%20public%20void%20onCreate(Bundle%20savedInstanceState)%20%7B%0A%20%20%20%20%20%20%20%20super.onCreate(savedInstanceState)%3B%0A%20%20%20%20%20%20%20%20%2F%2F%20requestWindowFeature()%3B%E7%9A%84%E5%8F%96%E5%80%BC%0A%20%20%20%20%20%20%20%20%2F%2F%201.DEFAULT_FEATURES%EF%BC%9A%E7%B3%BB%E7%BB%9F%E9%BB%98%E8%AE%A4%E7%8A%B6%E6%80%81%EF%BC%8C%E4%B8%80%E8%88%AC%E4%B8%8D%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9A%0A%20%20%20%20%20%20%20%20%2F%2F%202.FEATURE_CONTEXT_MENU%EF%BC%9A%E5%90%AF%E7%94%A8ContextMenu%EF%BC%8C%E9%BB%98%E8%AE%A4%E8%AF%A5%E9%A1%B9%E5%B7%B2%E5%90%AF%E7%94%A8%EF%BC%8C%E4%B8%80%E8%88%AC%E6%97%A0%E9%9C%80%E6%8C%87%E5%AE%9A%0A%20%20%20%20%20%20%20%20%2F%2F%203.FEATURE_CUSTOM_TITLE%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E9%A2%98%E3%80%82%E5%BD%93%E9%9C%80%E8%A6%81%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E9%A2%98%E6%97%B6%E5%BF%85%E9%A1%BB%E6%8C%87%E5%AE%9A%E3%80%82%E5%A6%82%EF%BC%9A%E6%A0%87%E9%A2%98%E6%98%AF%E4%B8%80%E4%B8%AA%E6%8C%89%E9%92%AE%E6%97%B6%0A%20%20%20%20%20%20%20%20%2F%2F%204.FEATURE_INDETERMINATE_PROGRESS%EF%BC%9A%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E8%BF%9B%E5%BA%A6%0A%20%20%20%20%20%20%20%20%2F%2F%205.FEATURE_LEFT_ICON%EF%BC%9A%E6%A0%87%E9%A2%98%E6%A0%8F%E5%B7%A6%E4%BE%A7%E7%9A%84%E5%9B%BE%E6%A0%87%0A%20%20%20%20%20%20%20%20%2F%2F%206.FEATURE_NO_TITLE%EF%BC%9A%E6%97%A0%E6%A0%87%E9%A2%98%0A%20%20%20%20%20%20%20%20%2F%2F%207.FEATURE_OPTIONS_PANEL%EF%BC%9A%E5%90%AF%E7%94%A8%E2%80%9C%E9%80%89%E9%A1%B9%E9%9D%A2%E6%9D%BF%E2%80%9D%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%BB%98%E8%AE%A4%E5%B7%B2%E5%90%AF%E7%94%A8%E3%80%82%0A%20%20%20%20%20%20%20%20%2F%2F%208.FEATURE_PROGRESS%EF%BC%9A%E8%BF%9B%E5%BA%A6%E6%8C%87%E7%A4%BA%E5%99%A8%E5%8A%9F%E8%83%BD%0A%20%20%20%20%20%20%20%20%2F%2F%209.FEATURE_RIGHT_ICON%3A%E6%A0%87%E9%A2%98%E6%A0%8F%E5%8F%B3%E4%BE%A7%E7%9A%84%E5%9B%BE%E6%A0%87%0A%20%20%20%20%20%20%20%20%2F%2F%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3DFEATURE_INDETERMINATE_PROGRESS%EF%BC%9A%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E8%BF%9B%E5%BA%A6%0A%2F%2F%20%20%20%20%20%20%20%20showFEATURE_INDETERMINATE_PROGRESS()%3B%0A%2F%2F%20%20%20%20%20%20%20%20%2F%2F%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3DFEATURE_CUSTOM_TITLE%20%20%20%20%20%20%20%0A%2F%2F%20%20%20%20%20%20%20%20showFEATURE_CUSTOM_TITLE()%3B%0A%2F%2F%20%20%20%20%20%20%20%20%2F%2F%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20FEATURE_LEFT_ICON%EF%BC%9A%E6%A0%87%E9%A2%98%E6%A0%8F%E5%B7%A6%E4%BE%A7%E7%9A%84%E5%9B%BE%E6%A0%87%0A%2F%2F%20%20%20%20%20%20%20%20showFEATURE_LEFT_ICON()%3B%0A%2F%2F%20%20%20%20%20%20%20%20%2F%2F%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3DFEATURE_NO_TITLE%0A%2F%2F%20%20%20%20%20%20%20%20showFEATURE_NO_TITLE()%3B%20%20%20%0A%2F%2F%20%20%20%20%20%20%20%20%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3DFEATURE_PROGRESS%0A%20%20%20%20%20%20%20%20showFEATURE_PROGRESS()%3B%0A%20%20%20%20%7D%0A%20%20%20%20private%20void%20showFEATURE_INDETERMINATE_PROGRESS()%20%7B%0A%20%20%20%20%20%20%20%20requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)%3B%0A%20%20%20%20%20%20%20%20setContentView(R.layout.main)%3B%0A%20%20%20%20%20%20%20%20getWindow().setFeatureInt(Window.FEATURE_INDETERMINATE_PROGRESS%2C%20R.layout.progress)%3B%0A%20%20%20%20%20%20%20%20%2F%2F%20%E5%BF%85%E9%A1%BB%E5%BE%97%E5%8A%A0%E4%B8%8A%E5%90%A6%E5%88%99%E6%98%BE%E7%A4%BA%E4%B8%8D%E5%87%BA%E6%95%88%E6%9E%9C%20%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E5%9C%A8%E4%BB%A5%E5%90%8E%E8%AE%BE%E7%BD%AE%E6%98%BE%E7%A4%BA%E6%88%96%E9%9A%90%E8%97%8F%0A%20%20%20%20%20%20%20%20setProgressBarIndeterminateVisibility(true)%3B%0A%20%20%20%20%7D%0A%20%20%20%20private%20void%20showFEATURE_CUSTOM_TITLE()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E9%A2%98%E3%80%82%E5%BD%93%E9%9C%80%E8%A6%81%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E9%A2%98%E6%97%B6%E5%BF%85%E9%A1%BB%E6%8C%87%E5%AE%9A%E3%80%82%E5%A6%82%EF%BC%9A%E6%A0%87%E9%A2%98%E6%98%AF%E4%B8%80%E4%B8%AA%E6%8C%89%E9%92%AE%E6%97%B6%0A%20%20%20%20%20%20%20%20requestWindowFeature(Window.FEATURE_CUSTOM_TITLE)%3B%0A%20%20%20%20%20%20%20%20setContentView(R.layout.main)%3B%0A%20%20%20%20%20%20%20%20getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE%2C%20R.layout.customtitle)%3B%0A%20%20%20%20%7D%0A%20%20%20%20private%20void%20showFEATURE_LEFT_ICON()%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20requestWindowFeature(Window.FEATURE_LEFT_ICON)%3B%0A%20%20%20%20%20%20%20%20%20setContentView(R.layout.main)%3B%0A%20%20%20%20%20%20%20%20%20getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON%2C%0A%20%20%20%20%20%20%20%20%20R.drawable.icon)%3B%0A%20%20%20%20%7D%0A%20%20%20%20private%20void%20showFEATURE_NO_TITLE()%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20requestWindowFeature(Window.FEATURE_NO_TITLE)%3B%0A%20%20%20%20%20%20%20%20%20setContentView(R.layout.main)%3B%0A%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%8A%A0%E4%B8%8A%E8%BF%99%E5%8F%A5%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%85%A8%E5%B1%8F%20%E4%B8%8D%E5%8A%A0%E5%88%99%E5%8F%AA%E9%9A%90%E8%97%8Ftitle%0A%20%20%20%20%20%20%20%20%20getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN%2C%0A%20%20%20%20%20%20%20%20%20WindowManager.LayoutParams.FLAG_FULLSCREEN)%3B%0A%20%20%20%20%7D%0A%20%20%20%20private%20void%20showFEATURE_PROGRESS()%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20requestWindowFeature(Window.FEATURE_PROGRESS)%3B%0A%20%20%20%20%20%20%20%20setProgressBarVisibility(true)%3B%0A%20%20%20%20%20%20%20%20setContentView(R.layout.main)%3B%0A%20%20%20%20%20%20%20%20setTitle(%22%22)%3B%0A%20%20%20%20%20%20%20%20getWindow().setFeatureInt(Window.FEATURE_PROGRESS%2C%20Window.PROGRESS_VISIBILITY_ON)%3B%0A%20%20%20%20%20%20%20%20%2F%2F%20%E9%80%9A%E8%BF%87%E7%BA%BF%E7%A8%8B%E6%9D%A5%E6%94%B9%E5%8F%98ProgressBar%E7%9A%84%E5%80%BC%0A%20%20%20%20%20%20%20%20new%20Thread(new%20Runnable()%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20public%20void%20run()%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20for%20(int%20i%20%3D%200%3B%20i%20%3C%2010%3B%20i%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Thread.sleep(1000)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Message%20m%20%3D%20new%20Message()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20m.what%20%3D%20(i%20%2B%201)%20*%2020%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20WindowFeatureDemoActivity.this.myMessageHandler.sendMessage(m)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%20catch%20(Exception%20e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20e.printStackTrace()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D).start()%3B%0A%20%20%20%20%7D%0A%20%20%20%20Handler%20myMessageHandler%20%3D%20new%20Handler()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20%40Override%0A%20%20%20%20%20%20%20%20public%20void%20handleMessage(Message%20msg)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E8%AE%BE%E7%BD%AE%E6%A0%87%E9%A2%98%E6%A0%8F%E4%B8%AD%E5%89%8D%E6%99%AF%E7%9A%84%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1%E8%BF%9B%E5%BA%A6%E5%80%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20setProgress(100%20*%20msg.what)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E8%AE%BE%E7%BD%AE%E6%A0%87%E9%A2%98%E6%A0%8F%E4%B8%AD%E5%90%8E%E9%9D%A2%E7%9A%84%E4%B8%80%E4%B8%AA%E8%BF%9B%E5%BA%A6%E6%9D%A1%E8%BF%9B%E5%BA%A6%E5%80%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20setSecondaryProgress(100%20*%20msg.what%20%2B%2010)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20super.handleMessage(msg)%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%3B%0A%7D" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="15" width="14">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_star.png" alt="收藏代码"><img class="spinner" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/spinner.gif" style="display:none"></a></div></div><ol class="dp-j" start="1"><li><span><span class="keyword">package</span><span>&nbsp;com.my;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;android.app.Activity;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;android.os.Bundle;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;android.os.Handler;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;android.os.Message;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;android.view.Window;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;android.view.WindowManager;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;WindowFeatureDemoActivity&nbsp;</span><span class="keyword">extends</span><span>&nbsp;Activity&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@Override</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;onCreate(Bundle&nbsp;savedInstanceState)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">super</span><span>.onCreate(savedInstanceState);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;requestWindowFeature();的取值</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;1.DEFAULT_FEATURES：系统默认状态，一般不需要指定</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;2.FEATURE_CONTEXT_MENU：启用ContextMenu，默认该项已启用，一般无需指定</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;3.FEATURE_CUSTOM_TITLE：自定义标题。当需要自定义标题时必须指定。如：标题是一个按钮时</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;4.FEATURE_INDETERMINATE_PROGRESS：不确定的进度</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;5.FEATURE_LEFT_ICON：标题栏左侧的图标</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;6.FEATURE_NO_TITLE：无标题</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;7.FEATURE_OPTIONS_PANEL：启用“选项面板”功能，默认已启用。</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;8.FEATURE_PROGRESS：进度指示器功能</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;9.FEATURE_RIGHT_ICON:标题栏右侧的图标</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;========================FEATURE_INDETERMINATE_PROGRESS：不确定的进度</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showFEATURE_INDETERMINATE_PROGRESS();</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;=====================FEATURE_CUSTOM_TITLE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showFEATURE_CUSTOM_TITLE();</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;========================&nbsp;FEATURE_LEFT_ICON：标题栏左侧的图标</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showFEATURE_LEFT_ICON();</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;======================FEATURE_NO_TITLE</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showFEATURE_NO_TITLE();&nbsp;&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=================================FEATURE_PROGRESS</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showFEATURE_PROGRESS();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;showFEATURE_INDETERMINATE_PROGRESS()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getWindow().setFeatureInt(Window.FEATURE_INDETERMINATE_PROGRESS,&nbsp;R.layout.progress);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;必须得加上否则显示不出效果&nbsp;可以通过这个在以后设置显示或隐藏</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setProgressBarIndeterminateVisibility(<span class="keyword">true</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;showFEATURE_CUSTOM_TITLE()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;自定义标题。当需要自定义标题时必须指定。如：标题是一个按钮时</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,&nbsp;R.layout.customtitle);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;showFEATURE_LEFT_ICON()&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestWindowFeature(Window.FEATURE_LEFT_ICON);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R.drawable.icon);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;showFEATURE_NO_TITLE()&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestWindowFeature(Window.FEATURE_NO_TITLE);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;加上这句设置为全屏&nbsp;不加则只隐藏title</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WindowManager.LayoutParams.FLAG_FULLSCREEN);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;showFEATURE_PROGRESS()&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestWindowFeature(Window.FEATURE_PROGRESS);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setProgressBarVisibility(<span class="keyword">true</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setTitle(<span class="string">""</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getWindow().setFeatureInt(Window.FEATURE_PROGRESS,&nbsp;Window.PROGRESS_VISIBILITY_ON);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;通过线程来改变ProgressBar的值</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">new</span><span>&nbsp;Thread(</span><span class="keyword">new</span><span>&nbsp;Runnable()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;run()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">int</span><span>&nbsp;i&nbsp;=&nbsp;</span><span class="number">0</span><span>;&nbsp;i&nbsp;&lt;&nbsp;</span><span class="number">10</span><span>;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thread.sleep(<span class="number">1000</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Message&nbsp;m&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;Message();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m.what&nbsp;=&nbsp;(i&nbsp;+&nbsp;<span class="number">1</span><span>)&nbsp;*&nbsp;</span><span class="number">20</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WindowFeatureDemoActivity.<span class="keyword">this</span><span>.myMessageHandler.sendMessage(m);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(Exception&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).start();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;Handler&nbsp;myMessageHandler&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;Handler()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;@Override</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;handleMessage(Message&nbsp;msg)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;设置标题栏中前景的一个进度条进度值</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setProgress(<span class="number">100</span><span>&nbsp;*&nbsp;msg.what);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;设置标题栏中后面的一个进度条进度值</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setSecondaryProgress(<span class="number">100</span><span>&nbsp;*&nbsp;msg.what&nbsp;+&nbsp;</span><span class="number">10</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">super</span><span>.handleMessage(msg);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;};&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre title="requestWindowFeature使用详解" pre_index="0" source_url="http://zhanhao.iteye.com/blog/1174914" codeable_type="Blog" codeable_id="1174914" style="display: none;" class="java" name="code">package com.my;
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.Window;
+import android.view.WindowManager;
+public class WindowFeatureDemoActivity extends Activity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // requestWindowFeature();的取值
+        // 1.DEFAULT_FEATURES：系统默认状态，一般不需要指定
+        // 2.FEATURE_CONTEXT_MENU：启用ContextMenu，默认该项已启用，一般无需指定
+        // 3.FEATURE_CUSTOM_TITLE：自定义标题。当需要自定义标题时必须指定。如：标题是一个按钮时
+        // 4.FEATURE_INDETERMINATE_PROGRESS：不确定的进度
+        // 5.FEATURE_LEFT_ICON：标题栏左侧的图标
+        // 6.FEATURE_NO_TITLE：无标题
+        // 7.FEATURE_OPTIONS_PANEL：启用“选项面板”功能，默认已启用。
+        // 8.FEATURE_PROGRESS：进度指示器功能
+        // 9.FEATURE_RIGHT_ICON:标题栏右侧的图标
+        // ========================FEATURE_INDETERMINATE_PROGRESS：不确定的进度
+//        showFEATURE_INDETERMINATE_PROGRESS();
+//        // =====================FEATURE_CUSTOM_TITLE       
+//        showFEATURE_CUSTOM_TITLE();
+//        // ======================== FEATURE_LEFT_ICON：标题栏左侧的图标
+//        showFEATURE_LEFT_ICON();
+//        // ======================FEATURE_NO_TITLE
+//        showFEATURE_NO_TITLE();   
+//         =================================FEATURE_PROGRESS
+        showFEATURE_PROGRESS();
+    }
+    private void showFEATURE_INDETERMINATE_PROGRESS() {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setContentView(R.layout.main);
+        getWindow().setFeatureInt(Window.FEATURE_INDETERMINATE_PROGRESS, R.layout.progress);
+        // 必须得加上否则显示不出效果 可以通过这个在以后设置显示或隐藏
+        setProgressBarIndeterminateVisibility(true);
+    }
+    private void showFEATURE_CUSTOM_TITLE() {
+        // 自定义标题。当需要自定义标题时必须指定。如：标题是一个按钮时
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        setContentView(R.layout.main);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.customtitle);
+    }
+    private void showFEATURE_LEFT_ICON()
+    {
+         requestWindowFeature(Window.FEATURE_LEFT_ICON);
+         setContentView(R.layout.main);
+         getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
+         R.drawable.icon);
+    }
+    private void showFEATURE_NO_TITLE()
+    {
+         requestWindowFeature(Window.FEATURE_NO_TITLE);
+         setContentView(R.layout.main);
+         // 加上这句设置为全屏 不加则只隐藏title
+         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+         WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+    private void showFEATURE_PROGRESS()
+    {
+        requestWindowFeature(Window.FEATURE_PROGRESS);
+        setProgressBarVisibility(true);
+        setContentView(R.layout.main);
+        setTitle("");
+        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
+        // 通过线程来改变ProgressBar的值
+        new Thread(new Runnable() {
+            public void run() {
+                for (int i = 0; i &lt; 10; i++) {
+                    try {
+                        Thread.sleep(1000);
+                        Message m = new Message();
+                        m.what = (i + 1) * 20;
+                        WindowFeatureDemoActivity.this.myMessageHandler.sendMessage(m);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+    Handler myMessageHandler = new Handler() {
+        // @Override
+        public void handleMessage(Message msg) {
+            // 设置标题栏中前景的一个进度条进度值
+            setProgress(100 * msg.what);
+            // 设置标题栏中后面的一个进度条进度值
+            setSecondaryProgress(100 * msg.what + 10);
+            super.handleMessage(msg);
+        }
+    };
+}</pre>
+<p>&nbsp;</p>
+</div>
+  </div>
+
+  
+  <div class="attachments">
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0055/6385/12ddefa9-ca1e-32f3-b6c6-e7442e208da1.png" target="_blank"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/12ddefa9-ca1e-32f3-b6c6-e7442e208da1-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 41.4 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0055/6387/767089ab-e279-3b7c-bcc5-310af9d14882.png" target="_blank"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/767089ab-e279-3b7c-bcc5-310af9d14882-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 18 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0055/6389/e4f517e6-7b2d-3cca-a333-4427210c4e53.png" target="_blank"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/e4f517e6-7b2d-3cca-a333-4427210c4e53-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 24 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0055/6391/d14c7f38-41cb-342d-896f-0b5a7e400ca8.png" target="_blank"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/d14c7f38-41cb-342d-896f-0b5a7e400ca8-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 6.6 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0055/6393/91e2a287-b17d-349c-aaac-36d61cdbac75.png" target="_blank"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/91e2a287-b17d-349c-aaac-36d61cdbac75-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 23.9 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0055/6395/fec9a99f-0a53-35ef-ad47-09c174d1ed27.png" target="_blank"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/fec9a99f-0a53-35ef-ad47-09c174d1ed27-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 14.6 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="http://dl2.iteye.com/upload/attachment/0055/6397/76431e5c-6bc9-3dd6-92a6-071d512f8b06.png" target="_blank"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/76431e5c-6bc9-3dd6-92a6-071d512f8b06-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 24 KB</li>
+        </ul>
+      
+    
+      
+        <ul>
+          <li><a href="http://dl.iteye.com/topics/download/54f18daf-2326-30b6-8414-ff8ef3e2cc07">requestWindowFeatureDemo.rar</a> (44.9 KB)</li>
+          
+          <li>下载次数: 385</li>
+        </ul>
+      
+    
+    
+      <ul>
+        <li><a href="#" onclick="$$('div.attachments ul').invoke('show');$(this).up(1).hide();return false;">查看图片附件</a></li>
+      </ul>
+    
+  </div>
+
+
+  
+  
+  <iframe src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/187.htm" scrolling="no" frameborder="0" height="60" width="468"></iframe>
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class="digged"><strong>8</strong> <br>顶</div><div class="digged"><strong>0</strong> <br>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="http://zhanhao.iteye.com/blog/1175106" class="next" title="ViewSwitcher,ImageSwitcher,TextSwitcher的使用">ViewSwitcher,ImageSwitcher,TextSwitcher ...</a>
+      |
+      <a href="http://zhanhao.iteye.com/blog/1174430" class="pre" title="java堆栈 （转） ">java堆栈 （转） </a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2011-09-19 10:41</li>
+      <li>浏览 57450</li>
+      <li><a href="#comments">评论(2)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/mobile">移动开发</a></li>      
+      <li class="last"><a href="http://www.iteye.com/wiki/blog/1174914" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2329666">
+  <div class="comment_title">
+    2 楼
+    <a href="http://urok22.iteye.com/" target="_blank" title="urok22">urok22</a>
+    2013-10-30&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">很不错，学习了</div>
+</div>
+
+<div id="bc2277611">
+  <div class="comment_title">
+    1 楼
+    <a href="http://liaohq-45289.iteye.com/" target="_blank" title="liaohq_45289">liaohq_45289</a>
+    2012-08-21&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_idea.gif"> 学习了，谢谢。正纠结着呢。</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="http://zhanhao.iteye.com/login" style="background-color:white;"> <img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="http://zhanhao.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 1174914;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'requestWindowFeature使用详解');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'requestWindowFeature使用详解');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="http://zhanhao.iteye.com/"><img alt="zhanhao的博客" class="logo" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/055a2fab-5980-33c3-b0fa-0b46b610c716.jpg" title="zhanhao的博客: " width=""></a></div>
+  <div id="blog_owner_name">zhanhao</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 170382 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/icon_minigender_1.gif" title="男"></li>
+              <li>来自: 北京</li>
+              <li><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/offline.gif"></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;"><a href="http://zhanhao.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://stoneme1112.iteye.com/" target="_blank"><img alt="stoneme1112的博客" class="logo" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="stoneme1112的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://stoneme1112.iteye.com/" target="_blank" title="stoneme1112">stoneme1112</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://201402241732.iteye.com/" target="_blank"><img alt="lyc0908的博客" class="logo" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="lyc0908的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://201402241732.iteye.com/" target="_blank" title="lyc0908">lyc0908</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://pulseco.iteye.com/" target="_blank"><img alt="pulseco的博客" class="logo" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/user-logo-thumb.gif" title="pulseco的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://pulseco.iteye.com/" target="_blank" title="pulseco">pulseco</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://jianwang0310.iteye.com/" target="_blank"><img alt="jianwang0310的博客" class="logo" src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/1a5e315e-d08a-3ad3-a0ac-c81336a7c554-thumb.gif" title="jianwang0310的博客: " width="48px"></a></div>
+                <div class="left"><a href="http://jianwang0310.iteye.com/" target="_blank" title="jianwang0310">jianwang0310</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="http://zhanhao.iteye.com/">全部博客 (43)</a></li>
+                
+                  <li><a href="http://zhanhao.iteye.com/category/162665">android (34)</a></li>
+                
+                  <li><a href="http://zhanhao.iteye.com/category/162666">java (1)</a></li>
+                
+                  <li><a href="http://zhanhao.iteye.com/category/164953">数据结构 (4)</a></li>
+                
+                  <li><a href="http://zhanhao.iteye.com/category/183895">iOS (3)</a></li>
+                
+                  <li><a href="http://zhanhao.iteye.com/category/254231">非技术 (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="http://zhanhao.iteye.com/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="http://zhanhao.iteye.com/blog/post">我的论坛</a> (0)
+                </li>
+                <li><a href="http://zhanhao.iteye.com/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="http://zhanhao.iteye.com/blog/monthblog/2012-11">2012-11</a> (1)</li>
+                
+                  <li><a href="http://zhanhao.iteye.com/blog/monthblog/2012-10">2012-10</a> (1)</li>
+                
+                  <li><a href="http://zhanhao.iteye.com/blog/monthblog/2012-07">2012-07</a> (1)</li>
+                
+                <li><a href="http://zhanhao.iteye.com/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href="http://479001499.iteye.com/" target="_blank" title="肆无忌惮_">肆无忌惮_</a>： 
+                  多谢楼主分享<br>
+                  <a href="http://zhanhao.iteye.com/blog/1463350#bc2372924">android内存泄露优化总结</a>
+                </li>
+                
+                <li>
+                  <a href="http://wwwjiandan.iteye.com/" target="_blank" title="wwwjiandan">wwwjiandan</a>： 
+                  我用自定义Action为什么每次调用Activity时都提示找 ...<br>
+                  <a href="http://zhanhao.iteye.com/blog/1116805#bc2363722">Activity之间的通信与自定义Action</a>
+                </li>
+                
+                <li>
+                  <a href="http://835060947.iteye.com/" target="_blank" title="Zero颴">Zero颴</a>： 
+                  写得好&nbsp;&nbsp;<br>
+                  <a href="http://zhanhao.iteye.com/blog/1463350#bc2356100">android内存泄露优化总结</a>
+                </li>
+                
+                <li>
+                  <a href="http://pigeon200461.iteye.com/" target="_blank" title="pigeon200461">pigeon200461</a>： 
+                   你好！请问你的这个项目里面是否使用sqlite3数据库。<br>
+                  <a href="http://zhanhao.iteye.com/blog/1113776#bc2342401">android通过webview+jquery设计界面</a>
+                </li>
+                
+                <li>
+                  <a href="http://zhxin.iteye.com/" target="_blank" title="ZHxin">ZHxin</a>： 
+                  在activity中引入Fragment的xml方式确信能在低 ...<br>
+                  <a href="http://zhanhao.iteye.com/blog/1180795#bc2337804">通过Compatibility Package低版本使用Fragment</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br>
+          © 2003-2015 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/a.gif" height="0" width="0">
+
+<script src="requestWindowFeature%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%20-%20-%20ITeye%E6%8A%80%E6%9C%AF%E7%BD%91%E7%AB%99_files/tracking.js" type="text/javascript"></script>
+
+    
+    
+  
+
+</body></html>

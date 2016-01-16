@@ -1,0 +1,1173 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0064)http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html -->
+<HTML><HEAD id=Head><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE>并发性能测试程序编写 - qileilove - BlogJava</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type>
+<META id=metaKeywords name=keywords content=并发性能测试程序编写><LINK rel=stylesheet 
+type=text/css 
+href="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/common.css"><LINK 
+id=MainCss rel=stylesheet type=text/css 
+href="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/style.css"><LINK 
+id=RSSLink title=RSS rel=alternate type=application/rss+xml 
+href="http://www.blogjava.net/qileilove/rss.aspx">
+<META name=GENERATOR content="MSHTML 11.00.9600.18015"></HEAD>
+<BODY>
+<FORM id=Form1 onsubmit="javascript:return WebForm_OnSubmit();" method=post 
+name=Form1 action=414561.html>
+<DIV><INPUT id=__EVENTTARGET type=hidden name=__EVENTTARGET> <INPUT 
+id=__EVENTARGUMENT type=hidden name=__EVENTARGUMENT> <INPUT 
+id="&#13;&#10;__VIEWSTATE" type=hidden name=__VIEWSTATE> </DIV>
+<SCRIPT type=text/javascript>
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/WebResource.js"></SCRIPT>
+
+<SCRIPT language=JavaScript>
+									function ctlent(evt,id)
+											{
+												if(evt.ctrlKey && evt.keyCode == 13)
+												{	
+													try
+													{
+														TempSave(id);
+													}
+													catch(ex)
+													{
+													}
+													finally
+													{
+													    __doPostBack('AjaxHolder$PostComment$btnSubmit','')
+													}
+												}
+		
+												}</SCRIPT>
+
+<SCRIPT language=JavaScript>function SetReplyAuhor(author){document.getElementById('AjaxHolder_PostComment_tbComment').value+="@"+author+"\n";document.getElementById('AjaxHolder_PostComment_tbComment').focus();return false}</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/ScriptResource.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/ScriptResource(1).js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/ScriptResource(2).js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</SCRIPT>
+
+<H1><A id=Header1_HeaderTitle class=headermaintitle 
+href="http://www.blogjava.net/qileilove/">qileilove</A></H1>
+<P id=tagline>blog已经转移至github,大家请访问qileizhaokan.github.io</P>
+<DIV id=main>
+<DIV class=post>
+<H2><A id=viewpost1_TitleUrl 
+href="http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html">并发性能测试程序编写</A> 
+</H2>
+<DIV 
+style="FONT-SIZE: 11px; FONT-FAMILY: Arial, Helvetica, sans-serif; WORD-BREAK: break-all; COLOR: #333333; MARGIN: 10px 0px; LINE-HEIGHT: 21px; BACKGROUND-COLOR: #ffffff">　一般要<A 
+style="WORD-BREAK: break-all; COLOR: #202859; LINE-HEIGHT: normal !important" 
+target=_self><U style="WORD-BREAK: break-all"><STRONG 
+style="WORD-BREAK: break-all">测试</STRONG></U></A>软件或者库的性能，需要在多线程条件下进行。本文提供一种编写多线程<A 
+style="WORD-BREAK: break-all; COLOR: #202859; LINE-HEIGHT: normal !important" 
+target=_self><U style="WORD-BREAK: break-all"><STRONG 
+style="WORD-BREAK: break-all">性能测试</STRONG></U></A>的模板，方便大家参考和使用。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; FONT-FAMILY: Arial, Helvetica, sans-serif; WORD-BREAK: break-all; COLOR: #333333; MARGIN: 10px 0px; LINE-HEIGHT: 21px; BACKGROUND-COLOR: #ffffff">　　本文以AES加密和解密为例，并指出Cipher的获取在程序中的不同位置会对程序性能造成的影响。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; FONT-FAMILY: Arial, Helvetica, sans-serif; WORD-BREAK: break-all; COLOR: #333333; MARGIN: 10px 0px; LINE-HEIGHT: 21px; BACKGROUND-COLOR: #ffffff">　　程序代码如下：</DIV>
+<DIV 
+style="FONT-SIZE: 11px; FONT-FAMILY: Arial, Helvetica, sans-serif; WORD-BREAK: break-all; COLOR: #333333; MARGIN: 10px 0px; LINE-HEIGHT: 21px; BACKGROUND-COLOR: #ffffff">
+<TABLE 
+style="BORDER-TOP-STYLE: solid; FONT-SIZE: 12px; BORDER-TOP-COLOR: #999999; WIDTH: 612px; BORDER-BOTTOM-STYLE: solid; WORD-BREAK: break-all; BORDER-LEFT-COLOR: #999999; BORDER-BOTTOM-COLOR: #999999; BORDER-RIGHT-STYLE: solid; BORDER-LEFT-STYLE: solid; BORDER-RIGHT-COLOR: #999999; BACKGROUND-COLOR: #dddddd" 
+align=center>
+  <TBODY style="WORD-BREAK: break-all">
+  <TR style="WORD-BREAK: break-all">
+    <TD style="WORD-BREAK: break-all">
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">package 
+      com.lazycat.secure.aes;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import&nbsp;<A 
+      style="WORD-BREAK: break-all; COLOR: #202859" target=_self><U 
+      style="WORD-BREAK: break-all"><STRONG 
+      style="WORD-BREAK: break-all">java</STRONG></U></A>.nio.charset.Charset;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import 
+      java.security.NoSuchAlgorithmException;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import 
+      java.util.concurrent.CountDownLatch;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import 
+      java.util.concurrent.ExecutorService;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import 
+      java.util.concurrent.Executors;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import 
+      javax.crypto.Cipher;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import 
+      javax.crypto.NoSuchPaddingException;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">import 
+      javax.crypto.spec.SecretKeySpec;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">public class AESCoder 
+      {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">public static int 
+      count = 1000000;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">public static 
+      CountDownLatch latch =new CountDownLatch(count);</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">public static void 
+      main(String[] args)throws Exception {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">ExecutorService pool 
+      = Executors.newFixedThreadPool(200);</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">final byte[] payload 
+      = 
+      "{\"msg\":{\"content\":{\"text\":\"JJH\",\"tplId\":0},\"from\":{\"name\":\"10000213\",\"id\":1,\"type\":0},\"to\":{\"name\":\"10095812\",\"id\":10000213,\"type\":0},\"time\":0,\"txid\":0,\"subtype\":1},\"type\":\"chat\"}".getBytes(Charset.forName("utf-8"));</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">final String 
+      secureKey ="BBmFdTFVgAjgHNwRkWWRcOFFiBzAANFU9DmMAP1JpBmc.";</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">long start = 
+      System.currentTimeMillis();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">for(int i = 0 ; i 
+      &lt;count ; i++){</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">pool.execute(new 
+      Runnable() {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">public void run() 
+      {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">AESCoder coder = new 
+      AESCoder();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">byte[] enret 
+      =null;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">try {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">enret = 
+      coder.encrypt(payload,secureKey);</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">byte[] deret = 
+      coder.decrypt(enret, secureKey);</DIV>
+      <DIV 
+      style="WORD-BREAK: break-all; MARGIN: 10px 0px">System.out.println(new 
+      String(deret,"utf-8"));</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">} catch (Exception e) 
+      {</DIV>
+      <DIV 
+      style="WORD-BREAK: break-all; MARGIN: 10px 0px">e.printStackTrace();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV 
+      style="WORD-BREAK: break-all; MARGIN: 10px 0px">latch.countDown();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">});</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">latch.await();</DIV>
+      <DIV 
+      style="WORD-BREAK: break-all; MARGIN: 10px 0px">System.out.println(System.currentTimeMillis() 
+      - start);</DIV>
+      <DIV 
+style="WORD-BREAK: break-all; MARGIN: 10px 0px">pool.shutdown();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">private byte[] 
+      encrypt(byte[] payload,String securekey)throws Exception{</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">byte[] enCodeFormat = 
+      securekey.substring(0, 16).getBytes();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">SecretKeySpec key = 
+      newSecretKeySpec(enCodeFormat,"AES");</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">Cipher cipher = 
+      CliperInstance.getInstance();//创建密码器</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">//Cipher cipher = 
+      Cipher.getInstance("AES/ECB/PKCS5Padding");</DIV>
+      <DIV 
+      style="WORD-BREAK: break-all; MARGIN: 10px 0px">cipher.init(Cipher.ENCRYPT_MODE, 
+      key);//初始化</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">byte[] result = 
+      cipher.doFinal(payload);</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">return result;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">public byte[] 
+      decrypt(byte[] buffer,StringsecureKey)throws Exception{</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">byte[] enCodeFormat = 
+      secureKey.substring(0,16).getBytes();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">SecretKeySpec key = 
+      newSecretKeySpec(enCodeFormat,"AES");</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">//Cipher cipher = 
+      Cipher.getInstance("AES/ECB/PKCS5Padding");//创建密码器</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">Cipher cipher = 
+      CliperInstance.getInstance();</DIV>
+      <DIV 
+      style="WORD-BREAK: break-all; MARGIN: 10px 0px">cipher.init(Cipher.DECRYPT_MODE, 
+      key);//初始化</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">byte[] result = 
+      cipher.doFinal(buffer);</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">return result;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">class CliperInstance 
+      {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">private static 
+      ThreadLocal&lt;Cipher&gt; cipherTL =new ThreadLocal&lt;Cipher&gt;(){</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">@Override</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">protected Cipher 
+      initialValue() {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">try {</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">return 
+      Cipher.getInstance("AES/ECB/PKCS5Padding");</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}catch(Exception 
+      e){</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">return null;</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">};</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">public static &nbsp; 
+      CiphergetInstance() throws NoSuchAlgorithmException, 
+      NoSuchPaddingException{</DIV>
+      <DIV 
+      style="WORD-BREAK: break-all; MARGIN: 10px 0px">returncipherTL.get();</DIV>
+      <DIV style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV>
+      <DIV 
+style="WORD-BREAK: break-all; MARGIN: 10px 0px">}</DIV></TD></TR></TBODY></TABLE>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　上述代码中有两个方法，分别是encrypt和decryption，分别表示加密和解密。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　为了简单，可以被多个线程共用，因此将CountDownLatch定义为static。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　在main函数中，创建了固定大小的线程池（200个线程，这个可以根据需要进行调整）和用于加密的payload和秘钥secureKey。Start用于记录开始时间，通过最后的System.currentTimeMillis()-start即可获得程序的运行时间。在for循环中，并发执行了count（10W）次payload的加密和解密，每个线程在执行完一个任务后会调用latch.countDown()，而主程序在循环后使用latch.await()，等待所有线程执行结束后，统计执行时间，输出消耗时间，最后关闭线程池。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　一般在做对比或者寻找瓶颈时，才会使用性能测试，下面给出一个性能对比的例子。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　在前面的代码中，无论是encrypt，还是decrypt，都有如下内容：</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　Cipher 
+cipher = CliperInstance.getInstance();//创建密码器</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　//Cipher 
+cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　现在我们要对比每次加密和解密都执行Cipher.getInstance方法和对每一个线程自己都维护一个Cipher实例的性能差别。（我们都知道，Ciper.getInstance的调用时很耗时的）。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　使用Ciphercipher 
+= CliperInstance.getInstance(); 时，执行100W次加密和解密，大约使用11.2s，而使用Cipher cipher = 
+Cipher.getInstance("AES/ECB/PKCS5Padding"); 
+大约需要39.6s，因此在进行加密、解密、签名等算法时，最好每个线程维护一个加密、解密或者签名的实例（这些实例是不能再多线程间共享的，如上例所示，调用init和doFinal必须在一个线程内完成，如果全局共享同一个实例，A调用init，B也调用了init，当A调用doFinal时，此时实例内的数据已经不是A的了，会出现异常）。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　顺便说一下，如果要求每个线程有自己的实例的情况下（如上面的加密和解密等），那么就可以使用ThreadLocal，在使用ThreadLocal时，重写内部的initialValue 
+方法，每次调用ThreadLocal的get方法时，ThreadLocal实例先到自己的Map中寻找有没有当前线程对应的Instance，如果存在，将Instance返回，如果不存在，调用initialValue去创建一个Instance，并将新Instance放到Map中后，返回。详情参看JDK文档。</DIV>
+<DIV 
+style="FONT-SIZE: 11px; WORD-BREAK: break-all; MARGIN: 10px 0px; LINE-HEIGHT: 21px">　　需要注意的是，CliperInstance 
+没必要非点单写成一个类，这里是为了让代码更容易懂。</DIV></DIV>
+<DIV 
+style="FONT-SIZE: 11px; FONT-FAMILY: Arial, Helvetica, sans-serif; WORD-BREAK: break-all; COLOR: #333333; MARGIN: 10px 0px; LINE-HEIGHT: 21px; BACKGROUND-COLOR: #ffffff"></DIV>
+<DIV 
+style="FONT-SIZE: 11px; FONT-FAMILY: Arial, Helvetica, sans-serif; WORD-BREAK: break-all; COLOR: #333333; MARGIN: 10px 0px; LINE-HEIGHT: 21px; BACKGROUND-COLOR: #ffffff"></DIV>
+<DIV 
+style="FONT-SIZE: 11px; HEIGHT: 21px; FONT-FAMILY: Arial, Helvetica, sans-serif; WIDTH: 627px; POSITION: relative; WORD-BREAK: break-all; COLOR: #333333; MARGIN: 10px 0px; LINE-HEIGHT: 21px; BACKGROUND-COLOR: #ffffff"></DIV>
+<P class=postfoot>posted on 2014-06-10 09:46 <A 
+href="http://www.blogjava.net/qileilove/">顺其自然EVO</A> 阅读(174) <A 
+href="http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html#Post">评论(0)</A> 
+&nbsp;<A 
+href="http://www.blogjava.net/qileilove/admin/EditPosts.aspx?postid=414561">编辑</A> 
+&nbsp;<A 
+href="http://www.blogjava.net/qileilove/AddToFavorite.aspx?id=414561">收藏</A> 
+</P></DIV><IMG src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/414561.jpg" 
+width=1 height=1> <!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html"
+dc:identifier="http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html"
+dc:title="并发性能测试程序编写"
+trackback:ping="http://www.blogjava.net/qileilove/services/trackbacks/414561.aspx" />
+</rdf:RDF>
+-->
+<SCRIPT type=text/javascript>
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('AjaxHolder$scriptmanager1', document.getElementById('Form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tAjaxHolder$UpdatePanel1'], [], [], 90);
+//]]>
+</SCRIPT>
+
+<DIV id=AjaxHolder_UpdatePanel1>
+<STYLE>TD {
+	FONT-SIZE: 12px
+}
+.commentTextBox {
+	FONT-SIZE: 13px; FONT-FAMILY: Verdana
+}
+</STYLE>
+<!--Beging Temp Save-->
+<STYLE>.userData {
+	BEHAVIOR: url(#default#userdata)
+}
+</STYLE>
+
+<DIV id=CommentsPersistDiv class=userData></DIV>
+<SCRIPT type=text/javascript>
+function pageLoad()
+{
+    Sys.WebForms.PageRequestManager.getInstance().add_initializeRequest(handleInitializeRequest);
+    //Sys.WebForms.PageRequestManager.getInstance().add_endRequest(handleEndRequest);
+}
+
+function handleInitializeRequest(sender, args)
+{
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    var eid = args.get_postBackElement().id;
+    if (eid.indexOf("DeleteLink")>0) 
+    {
+       args.get_postBackElement().innerHTML = "<font color='red'>正在删除...</font>";         
+    }    
+    else if (eid.indexOf("btnSubmit")>0) 
+    {
+       document.getElementById("AjaxHolder_PostComment_ltSubmitMsg").innerHTML="正在提交...";
+       document.getElementById("AjaxHolder_PostComment_btnSubmit").disabled = true;       
+    }   
+    else if(eid.indexOf("refreshList")>0)
+    {
+        document.getElementById("AjaxHolder_PostComment_refreshList").innerHTML="<font color='red'>正在刷新...</font>";
+    }
+   
+}	
+
+function TempSave(ElementID)
+{
+	try
+	{
+	CommentsPersistDiv.setAttribute("CommentContent",document.getElementById(ElementID).value);
+	CommentsPersistDiv.save("CommentXMLStore");
+	}
+	catch(ex)
+	{
+	}
+	
+}
+function Restore(ElementID)
+{
+	CommentsPersistDiv.load("CommentXMLStore");
+	document.getElementById(ElementID).value=CommentsPersistDiv.getAttribute("CommentContent");
+}	
+			
+			
+</SCRIPT>
+<!--Ene TempSave-->
+<DIV id=divRefreshComments 
+style="MARGIN-BOTTOM: 5px; FONT-SIZE: 12px; TEXT-ALIGN: right; MARGIN-RIGHT: 10px"><A 
+href="http://www.blogjava.net/RequireRegister.aspx">新用户注册</A>&nbsp;&nbsp;<A 
+id=AjaxHolder_PostComment_refreshList 
+href="javascript:__doPostBack('AjaxHolder$PostComment$refreshList','')">刷新评论列表</A>&nbsp;&nbsp;</DIV>
+<DIV class=commentform><SPAN id=AjaxHolder_PostComment_ltSubmitMsg 
+style="COLOR: red"></SPAN><BR><A name=Feedback></A>
+<TABLE cellSpacing=1 cellPadding=1 border=0>
+  <TBODY>
+  <TR>
+    <TD id=AjaxHolder_PostComment_tdOnCommentForm style="LINE-HEIGHT: 1.5" 
+    colSpan=3></TD></TR>
+  <DIV id=AjaxHolder_PostComment_divCommnentArea></DIV>
+  <TR>
+    <TD colSpan=3></TD></TR>
+  <TR>
+    <TD width=75></TD>
+    <TD></TD>
+    <TD></TD></TR>
+  <TR>
+    <TD></TD>
+    <TD colSpan=2><A href="http://job.cnblogs.com/" 
+      target=_blank>找优秀程序员，就在博客园</A> <!--<a href="http://www.cnblogs.com" target="_blank">博客园</a>&nbsp;  <a href="http://q.cnblogs.com/" target="_blank">博问</a>&nbsp; <a href="http://news.cnblogs.com" target="_blank">IT新闻</a>&nbsp; <a href="http://job.cnblogs.com/cate-java_programmer/" target="_blank">Java程序员招聘</a>--></TD></TR>
+  <TR>
+    <TD width=55>标题</TD>
+    <TD><INPUT id=AjaxHolder_PostComment_tbTitle class=commenttb 
+      style="WIDTH: 320px" value="re: 并发性能测试程序编写" 
+      name=AjaxHolder$PostComment$tbTitle></TD>
+    <TD><SPAN id=AjaxHolder_PostComment_RequiredFieldValidator1 
+      style="COLOR: red; VISIBILITY: hidden">请输入标题</SPAN></TD></TR>
+  <TR>
+    <TD>姓名</TD>
+    <TD><INPUT id=AjaxHolder_PostComment_tbName class=commenttb 
+      style="WIDTH: 320px" name=AjaxHolder$PostComment$tbName></TD>
+    <TD><SPAN id=AjaxHolder_PostComment_RequiredFieldValidator2 
+      style="COLOR: red; VISIBILITY: hidden">请输入你的姓名</SPAN></TD></TR>
+  <TR>
+    <TD>主页</TD>
+    <TD><INPUT id=AjaxHolder_PostComment_tbUrl class=commenttb 
+      style="WIDTH: 320px" name=AjaxHolder$PostComment$tbUrl></TD>
+    <TD><FONT face=宋体></FONT></TD></TR>
+  <TR>
+    <TD colSpan=3 align=left>
+      <TABLE id=AjaxHolder_PostComment_tbCaptchaImage class=CommentForm 
+      cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD colSpan=3><SPAN 
+            id=AjaxHolder_PostComment_Requiredfieldvalidator4 
+            style="COLOR: red; DISPLAY: none">请输入验证码</SPAN> <SPAN 
+            id=AjaxHolder_PostComment_lblImage 
+            style="FONT-WEIGHT: bold; COLOR: red"></SPAN></TD></TR>
+        <TR>
+          <TD width=78>验证码</TD>
+          <TD><INPUT id=AjaxHolder_PostComment_CodeNumberTextBox 
+            name=AjaxHolder$PostComment$CodeNumberTextBox>*&nbsp;&nbsp;<IMG 
+            src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/JpegImage.jpg"></TD>
+          <TD align=left></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TD colSpan=3>内容(请不要发表任何与政治相关的内容) <SPAN 
+      id=AjaxHolder_PostComment_RequiredFieldValidator3 
+      style="COLOR: red; VISIBILITY: hidden">请输入评论内容</SPAN><BR><TEXTAREA id=AjaxHolder_PostComment_tbComment class=commentTextBox onkeydown="ctlent(event,'AjaxHolder_PostComment_tbComment')" style="HEIGHT: 220px; WIDTH: 480px" rows=10 cols=50 name=AjaxHolder$PostComment$tbComment></TEXTAREA></TD></TR>
+  <TR>
+    <TD colSpan=3><SPAN id=AjaxHolder_PostComment_Message 
+      style="COLOR: red"></SPAN></TD>
+  <TR>
+    <TD colSpan=3><INPUT tabIndex=-1 id=AjaxHolder_PostComment_chkRemember 
+      CHECKED type=checkbox name=AjaxHolder$PostComment$chkRemember><LABEL 
+      for=AjaxHolder_PostComment_chkRemember>Remember Me?</LABEL></TD></TR>
+  <TR>
+    <TD height=23><INPUT onclick="TempSave('AjaxHolder_PostComment_tbComment');WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;AjaxHolder$PostComment$btnSubmit&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id=AjaxHolder_PostComment_btnSubmit class=commentButton type=submit value=提交 name=AjaxHolder$PostComment$btnSubmit> 
+    </TD>
+    <TD height=23 colSpan=2>&nbsp; <A id=AjaxHolder_PostComment_lnkLogin 
+      href="http://www.blogjava.net/login.aspx?ReturnURL=http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html&amp;SourceURL=/qileilove/archive/2014/06/10/414561.html">登录</A>&nbsp;&nbsp;<!--<a id="AjaxHolder_PostComment_linkLoginComment" OnClick="if(document.getElementById('AjaxHolder_PostComment_tbComment').value != '') return confirm('未提交的评论内容将会丢失, 你真的要进入高级评论吗?');" href="http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html?login=1#Post">使用高级评论</a>&nbsp;&nbsp;<a href="http://www.blogjava.net/RequireRegister.aspx">新用户注册</a>&nbsp;&nbsp;<A href="#Top">返回页首</A>&nbsp;&nbsp;<a id="AjaxHolder_PostComment_lbRestore" OnClick="Restore('AjaxHolder_PostComment_tbComment'); return false;" href="/qileilove/archive/2014/06/10/414561.html#Post">恢复上次提交</a>&nbsp;&nbsp;-->&nbsp;&nbsp;&nbsp;&nbsp; 
+    </TD></TR>
+  <TR>
+    <TD colSpan=3><LABEL class=CtrlEnter>[使用Ctrl+Enter键可以直接提交]</LABEL></TD></TR>
+  <DIV></DIV>
+  <TR>
+    <TD colSpan=3><!----></TD></TR><!--
+		<TR>
+			<TD colSpan="3" height="5"></TD>
+		</TR>	
+		-->
+  <TR>
+    <TD colSpan=3>
+      <SCRIPT type=text/javascript>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</SCRIPT>
+
+      <SCRIPT type=text/javascript>
+googletag.cmd.push(function() {
+googletag.defineSlot('/1090369/blogjava_blogpost_bottom', [300, 250], 'div-gpt-ad-1364133350381-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</SCRIPT>
+<!-- blogjava_blogpost_bottom -->
+      <DIV id=div-gpt-ad-1364133350381-0 style="HEIGHT: 250px; WIDTH: 300px">
+      <SCRIPT type=text/javascript>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1364133350381-0'); });
+</SCRIPT>
+      </DIV><BR></TD></TR>
+  <TR>
+    <TD colSpan=3></TD></TR>
+  <TR>
+    <TD colSpan=3></TD></TR>
+  <TR>
+    <TD height=1 colSpan=3>网站导航:
+      <DIV id=blogsite><A title=开发者的网上家园 
+      href="http://www.cnblogs.com/">博客园</A>&nbsp;&nbsp; <A 
+      href="http://news.cnblogs.com/">IT新闻</A>&nbsp;&nbsp; <A 
+      href="http://kb.cnblogs.com/">知识库</A>&nbsp;&nbsp; <A 
+      href="http://www.cppblog.com/">C++博客</A>&nbsp;&nbsp; <A 
+      href="http://job.cnblogs.com/">程序员招聘</A>&nbsp;&nbsp; <A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/10/414561.html?opt=admin">管理</A> 
+      </DIV></TD></TR>
+  <TR>
+    <TD height=5 colSpan=3></TD></TR>
+  <TR>
+    <TD colSpan=3>&nbsp;</TD></TR>
+  <TR>
+    <TD height=5 colSpan=3></TD></TR>
+  <TR>
+    <TD colSpan=3></TD></TR></TBODY></TABLE></DIV>
+<DIV id=AjaxHolder_PostComment_ValidationSummary1 
+style="COLOR: red; DISPLAY: none"></DIV></DIV></DIV>
+<DIV id=rightmenu>
+<TABLE id=Calendar1_entryCal title=日历 class=Cal 
+style="BORDER-TOP: 1px solid; BORDER-RIGHT: 1px solid; BORDER-COLLAPSE: collapse; BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid" 
+cellSpacing=0 cellPadding=0 border=0>
+  <TBODY>
+  <TR>
+    <TD style="BACKGROUND-COLOR: silver" colSpan=7>
+      <TABLE class=CalTitle style="WIDTH: 100%; BORDER-COLLAPSE: collapse" 
+      cellSpacing=0 border=0>
+        <TBODY>
+        <TR>
+          <TD class=CalNextPrev style="WIDTH: 15%"><A title=转到上一个月 
+            style="COLOR: black" 
+            href="javascript:__doPostBack('Calendar1$entryCal','V5234')">&lt;</A></TD>
+          <TD style="WIDTH: 70%" align=center>2014年6月</TD>
+          <TD class=CalNextPrev style="WIDTH: 15%" align=right><A title=转到下一个月 
+            style="COLOR: black" 
+            href="javascript:__doPostBack('Calendar1$entryCal','V5295')">&gt;</A></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TH class=CalDayHeader scope=col abbr=日 align=center>日</TH>
+    <TH class=CalDayHeader scope=col abbr=一 align=center>一</TH>
+    <TH class=CalDayHeader scope=col abbr=二 align=center>二</TH>
+    <TH class=CalDayHeader scope=col abbr=三 align=center>三</TH>
+    <TH class=CalDayHeader scope=col abbr=四 align=center>四</TH>
+    <TH class=CalDayHeader scope=col abbr=五 align=center>五</TH>
+    <TH class=CalDayHeader scope=col abbr=六 align=center>六</TH></TR>
+  <TR>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>25</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>26</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>27</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>28</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>29</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>30</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>31</TD></TR>
+  <TR>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>1</TD>
+    <TD style="WIDTH: 14%" align=center>2</TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/03.html"><U>3</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/04.html"><U>4</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/05.html"><U>5</U></A></TD>
+    <TD style="WIDTH: 14%" align=center>6</TD>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>7</TD></TR>
+  <TR>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>8</TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/09.html"><U>9</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/10.html"><U>10</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/11.html"><U>11</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/12.html"><U>12</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/13.html"><U>13</U></A></TD>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>14</TD></TR>
+  <TR>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>15</TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/16.html"><U>16</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/17.html"><U>17</U></A></TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/18.html"><U>18</U></A></TD>
+    <TD style="WIDTH: 14%" align=center>19</TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/20.html"><U>20</U></A></TD>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>21</TD></TR>
+  <TR>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>22</TD>
+    <TD style="WIDTH: 14%" align=center>23</TD>
+    <TD style="WIDTH: 14%" align=center>24</TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/25.html"><U>25</U></A></TD>
+    <TD style="WIDTH: 14%" align=center>26</TD>
+    <TD style="WIDTH: 14%" align=center>27</TD>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>28</TD></TR>
+  <TR>
+    <TD class=CalWeekendDay style="WIDTH: 14%" align=center>29</TD>
+    <TD style="WIDTH: 14%" align=center><A 
+      href="http://www.blogjava.net/qileilove/archive/2014/06/30.html"><U>30</U></A></TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>1</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>2</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>3</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" align=center>4</TD>
+    <TD class=CalOtherMonthDay style="WIDTH: 14%" 
+align=center>5</TD></TR></TBODY></TABLE>
+<H3>导航</H3>
+<UL>
+  <LI><A id=MyLinks1_HomeLink href="http://www.blogjava.net/">BlogJava</A> 
+  <LI><A id=MyLinks1_MyHomeLink href="http://www.blogjava.net/qileilove/">首页</A> 
+
+  <LI><A id=MyLinks1_NewPostLink 
+  href="http://www.blogjava.net/qileilove/admin/EditPosts.aspx?opt=1">新随笔</A> 
+  <LI><A id=MyLinks1_ContactLink accessKey=9 
+  href="http://www.blogjava.net/qileilove/contact.aspx?id=1">联系</A> 
+  <LI><A id=MyLinks1_Syndication 
+  href="http://www.blogjava.net/qileilove/rss">聚合</A><A id=MyLinks1_XMLLink 
+  href="http://www.blogjava.net/qileilove/rss"><IMG 
+  style="BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-TOP-WIDTH: 0px" 
+  src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/xml.gif"></A> 
+  <LI><A id=MyLinks1_Admin 
+  href="http://www.blogjava.net/qileilove/admin/EditPosts.aspx">管理</A> </LI></UL>
+<H3>统计</H3>
+<UL>
+  <LI>随笔 - 3936 
+  <LI>文章 - 404 
+  <LI>评论 - 154 
+  <LI>引用 - 0 </LI></UL>
+<H3>常用链接</H3>
+<UL>
+  <LI><A id=SingleColumn1_ctl00_repeaterLinks_ctl01_lnkLinkItem 
+  href="http://www.blogjava.net/qileilove/MyPosts.html">我的随笔</A> 
+  <LI><A id=SingleColumn1_ctl00_repeaterLinks_ctl02_lnkLinkItem 
+  href="http://www.blogjava.net/qileilove/MyComments.html">我的评论</A> 
+  <LI><A id=SingleColumn1_ctl00_repeaterLinks_ctl03_lnkLinkItem 
+  href="http://www.blogjava.net/qileilove/OtherPosts.html">我的参与</A> 
+  <LI><A id=SingleColumn1_ctl00_repeaterLinks_ctl04_lnkLinkItem 
+  href="http://www.blogjava.net/qileilove/RecentComments.html">最新评论</A> </LI></UL>
+<H3>留言簿<SPAN style="FONT-SIZE: 11px; FONT-WEIGHT: normal">(50)</SPAN></H3>
+<UL>
+  <LI><A id=SingleColumn1_ctl01_lnkMessages 
+  href="http://www.blogjava.net/qileilove/Contact.aspx?id=1">给我留言</A> 
+  <LI><A id=SingleColumn1_ctl01_lnkPublicMsgView 
+  href="http://www.blogjava.net/qileilove/default.aspx?opt=msg">查看公开留言</A> 
+  <LI><A id=SingleColumn1_ctl01_lnkPrivateMsgView 
+  href="http://www.blogjava.net/qileilove/admin/MyMessages.aspx">查看私人留言</A> 
+</LI></UL>
+<H3>随笔分类</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl01_Link 
+  href="http://www.blogjava.net/qileilove/category/52522.html">android(168)</A> 
+  <A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl01_RssLink 
+  title="Subscribe to android(168)" 
+  href="http://www.blogjava.net/qileilove/category/52522.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl02_Link 
+  href="http://www.blogjava.net/qileilove/category/51390.html">CMMI &amp; 
+  QA(16)</A> <A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl02_RssLink 
+  title="Subscribe to CMMI &amp; QA(16)" 
+  href="http://www.blogjava.net/qileilove/category/51390.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl03_Link 
+  href="http://www.blogjava.net/qileilove/category/53093.html">DB2(19)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl03_RssLink 
+  title="Subscribe to DB2(19)" 
+  href="http://www.blogjava.net/qileilove/category/53093.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl04_Link 
+  href="http://www.blogjava.net/qileilove/category/51399.html">defalut 
+  managerment system 缺陷管理系统(32)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl04_RssLink 
+  title="Subscribe to defalut managerment system 缺陷管理系统(32)" 
+  href="http://www.blogjava.net/qileilove/category/51399.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl05_Link 
+  href="http://www.blogjava.net/qileilove/category/50118.html">HTML5(4)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl05_RssLink 
+  title="Subscribe to HTML5(4)" 
+  href="http://www.blogjava.net/qileilove/category/50118.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl06_Link 
+  href="http://www.blogjava.net/qileilove/category/51343.html">jmeter and 
+  badboy(55)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl06_RssLink 
+  title="Subscribe to jmeter and badboy(55)" 
+  href="http://www.blogjava.net/qileilove/category/51343.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl07_Link 
+  href="http://www.blogjava.net/qileilove/category/51358.html">linux(147)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl07_RssLink 
+  title="Subscribe to linux(147)" 
+  href="http://www.blogjava.net/qileilove/category/51358.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl08_Link 
+  href="http://www.blogjava.net/qileilove/category/51344.html">loadrunner(164)</A> 
+  <A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl08_RssLink 
+  title="Subscribe to loadrunner(164)" 
+  href="http://www.blogjava.net/qileilove/category/51344.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl09_Link 
+  href="http://www.blogjava.net/qileilove/category/51875.html">mongodb(1)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl09_RssLink 
+  title="Subscribe to mongodb(1)" 
+  href="http://www.blogjava.net/qileilove/category/51875.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl10_Link 
+  href="http://www.blogjava.net/qileilove/category/51345.html">qtp(64)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl10_RssLink 
+  title="Subscribe to qtp(64)" 
+  href="http://www.blogjava.net/qileilove/category/51345.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl11_Link 
+  href="http://www.blogjava.net/qileilove/category/51386.html">requirement and 
+  analysis(8)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl11_RssLink 
+  title="Subscribe to requirement and  analysis(8)" 
+  href="http://www.blogjava.net/qileilove/category/51386.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl12_Link 
+  href="http://www.blogjava.net/qileilove/category/51347.html">ruby languages 
+  (3)</A> <A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl12_RssLink 
+  title="Subscribe to ruby languages  (3)" 
+  href="http://www.blogjava.net/qileilove/category/51347.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl13_Link 
+  href="http://www.blogjava.net/qileilove/category/51346.html">selenium and 
+  watir webdrivers 自动化测试学习(265)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl13_RssLink 
+  title="Subscribe to selenium and watir webdrivers 自动化测试学习(265)" 
+  href="http://www.blogjava.net/qileilove/category/51346.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl14_Link 
+  href="http://www.blogjava.net/qileilove/category/51872.html">web 
+  前端性能测试(91)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl14_RssLink 
+  title="Subscribe to web 前端性能测试(91)" 
+  href="http://www.blogjava.net/qileilove/category/51872.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl15_Link 
+  href="http://www.blogjava.net/qileilove/category/52072.html">安全性测试(46)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl15_RssLink 
+  title="Subscribe to 安全性测试(46)" 
+  href="http://www.blogjava.net/qileilove/category/52072.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl16_Link 
+  href="http://www.blogjava.net/qileilove/category/51359.html">性能测试(180)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl16_RssLink 
+  title="Subscribe to 性能测试(180)" 
+  href="http://www.blogjava.net/qileilove/category/51359.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl17_Link 
+  href="http://www.blogjava.net/qileilove/category/52524.html">敏捷测试(25)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl17_RssLink 
+  title="Subscribe to 敏捷测试(25)" 
+  href="http://www.blogjava.net/qileilove/category/52524.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl18_Link 
+  href="http://www.blogjava.net/qileilove/category/49945.html">数据库(359)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl18_RssLink 
+  title="Subscribe to 数据库(359)" 
+  href="http://www.blogjava.net/qileilove/category/49945.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl19_Link 
+  href="http://www.blogjava.net/qileilove/category/49768.html">新闻(8)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl19_RssLink 
+  title="Subscribe to 新闻(8)" 
+  href="http://www.blogjava.net/qileilove/category/49768.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl20_Link 
+  href="http://www.blogjava.net/qileilove/category/49781.html">测试学习专栏(1547)</A> 
+  <A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl20_RssLink 
+  title="Subscribe to 测试学习专栏(1547)" 
+  href="http://www.blogjava.net/qileilove/category/49781.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl21_Link 
+  href="http://www.blogjava.net/qileilove/category/49787.html">管理方向(98)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl21_RssLink 
+  title="Subscribe to 管理方向(98)" 
+  href="http://www.blogjava.net/qileilove/category/49787.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl22_Link 
+  href="http://www.blogjava.net/qileilove/category/53091.html">设计模式学习(13)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl00_LinkList_ctl22_RssLink 
+  title="Subscribe to 设计模式学习(13)" 
+  href="http://www.blogjava.net/qileilove/category/53091.html/rss">(rss)</A> 
+  </LI></UL>
+<H3>随笔档案</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl01_Link 
+  href="http://www.blogjava.net/qileilove/archive/2015/03.html">2015年3月 (5)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl02_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/12.html">2014年12月 
+  (109)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl03_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/11.html">2014年11月 
+  (162)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl04_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/10.html">2014年10月 
+  (129)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl05_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/09.html">2014年9月 
+  (185)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl06_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/08.html">2014年8月 
+  (184)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl07_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/07.html">2014年7月 
+  (169)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl08_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/06.html">2014年6月 
+  (136)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl09_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/05.html">2014年5月 
+  (135)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl10_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/04.html">2014年4月 
+  (136)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl11_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/03.html">2014年3月 
+  (110)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl12_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/02.html">2014年2月 (95)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl13_Link 
+  href="http://www.blogjava.net/qileilove/archive/2014/01.html">2014年1月 
+  (130)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl14_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/12.html">2013年12月 
+  (105)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl15_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/11.html">2013年11月 
+  (130)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl16_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/10.html">2013年10月 
+  (106)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl17_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/09.html">2013年9月 
+  (119)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl18_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/08.html">2013年8月 (97)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl19_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/07.html">2013年7月 
+  (100)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl20_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/06.html">2013年6月 (97)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl21_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/05.html">2013年5月 
+  (147)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl22_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/04.html">2013年4月 (67)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl23_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/03.html">2013年3月 (60)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl24_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/02.html">2013年2月 (17)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl25_Link 
+  href="http://www.blogjava.net/qileilove/archive/2013/01.html">2013年1月 (58)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl26_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/12.html">2012年12月 
+  (43)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl27_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/11.html">2012年11月 
+  (32)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl28_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/10.html">2012年10月 
+  (30)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl29_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/09.html">2012年9月 (88)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl30_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/08.html">2012年8月 (85)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl31_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/07.html">2012年7月 (69)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl32_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/06.html">2012年6月 
+  (103)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl33_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/05.html">2012年5月 
+  (125)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl34_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/04.html">2012年4月 (56)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl35_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/03.html">2012年3月 (19)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl36_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/02.html">2012年2月 (20)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl37_Link 
+  href="http://www.blogjava.net/qileilove/archive/2012/01.html">2012年1月 (24)</A> 
+
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl38_Link 
+  href="http://www.blogjava.net/qileilove/archive/2011/12.html">2011年12月 
+  (99)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl39_Link 
+  href="http://www.blogjava.net/qileilove/archive/2011/11.html">2011年11月 
+  (179)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl40_Link 
+  href="http://www.blogjava.net/qileilove/archive/2011/10.html">2011年10月 
+  (148)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl01_LinkList_ctl41_Link 
+  href="http://www.blogjava.net/qileilove/archive/2011/09.html">2011年9月 (26)</A> 
+  </LI></UL>
+<H3>文章分类</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl01_Link 
+  href="http://www.blogjava.net/qileilove/category/54306.html">AJAX(9)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl01_RssLink 
+  title="Subscribe to AJAX(9)" 
+  href="http://www.blogjava.net/qileilove/category/54306.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl02_Link 
+  href="http://www.blogjava.net/qileilove/category/54152.html">android(7)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl02_RssLink 
+  title="Subscribe to android(7)" 
+  href="http://www.blogjava.net/qileilove/category/54152.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl03_Link 
+  href="http://www.blogjava.net/qileilove/category/54297.html">CSS 教程(17)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl03_RssLink 
+  title="Subscribe to CSS 教程(17)" 
+  href="http://www.blogjava.net/qileilove/category/54297.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl04_Link 
+  href="http://www.blogjava.net/qileilove/category/54129.html">db2(4)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl04_RssLink 
+  title="Subscribe to db2(4)" 
+  href="http://www.blogjava.net/qileilove/category/54129.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl05_Link 
+  href="http://www.blogjava.net/qileilove/category/54355.html">HOLMOS(1)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl05_RssLink 
+  title="Subscribe to HOLMOS(1)" 
+  href="http://www.blogjava.net/qileilove/category/54355.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl06_Link 
+  href="http://www.blogjava.net/qileilove/category/54301.html">HTML(12)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl06_RssLink 
+  title="Subscribe to HTML(12)" 
+  href="http://www.blogjava.net/qileilove/category/54301.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl07_Link 
+  href="http://www.blogjava.net/qileilove/category/54260.html">HTML DOM(11)</A> 
+  <A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl07_RssLink 
+  title="Subscribe to HTML DOM(11)" 
+  href="http://www.blogjava.net/qileilove/category/54260.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl08_Link 
+  href="http://www.blogjava.net/qileilove/category/54258.html">HTML5(17)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl08_RssLink 
+  title="Subscribe to HTML5(17)" 
+  href="http://www.blogjava.net/qileilove/category/54258.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl09_Link 
+  href="http://www.blogjava.net/qileilove/category/54139.html">java(3)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl09_RssLink 
+  title="Subscribe to java(3)" 
+  href="http://www.blogjava.net/qileilove/category/54139.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl10_Link 
+  href="http://www.blogjava.net/qileilove/category/54193.html">jmeter(26)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl10_RssLink 
+  title="Subscribe to jmeter(26)" 
+  href="http://www.blogjava.net/qileilove/category/54193.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl11_Link 
+  href="http://www.blogjava.net/qileilove/category/54279.html">jQuery (116)</A> 
+  <A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl11_RssLink 
+  title="Subscribe to jQuery (116)" 
+  href="http://www.blogjava.net/qileilove/category/54279.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl12_Link 
+  href="http://www.blogjava.net/qileilove/category/54371.html">jQuery Mobile 
+  教程(14)</A> <A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl12_RssLink 
+  title="Subscribe to jQuery Mobile 教程(14)" 
+  href="http://www.blogjava.net/qileilove/category/54371.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl13_Link 
+  href="http://www.blogjava.net/qileilove/category/54249.html">js(53)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl13_RssLink 
+  title="Subscribe to js(53)" 
+  href="http://www.blogjava.net/qileilove/category/54249.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl14_Link 
+  href="http://www.blogjava.net/qileilove/category/54206.html">maven(23)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl14_RssLink 
+  title="Subscribe to maven(23)" 
+  href="http://www.blogjava.net/qileilove/category/54206.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl15_Link 
+  href="http://www.blogjava.net/qileilove/category/54131.html">python(48)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl15_RssLink 
+  title="Subscribe to python(48)" 
+  href="http://www.blogjava.net/qileilove/category/54131.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl16_Link 
+  href="http://www.blogjava.net/qileilove/category/54127.html">性能测试(18)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl16_RssLink 
+  title="Subscribe to 性能测试(18)" 
+  href="http://www.blogjava.net/qileilove/category/54127.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl17_Link 
+  href="http://www.blogjava.net/qileilove/category/54130.html">持续集成(24)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl17_RssLink 
+  title="Subscribe to 持续集成(24)" 
+  href="http://www.blogjava.net/qileilove/category/54130.html/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl18_Link 
+  href="http://www.blogjava.net/qileilove/category/54128.html">自动化测试(25)</A> <A 
+  id=SingleColumn1_Categories_CatList_ctl02_LinkList_ctl18_RssLink 
+  title="Subscribe to 自动化测试(25)" 
+  href="http://www.blogjava.net/qileilove/category/54128.html/rss">(rss)</A> 
+  </LI></UL>
+<H3>文章档案</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList_ctl03_LinkList_ctl01_Link 
+  href="http://www.blogjava.net/qileilove/archives/2014/05.html">2014年5月 
+  (21)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl03_LinkList_ctl02_Link 
+  href="http://www.blogjava.net/qileilove/archives/2014/04.html">2014年4月 
+  (202)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl03_LinkList_ctl03_Link 
+  href="http://www.blogjava.net/qileilove/archives/2014/03.html">2014年3月 
+  (107)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl03_LinkList_ctl04_Link 
+  href="http://www.blogjava.net/qileilove/archives/2014/02.html">2014年2月 
+  (59)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl03_LinkList_ctl05_Link 
+  href="http://www.blogjava.net/qileilove/archives/2014/01.html">2014年1月 
+  (14)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList_ctl03_LinkList_ctl06_Link 
+  href="http://www.blogjava.net/qileilove/archives/2012/08.html">2012年8月 (1)</A> 
+  </LI></UL>
+<SCRIPT language=JavaScript>
+function SearchGoogle(key,evt,site)
+		{
+			if(evt.keyCode==13 || evt.keyCode==0 || evt.type =='click')
+			{
+				key.focus();
+				var keystr = encodeURIComponent(key.value);
+				url = "http://www.google.com/search?q=";
+				url = url+keystr;
+				url += "&ie=UTF-8&oe=GB2312&hl=zh-CN&domains="+site+"&sitesearch="+site;
+				window.location=url;
+				return false;
+			}
+		}
+</SCRIPT>
+
+<H3>搜索</H3>
+<UL>
+  <LI>
+  <LI><INPUT id=q 
+  onkeydown="return SearchGoogle(document.getElementById('q'),event,'www.blogjava.net/qileilove')" 
+  style="WIDTH: 130px" name=q>&nbsp;<INPUT onclick="SearchGoogle(document.getElementById('q'),event,'www.blogjava.net/qileilove')" type=button value=搜索 name=sa> 
+  </LI></UL>
+<H3>最新评论 <A id=SingleColumn1__2fe98af_RSSHyperlink1 
+href="http://www.blogjava.net/qileilove/CommentsRSS.aspx"><IMG 
+style="BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-TOP-WIDTH: 0px" 
+src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/xml.gif"></A></H3>
+<DIV class=RecentComment>
+<UL>
+  <LI style="WORD-BREAK: break-all"><A 
+  id=SingleColumn1__2fe98af_CommentList_ctl01_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2015/10/15/404852.html#427767">1.&nbsp;f[未登录]</A> 
+
+  <LI style="WORD-BREAK: break-all">ff 
+  <LI style="TEXT-ALIGN: right; MARGIN-RIGHT: 4px">--f 
+  <LI style="WORD-BREAK: break-all"><A 
+  id=SingleColumn1__2fe98af_CommentList_ctl02_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2015/09/23/403352.html#427443">2.&nbsp;re: 
+  Android自动获取短信验证码</A> 
+  <LI style="WORD-BREAK: break-all">没有验证码就建不了QQ号 
+  <LI style="TEXT-ALIGN: right; MARGIN-RIGHT: 4px">--hugege 
+  <LI style="WORD-BREAK: break-all"><A 
+  id=SingleColumn1__2fe98af_CommentList_ctl03_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2015/09/23/403352.html#427442">3.&nbsp;re: 
+  Android自动获取短信验证码</A> 
+  <LI style="WORD-BREAK: break-all">没有验证码，就建不了QQ 
+  <LI style="TEXT-ALIGN: right; MARGIN-RIGHT: 4px">--hugege 
+  <LI style="WORD-BREAK: break-all"><A 
+  id=SingleColumn1__2fe98af_CommentList_ctl04_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2015/09/14/409013.html#427305">4.&nbsp;re: 
+  AndroidPN真机环境测试</A> 
+  <LI style="WORD-BREAK: break-all">androidpn的代码太乱，已重构！ 
+  <LI style="TEXT-ALIGN: right; MARGIN-RIGHT: 4px">--cc鲁 
+  <LI style="WORD-BREAK: break-all"><A 
+  id=SingleColumn1__2fe98af_CommentList_ctl05_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2015/08/31/405004.html#427054">5.&nbsp;re: 
+  使用 JUnit 进行 Java 代码的单元测试[未登录]</A> 
+  <LI style="WORD-BREAK: break-all">1 
+  <LI style="TEXT-ALIGN: right; MARGIN-RIGHT: 4px">--1 </LI></UL></DIV>
+<H3>阅读排行榜</H3>
+<DIV class=RecentComment>
+<UL style="WORD-BREAK: break-all">
+  <LI><A id=SingleColumn1__f526de_TopList_ctl01_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2012/05/31/379631.html">1.&nbsp;接口测试的两种方法(32902)</A> 
+
+  <LI><A id=SingleColumn1__f526de_TopList_ctl02_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2012/04/09/373628.html">2.&nbsp;利用JMeter进行Web测试（简介适合初学者）(31139)</A> 
+
+  <LI><A id=SingleColumn1__f526de_TopList_ctl03_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2012/08/22/386010.html">3.&nbsp;操作系统常见面试题总结(20014)</A> 
+
+  <LI><A id=SingleColumn1__f526de_TopList_ctl04_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2011/10/17/361397.html">4.&nbsp;eclipse中配置SVN(16186)</A> 
+
+  <LI><A id=SingleColumn1__f526de_TopList_ctl05_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2011/10/26/362091.html">5.&nbsp;总结测试用例的设计(12138)</A> 
+  </LI></UL></DIV>
+<H3>评论排行榜</H3>
+<DIV class=RecentComment>
+<UL style="WORD-BREAK: break-all">
+  <LI><A id=SingleColumn1__3cafa79_TopList_ctl01_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2013/08/27/403352.html">1.&nbsp;Android自动获取短信验证码(13)</A> 
+
+  <LI><A id=SingleColumn1__3cafa79_TopList_ctl02_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2012/05/31/379631.html">2.&nbsp;接口测试的两种方法(9)</A> 
+
+  <LI><A id=SingleColumn1__3cafa79_TopList_ctl03_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2011/12/01/365316.html">3.&nbsp;java实现后台自动发邮件功能(6)</A> 
+
+  <LI><A id=SingleColumn1__3cafa79_TopList_ctl04_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2014/03/20/411254.html">4.&nbsp;TestNG开源插件Arrow介绍(4)</A> 
+
+  <LI><A id=SingleColumn1__3cafa79_TopList_ctl05_Hyperlink1 
+  href="http://www.blogjava.net/qileilove/archive/2014/08/11/416809.html">5.&nbsp;当ASP.NET 
+  Forms验证方式遭遇苹果IOS(3)</A> </LI></UL></DIV></DIV>
+<P id=footer>Powered by: <BR><A id=Footer1_Hyperlink3 
+style="FONT-SIZE: 12px; FONT-FAMILY: Verdana" href="http://www.blogjava.net/" 
+name=Hyperlink1>BlogJava</A> <BR>Copyright © 顺其自然EVO </P>
+<SCRIPT type=text/javascript>
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("AjaxHolder_PostComment_ValidationSummary1"));
+var Page_Validators =  new Array(document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2"), document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3"));
+//]]>
+</SCRIPT>
+
+<SCRIPT type=text/javascript>
+//<![CDATA[
+var AjaxHolder_PostComment_RequiredFieldValidator1 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator1"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator1");
+AjaxHolder_PostComment_RequiredFieldValidator1.controltovalidate = "AjaxHolder_PostComment_tbTitle";
+AjaxHolder_PostComment_RequiredFieldValidator1.errormessage = "请输入标题";
+AjaxHolder_PostComment_RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator1.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator2 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator2"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2");
+AjaxHolder_PostComment_RequiredFieldValidator2.controltovalidate = "AjaxHolder_PostComment_tbName";
+AjaxHolder_PostComment_RequiredFieldValidator2.errormessage = "请输入你的姓名";
+AjaxHolder_PostComment_RequiredFieldValidator2.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator2.initialvalue = "";
+var AjaxHolder_PostComment_Requiredfieldvalidator4 = document.all ? document.all["AjaxHolder_PostComment_Requiredfieldvalidator4"] : document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4");
+AjaxHolder_PostComment_Requiredfieldvalidator4.controltovalidate = "AjaxHolder_PostComment_CodeNumberTextBox";
+AjaxHolder_PostComment_Requiredfieldvalidator4.errormessage = "请输入验证码";
+AjaxHolder_PostComment_Requiredfieldvalidator4.display = "Dynamic";
+AjaxHolder_PostComment_Requiredfieldvalidator4.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_Requiredfieldvalidator4.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator3 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator3"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3");
+AjaxHolder_PostComment_RequiredFieldValidator3.controltovalidate = "AjaxHolder_PostComment_tbComment";
+AjaxHolder_PostComment_RequiredFieldValidator3.errormessage = "请输入评论内容";
+AjaxHolder_PostComment_RequiredFieldValidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator3.initialvalue = "";
+var AjaxHolder_PostComment_ValidationSummary1 = document.all ? document.all["AjaxHolder_PostComment_ValidationSummary1"] : document.getElementById("AjaxHolder_PostComment_ValidationSummary1");
+AjaxHolder_PostComment_ValidationSummary1.showmessagebox = "True";
+AjaxHolder_PostComment_ValidationSummary1.showsummary = "False";
+//]]>
+</SCRIPT>
+
+<SCRIPT type=text/javascript>
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+document.getElementById('AjaxHolder_PostComment_ValidationSummary1').dispose = function() {
+    Array.remove(Page_ValidationSummaries, document.getElementById('AjaxHolder_PostComment_ValidationSummary1'));
+}
+Sys.Application.initialize();
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator1'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2'));
+}
+
+document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3'));
+}
+//]]>
+</SCRIPT>
+</FORM>
+<SCRIPT type=text/javascript 
+src="并发性能测试程序编写%20-%20qileilove%20-%20BlogJava_files/ShowHidden.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-476124-3']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</SCRIPT>
+</BODY></HTML>
